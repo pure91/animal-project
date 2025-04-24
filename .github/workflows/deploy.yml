@@ -2,43 +2,43 @@ name: Deploy to Server (Docker)
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository }}:latest   # ← GHCR 사용 예
+  IMAGE_NAME: ghcr.io/${{ github.repository }}:latest   # GHCR 이미지 이름
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    # ---------- (1) 로컬 러너에서 이미지 빌드 ----------
-    - name: Build Docker image
-      run: docker build -t $IMAGE_NAME .
+      # ---------- (1) Docker 이미지 빌드 ----------
+      - name: Build Docker image
+        run: docker build -t $IMAGE_NAME .
 
-    # ---------- (2) GHCR/Docker Hub 로그인 & 푸시 ----------
-    - name: Push image to GHCR
-      run: |
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker push $IMAGE_NAME
+      # ---------- (2) GHCR에 로그인 ----------
+      - name: Login to GHCR
+        run: |
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-    # ---------- (3) SSH로 서버에 접속해 pull & run ----------
-    - name: Deploy to server
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SERVER_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+      # ---------- (3) GHCR에 이미지 푸시 ----------
+      - name: Push image to GHCR
+        run: docker push $IMAGE_NAME
 
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22 \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          IMAGE="ghcr.io/${{ github.repository }}:latest"
-          docker pull $IMAGE
-          docker stop mbti || true && docker rm mbti || true
-          docker run -d --name mbti -p 3000:3000 --restart=always $IMAGE
-        EOF
-      env:
-        SERVER_USER: ${{ secrets.SERVER_USER }}
-        SERVER_IP: ${{ secrets.SERVER_IP }}
+      # ---------- (4) 서버에 접속하여 Docker 이미지 Pull 및 실행 ----------
+      - name: Deploy to server
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22 \
+              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            IMAGE="ghcr.io/${{ github.repository }}:latest"
+            docker pull $IMAGE
+            docker stop mbti || true && docker rm mbti || true
+            docker run -d --name mbti -p 3000:3000 --restart=always $IMAGE
+          EOF
