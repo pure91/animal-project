@@ -27,14 +27,15 @@ jobs:
     - name: Deploy to server
       run: |
         mkdir -p ~/.ssh  # SSH 폴더 생성
-        echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa  # GitHub Secrets에서 SSH 키 설정
+        echo "${{ secrets.SERVER_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa  # GitHub Secrets에서 SSH 키 설정
         chmod 600 ~/.ssh/id_rsa  # SSH 키 권한 설정
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           cd /path/to/project
           git pull origin main
           npm ci --no-optional
           npm run build
-          pm2 restart all  # pm2로 서버 재시작
+          pm2 restart all
         EOF
       env:
         SERVER_USER: ${{ secrets.SERVER_USER }}
