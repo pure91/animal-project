@@ -1,41 +1,43 @@
-name: Deploy to Server
+name: Deploy to Server (Docker)
 
 on:
   push:
-    branches:
-      - main  # main 브랜치에 푸시될 때마다 실행됩니다.
+    branches: [main]
+
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository }}:latest   # ← GHCR 사용 예
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Ubuntu 최신 버전에서 실행
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2  # 저장소를 체크아웃합니다.
+      uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'  # Node.js 18 버전 설치
+    # ---------- (1) 로컬 러너에서 이미지 빌드 ----------
+    - name: Build Docker image
+      run: docker build -t $IMAGE_NAME .
 
-    - name: Install dependencies
-      run: npm ci --no-optional  # 의존성 설치
+    # ---------- (2) GHCR/Docker Hub 로그인 & 푸시 ----------
+    - name: Push image to GHCR
+      run: |
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        docker push $IMAGE_NAME
 
-    - name: Build project
-      run: npm run build  # Next.js 빌드
-
+    # ---------- (3) SSH로 서버에 접속해 pull & run ----------
     - name: Deploy to server
       run: |
-        mkdir -p ~/.ssh  # SSH 폴더 생성
-        echo "${{ secrets.SERVER_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa  # GitHub Secrets에서 SSH 키 설정
-        chmod 600 ~/.ssh/id_rsa  # SSH 키 권한 설정
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa \
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SERVER_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 2222 \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          cd /path/to/project
-          git pull origin main
-          npm ci --no-optional
-          npm run build
-          pm2 restart all
+          IMAGE="ghcr.io/${{ github.repository }}:latest"
+          docker pull $IMAGE
+          docker stop mbti || true && docker rm mbti || true
+          docker run -d --name mbti -p 3000:3000 --restart=always $IMAGE
         EOF
       env:
         SERVER_USER: ${{ secrets.SERVER_USER }}
