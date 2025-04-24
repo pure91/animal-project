@@ -1,0 +1,41 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 푸시될 때마다 실행됩니다.
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Ubuntu 최신 버전에서 실행
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2  # 저장소를 체크아웃합니다.
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'  # Node.js 18 버전 설치
+
+    - name: Install dependencies
+      run: npm ci --no-optional  # 의존성 설치
+
+    - name: Build project
+      run: npm run build  # Next.js 빌드
+
+    - name: Deploy to server
+      run: |
+        mkdir -p ~/.ssh  # SSH 폴더 생성
+        echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa  # GitHub Secrets에서 SSH 키 설정
+        chmod 600 ~/.ssh/id_rsa  # SSH 키 권한 설정
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          cd /path/to/project
+          git pull origin main
+          npm ci --no-optional
+          npm run build
+          pm2 restart all  # pm2로 서버 재시작
+        EOF
+      env:
+        SERVER_USER: ${{ secrets.SERVER_USER }}
+        SERVER_IP: ${{ secrets.SERVER_IP }}
