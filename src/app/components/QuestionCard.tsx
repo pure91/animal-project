@@ -12,7 +12,7 @@ export default function QuestionCard({ question, options, onSelect } : {
                 <button
                     key={idx}
                     onClick={() => onSelect(option)}
-                    className="question-option"
+                    className={`question-option ${option === "예" ? "yes" : "no"}`}
                 >
                     {option}
                 </button>

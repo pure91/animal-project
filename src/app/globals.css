@@ -6,6 +6,7 @@ body {
   color: #333;
 }
 
+/*********** 질문 버튼 시작 ***********/
 button {
   padding: 10px 20px;
   margin-top: 20px;
@@ -18,9 +19,22 @@ button {
   transition: background 0.3s;
 }
 
-button:hover {
-  background-color: #7e78dd;
+button.yes {
+  background-color: #7BC7DD;
 }
+
+button.no {
+  background-color: #B0BEC5;
+}
+
+button.yes:hover {
+  background-color: #4AA7C3;
+}
+
+button.no:hover {
+  background-color: #90A4AE;
+}
+/*********** 질문 버튼 끝 ***********/
 
 header, footer {
   background-color: #7e78dd;
@@ -44,7 +58,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* question-card 스타일 시작 */
+/*********** question-card 스타일 시작 ***********/
 .question-card {
   background-color: white;
   border-radius: 12px;
@@ -71,9 +85,9 @@ a:hover {
 .question-option:hover {
   background-color: #4338ca;
 }
-/* question-card 스타일 끝 */
+/*********** question-card 스타일 끝 ***********/
 
-/* 결과 후 링크 스타일 시작 */
+/*********** 결과 후 링크 스타일 시작 ***********/
 .share-btn {
     display: inline-block;
     padding: 10px 20px;
@@ -127,4 +141,4 @@ a:hover {
     color: #fff;
     border-color: #007bff;
 }
-/* 결과 후 링크 스타일 끝 */
+/*********** 결과 후 링크 스타일 끝 ***********/
