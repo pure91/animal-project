@@ -1,6 +1,8 @@
 import {NextResponse} from 'next/server';
 import {connection} from '@/lib/db';
 
+/** API 관련 코드 */
+
 export async function GET() {
     try {
         const result = await new Promise((resolve, reject) => {
