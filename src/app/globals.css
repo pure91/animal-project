@@ -1,42 +1,130 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  font-family: 'Pretendard', sans-serif;
+  background-color: #f9fafb;
+  color: #333;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #7e78dd;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #7e78dd;
+}
+
+header, footer {
+  background-color: #7e78dd;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+main {
+  padding: 20px;
+  min-height: 80vh;
 }
 
 a {
-  color: inherit;
+  color: white;
+  margin: 0 10px;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+a:hover {
+  text-decoration: underline;
 }
+
+/* question-card 스타일 시작 */
+.question-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 500px;
+  margin: 30px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.question-option {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.question-option:hover {
+  background-color: #4338ca;
+}
+/* question-card 스타일 끝 */
+
+/* 결과 후 링크 스타일 시작 */
+.share-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+    color: white;
+    margin: 10px;
+}
+
+.share-btn.kakao {
+    background-color: #F7E600; /* 카카오톡 색상 */
+}
+
+.share-btn.instagram {
+    background-color: #E1306C; /* 인스타그램 색상 */
+}
+
+.share-btn:hover {
+    transform: scale(1.05);
+}
+
+.share-btn.kakao:hover {
+    background-color: #ffcc00; /* 카카오톡 hover 색상 */
+}
+
+.share-btn.instagram:hover {
+    background-color: #f24c8a; /* 인스타그램 hover 색상 */
+}
+
+/* 홈으로 돌아가기 스타일 */
+.home-link {
+    margin-top: 20px;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    border: 2px solid #ccc;
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: all 0.3s;
+}
+
+.home-link:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+/* 결과 후 링크 스타일 끝 */
