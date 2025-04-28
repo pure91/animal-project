@@ -1,14 +1,21 @@
+"use client"
+
 /** 공통 헤더 컴포넌트 */
+import Link from "next/link";
 
 export default function Header() {
+    const handleClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        window.location.href = '/';
+    };
+
     return (
         <header>
             <h1>
                 <nav>
-                    {/* 동일위치에서 Link는 작동하지 않기 때문에 a태그 사용*/}
-                    <a href="/" style={{textDecoration: 'none'}}>
+                    <Link href="/" onClick={handleClick} style={{textDecoration: 'none'}}>
                         MBTI 웹사이트
-                    </a>
+                    </Link>
                 </nav>
             </h1>
         </header>

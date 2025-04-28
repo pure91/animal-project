@@ -3,6 +3,7 @@
 import {useSearchParams} from "next/navigation";
 import mbtiDescriptions from "@/app/data/mbtiDescriptions";
 import Link from "next/link";
+import Image from "next/image";
 
 /** 결과 표시 페이지 */
 export default function Result() {
@@ -13,18 +14,18 @@ export default function Result() {
 
     // 카카오톡 공유 핸들러
     const handleKakaoShare = () => {
-        window.Kakao.Link.sendDefault({
-            objectType: "feed",
-            content: {
-                title: `나의 MBTI는 ${type}`,
-                description: mbtiDescriptions[type as keyof typeof mbtiDescriptions],
-                imageUrl: `/image/${type.toLowerCase()}.png`,
-                link: {
-                    mobileWebUrl: window.location.href,
-                    webUrl: window.location.href,
-                }
-            }
-        })
+        // window.Kakao.Link.sendDefault({
+        //     objectType: "feed",
+        //     content: {
+        //         title: `나의 MBTI는 ${type}`,
+        //         description: mbtiDescriptions[type as keyof typeof mbtiDescriptions],
+        //         imageUrl: `/image/${type.toLowerCase()}.png`,
+        //         link: {
+        //             mobileWebUrl: window.location.href,
+        //             webUrl: window.location.href,
+        //         }
+        //     }
+        // })
     }
 
     // 인스타그램 공유 핸들러
@@ -41,7 +42,7 @@ export default function Result() {
         <div style={{textAlign: "center", marginTop: "50px"}}>
             <h1>당신의 MBTI는..!</h1>
             <h2 style={{fontSize: "40px", margin: "20px 0"}}>⭐{type}⭐</h2>
-            <img
+            <Image
                 src={`/image/${type.toLowerCase()}.png`}
                 alt={type}
                 style={{width: "200px", height: "200px", margin: "20px 0"}}
