@@ -41,5 +41,5 @@ jobs:
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin          
             docker pull $IMAGE
             docker stop mbti || true && docker rm mbti || true
-            docker run -d --name mbti -p 3000:3000 --restart=always $IMAGE
+            docker run -d --name mbti --network mbti-net -p 3000:3000 --restart=always $IMAGE
           EOF
