@@ -1,95 +1,88 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
+import {useState} from "react";
+import {useRouter} from "next/navigation";
+import QuestionCard from "@/app/components/QuestionCard";
+import questions from "@/app/data/questions";
+
+/** 메인 페이지 */
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    const [started, setStarted] = useState(false);
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [answers, setAnswers] = useState<string[]>([]);
+    const router = useRouter();
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+    // 점수 계산
+    const [scores, setScores] = useState<{
+        I: number;
+        E: number;
+        S: number;
+        N: number;
+        F: number;
+        T: number;
+        J: number;
+        P: number;
+    }>({
+        I: 0, E: 0, S: 0, N: 0, F: 0, T: 0, J: 0, P: 0,
+    });
+
+    // 질문 시작
+    const handleStart = () => {
+        setStarted(true);
+    }
+
+    // 사용자가 선택한 값
+    const handleSelect = (option: string) => {
+        const updatedAnswers = [...answers, option];
+        setAnswers(updatedAnswers);
+
+        const currentScore = questions[currentQuestion].scores;
+        const selectedIndex = questions[currentQuestion].options.indexOf(option);
+        const selectedScore = currentScore[selectedIndex];
+
+        // selectedScore는 "I", "E", "S", "N", "F", "T", "J", "P" 중 하나여야 하므로 이를 명시적으로 타입 지정
+        setScores(prev => ({
+            ...prev,
+            [selectedScore as keyof typeof scores]: prev[selectedScore as keyof typeof scores] + 1
+        }));
+
+        if (currentQuestion + 1 < questions.length) {
+            setCurrentQuestion(currentQuestion + 1);
+        } else {
+            const mbti = calculateMbti();
+            router.push(`/result?type=${mbti}`);
+        }
+    };
+
+    // mbti 유형 계산
+    const calculateMbti = () => {
+        const mbti = [
+            scores.I >= scores.E ? "I" : "E",
+            scores.S >= scores.N ? "S" : "N",
+            scores.F >= scores.T ? "F" : "T",
+            scores.J >= scores.P ? "J" : "P",
+        ];
+        return mbti.join("");
+    }
+
+    if (!started) {
+        return (
+            <div style={{textAlign: "center", marginTop: "100px"}}>
+                <h1>나의 MBTI 유형은?</h1>
+                <p>간단한 질문에 답하고 알아보세요!</p>
+                <button onClick={handleStart}>시작하기</button>
+            </div>
+        );
+    }
+
+    return (
+        <div style={{textAlign: "center"}}>
+            <QuestionCard
+                question={questions[currentQuestion].question}
+                options={questions[currentQuestion].options}
+                onSelect={handleSelect}
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+            <p>{currentQuestion + 1} / {questions.length}</p>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    );
 }
