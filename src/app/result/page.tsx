@@ -4,9 +4,10 @@ import {useSearchParams} from "next/navigation";
 import mbtiDescriptions from "@/app/data/mbtiDescriptions";
 import Link from "next/link";
 import Image from "next/image";
+import {Suspense} from "react";
 
 /** 결과 표시 페이지 */
-export default function Result() {
+function ResultContent() {
     const searchParams = useSearchParams();
     console.log("searchParams:", searchParams);
     const type = searchParams.get("type") || "Unknown";
@@ -61,4 +62,12 @@ export default function Result() {
             </Link>
         </div>
     )
+}
+
+export default function Result() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResultContent />
+        </Suspense>
+    );
 }
