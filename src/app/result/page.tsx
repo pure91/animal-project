@@ -76,23 +76,21 @@ export default function Result() {
 
     return (
         <div style={{textAlign: "center", marginTop: "50px"}}>
-            <h1>당신의 동물 유형은..!</h1>
+            <h1>당신의 동물 유형은 ⭐{mbtiData?.animal}⭐</h1>
             {/*<Image*/}
             {/*    src={`/image/${type.toLowerCase()}.png`}*/}
             {/*    alt={type}*/}
             {/*    style={{width: "200px", height: "200px", margin: "20px 0"}}*/}
             {/*/>*/}
-            <h2>⭐ {mbtiData?.animal} ⭐</h2>
-            <p>{type} 유형, {mbtiData?.description}!</p>
+            <p>타입은 <b style={{ color : "blueviolet"}}>{type}</b>로 {mbtiData?.description}</p>
 
-            <p>당신의 성향 점수는:</p>
             <TraitBar leftLabel="I" rightLabel="E" leftValue={traits.I} />
             <TraitBar leftLabel="S" rightLabel="N" leftValue={traits.S} />
             <TraitBar leftLabel="T" rightLabel="F" leftValue={traits.T} />
             <TraitBar leftLabel="J" rightLabel="P" leftValue={traits.J} />
 
-            <h3>서브타입: {selectedSubtype?.name || "알 수 없음"}</h3>
-            <p>{selectedSubtype?.description || "서브타입 설명이 없습니다."}</p>
+            <h3>세부타입은 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h3>
+            <p style={{ color: "gray" }}>{selectedSubtype?.description || "세부타입 설명이 없습니다."}😄</p>
 
             {/* 카카오톡, 인스타그램 공유 버튼 */}
             <button onClick={handleKakaoShare} className="share-btn kakao">
