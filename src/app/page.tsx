@@ -9,13 +9,10 @@ import questions from "@/app/data/questions";
 export default function Home() {
     const [started, setStarted] = useState(false); // 시작하기
     const [currentQuestion, setCurrentQuestion] = useState(0); //현재 질문
-    const [answers, setAnswers] = useState<string[]>([]); // 질문
+    const [answers, setAnswers] = useState<string[]>([]); // 답변 저장
     const [showResult, setShowResult] = useState(false); // 결과보기
     const [loading, setLoading] = useState(false); // 로딩 상태
     const [progress, setProgress] = useState(0); // 로딩바의 진행 상태
-
-    const router = useRouter();
-    const pathname = usePathname();
 
     // 점수 계산
     const [scores, setScores] = useState<{
@@ -23,6 +20,9 @@ export default function Home() {
     }>({
         I: 0, E: 0, S: 0, N: 0, F: 0, T: 0, J: 0, P: 0,
     });
+
+    const router = useRouter();
+    const pathname = usePathname();
 
     useEffect(() => {
         // 홈 페이지로 이동 시 상태 초기화
@@ -40,23 +40,24 @@ export default function Home() {
     }
 
     // 사용자가 선택한 값
-    const handleSelect = (option: string) => {
-        const updatedAnswers = [...answers, option];
-        setAnswers(updatedAnswers);
+    const handleSelect = (selectedScore: { [key: string]: number }) => {
+        // 답변 저장
+        setAnswers((prev) => [...prev, JSON.stringify(selectedScore)]);
 
-        const currentScore = questions[currentQuestion].scores;
-        const selectedIndex = questions[currentQuestion].options.indexOf(option);
-        const selectedScore = currentScore[selectedIndex];
-        console.log("currentQuestion", currentQuestion);
-        console.log("selectedIndex", selectedIndex);
-        console.log("selectedScore", selectedScore);
+        console.log("selectedScore:", JSON.stringify(selectedScore));
 
-        // selectedScore는 "I", "E", "S", "N", "F", "T", "J", "P" 중 하나여야 하므로 이를 명시적으로 타입 지정
-        setScores(prev => ({
-            ...prev,
-            [selectedScore as keyof typeof scores]: prev[selectedScore as keyof typeof scores] + 1
-        }));
+        // 점수 업데이트
+        setScores((prev) => {
+            const newScores = {...prev};
+            for (const key in selectedScore) {
+                if (key in newScores) {
+                    newScores[key as keyof typeof newScores] += selectedScore[key];
+                }
+            }
+            return newScores;
+        });
 
+        // 다음 질문 이동
         if (currentQuestion + 1 < questions.length) {
             setCurrentQuestion(currentQuestion + 1);
         } else {
@@ -70,21 +71,17 @@ export default function Home() {
             const updatedAnswers = answers.slice(0, answers.length - 1); // 마지막 선택지 삭제
             setAnswers(updatedAnswers);
 
-            const currentScore = questions[currentQuestion - 1].scores;
-            const selectedOption = answers[answers.length - 1]; // 이전 질문에서 선택한 옵션
-            const selectedIndex = questions[currentQuestion - 1].options.indexOf(selectedOption);
-            const selectedScore = currentScore[selectedIndex];
-
-            console.log("뒤로가기 currentScore", currentScore);
-            console.log("뒤로가기 selectedOption", selectedOption);
-            console.log("뒤로가기 selectedIndex", selectedIndex);
-            console.log("뒤로가기 selectedScore", selectedScore);
-
-            // 점수 되돌림
-            setScores((prev) => ({
-                ...prev,
-                [selectedScore as keyof typeof scores]: prev[selectedScore as keyof typeof scores] - 1
-            }));
+            // 점수 복구
+            const previousScore = JSON.parse(answers[answers.length - 1]);
+            setScores((prev) => {
+                const newScores = {...prev};
+                for (const key in previousScore) {
+                    if (key in newScores) {
+                        newScores[key as keyof typeof newScores] -= previousScore[key];
+                    }
+                }
+                return newScores;
+            });
 
             // 이전 질문으로 돌아가기
             setCurrentQuestion(currentQuestion - 1);
@@ -99,7 +96,7 @@ export default function Home() {
             scores.F >= scores.T ? "F" : "T",
             scores.J >= scores.P ? "J" : "P",
         ];
-        console.log("scores:", scores);
+        console.log("최종 scores:", scores);
         return mbti.join("");
     }
 
@@ -116,13 +113,14 @@ export default function Home() {
                 }
                 return prev + 2; // 진행 상태 업데이트
             });
-        }, 40); // 50ms마다 진행 상태 업데이트 (일부러 느리게 증가)
+        }, 40); // 40ms마다 진행 상태 업데이트 (일부러 느리게 증가)
     };
 
+    // 최초 렌더링
     if (!started) {
         return (
             <div style={{textAlign: "center", marginTop: "100px"}}>
-                <h1>나의 MBTI 유형은?</h1>
+                <h1>나의 동물 유형은?</h1>
                 <p>간단한 질문에 답하고 알아보세요!</p>
                 <button onClick={handleStart}>시작하기</button>
             </div>
@@ -135,6 +133,7 @@ export default function Home() {
                 // 결과 보기 버튼
                 <div>
                     <h2>결과를 준비하는 중...</h2>
+                    <h2>👇 PUSH 👇</h2>
                     {loading && (
                         <div>
                             <div style={{width: "100%", height: "20px", background: "#e0e0e0", borderRadius: "10px"}}>
