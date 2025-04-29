@@ -4,8 +4,7 @@
 import Link from "next/link";
 
 export default function Header() {
-    const handleClick = (e: React.MouseEvent) => {
-        e.preventDefault();
+    const handleClick = () => {
         window.location.href = '/';
     };
 
@@ -14,7 +13,7 @@ export default function Header() {
             <h1>
                 <nav>
                     <Link href="/" onClick={handleClick} style={{textDecoration: 'none'}}>
-                        MBTI 웹사이트
+                        16 Animal Types
                     </Link>
                 </nav>
             </h1>
