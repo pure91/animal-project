@@ -15,7 +15,7 @@ const TraitBar: React.FC<TraitBarProps> = ({
   const rightValue = 100 - leftValue;
 
   return (
-    <div style={{ marginBottom: "24px" }}>
+    <div style={{ marginBottom: "24px", width: "30%", justifySelf: "center" }}>
       <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 600, marginBottom: "4px" }}>
         <span>{leftLabel}</span>
         <span>{rightLabel}</span>
