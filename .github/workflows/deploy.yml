@@ -48,6 +48,7 @@ jobs:
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e DB_NAME=${{ secrets.DB_NAME }} \
               -p 3000:3000 --restart=always $IMAGE
+            docker image prune -f
           EOF
 
       # ---------- (5) 최신 이미지가 실행되었는지 확인 ----------
