@@ -16,9 +16,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # ---------- (1) Docker 이미지 빌드 ----------
+      # ---------- (1) Docker 이미지 빌드, 노 캐시로 예전 이미지 확실히 삭제 ----------
       - name: Build Docker image
-        run: docker build -t $IMAGE_NAME .
+        run: docker build --no-cache -t $IMAGE_NAME .
 
       # ---------- (2) GHCR에 로그인 ----------
       - name: Login to GHCR
@@ -49,3 +49,9 @@ jobs:
             -e DB_NAME=${{ secrets.DB_NAME }} \
             -p 3000:3000 --restart=always $IMAGE
           EOF
+          
+          # ---------- (5) 최신 이미지가 실행되었는지 확인 ----------
+          - name: Verify Docker image version
+            run: |
+              ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22 \
+                ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker ps && docker images"
