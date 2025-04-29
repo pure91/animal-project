@@ -3,6 +3,7 @@ name: Deploy to Server (Docker)
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:  # GitHub Actions 수동 실행 지원
 
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository }}:latest   # GHCR 이미지 이름
