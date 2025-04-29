@@ -36,12 +36,13 @@ jobs:
           echo "${{ secrets.SERVER_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22 \
+          ssh -t -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22 \
               ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-            IMAGE="ghcr.io/${{ github.repository }}:latest"
+            IMAGE="${{ env.IMAGE_NAME }}"
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull $IMAGE
-            docker stop mbti || true && docker rm mbti || true
+            docker stop mbti || true
+            docker rm mbti || true
             docker run -d --name mbti --network mbti-net \
             -e DB_HOST=${{ secrets.DB_HOST }} \
             -e DB_USER=${{ secrets.DB_USER }} \
@@ -53,5 +54,5 @@ jobs:
           # ---------- (5) 최신 이미지가 실행되었는지 확인 ----------
           - name: Verify Docker image version
             run: |
-              ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22 \
+              ssh -t -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22 \
                 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker ps && docker images"
