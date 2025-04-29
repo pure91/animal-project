@@ -1,17 +1,49 @@
 "use client";
 
 import {useSearchParams} from "next/navigation";
-import mbtiDescriptions from "@/app/data/mbtiDescriptions";
+import mbtiDescriptions from "@/app/data/mbtiAnimalDescriptions.json";
 import Link from "next/link";
-import Image from "next/image";
-import {Suspense} from "react";
+import TraitBar from "@/app/components/TraitBar";
 
 /** 결과 표시 페이지 */
-function ResultContent() {
+export default function Result() {
     const searchParams = useSearchParams();
-    console.log("searchParams:", searchParams);
     const type = searchParams.get("type") || "Unknown";
-    console.log("type:", type);
+    const mbtiData = mbtiDescriptions[type as keyof typeof mbtiDescriptions];
+
+    type SubType = {
+        name : string;
+        description: string;
+        I: number;
+        S: number;
+        T: number;
+        J: number;
+    };
+
+    // 측정값에 따른 subtypes 선택
+    const determineSubtype = (
+        userTraits: { I: number; S: number; T: number; J: number },
+        subtypes: SubType[]
+    ): SubType | null => {
+        let bestMatch : SubType | null = null;
+        let smallestDiff = Infinity;
+
+        subtypes?.forEach(sub => {
+            const diff = ["I", "S", "T", "J"].reduce((acc, key) => {
+                const traitKey = key as "I" | "S" | "T" | "J";
+                return acc + Math.abs(userTraits[traitKey] - sub[traitKey]);
+            }, 0);
+
+            if (diff < smallestDiff) {
+                smallestDiff = diff;
+                bestMatch = sub;
+            }
+        });
+
+        return bestMatch;
+    };
+
+    const selectedSubtype: SubType | null = determineSubtype(mbtiData.traits, mbtiData.subtypes);
 
     // 카카오톡 공유 핸들러
     const handleKakaoShare = () => {
@@ -39,16 +71,26 @@ function ResultContent() {
         );
     };
 
+    // 비율 환산
+    const traits = mbtiData.traits;
+
     return (
         <div style={{textAlign: "center", marginTop: "50px"}}>
-            <h1>당신의 MBTI는..!</h1>
-            <h2 style={{fontSize: "40px", margin: "20px 0"}}>⭐{type}⭐</h2>
-            <Image
-                src={`/image/${type.toLowerCase()}.png`}
-                alt={type}
-                style={{width: "200px", height: "200px", margin: "20px 0"}}
-            />
-            <p>{mbtiDescriptions[type as keyof typeof mbtiDescriptions]}</p>
+            <h1>당신의 동물 유형은 ⭐{mbtiData?.animal}⭐</h1>
+            {/*<Image*/}
+            {/*    src={`/image/${type.toLowerCase()}.png`}*/}
+            {/*    alt={type}*/}
+            {/*    style={{width: "200px", height: "200px", margin: "20px 0"}}*/}
+            {/*/>*/}
+            <p>타입은 <b style={{ color : "blueviolet"}}>{type}</b>로 {mbtiData?.description}</p>
+
+            <TraitBar leftLabel="I" rightLabel="E" leftValue={traits.I} />
+            <TraitBar leftLabel="S" rightLabel="N" leftValue={traits.S} />
+            <TraitBar leftLabel="T" rightLabel="F" leftValue={traits.T} />
+            <TraitBar leftLabel="J" rightLabel="P" leftValue={traits.J} />
+
+            <h3>세부타입은 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h3>
+            <p style={{ color: "gray" }}>{selectedSubtype?.description || "세부타입 설명이 없습니다."}😄</p>
 
             {/* 카카오톡, 인스타그램 공유 버튼 */}
             <button onClick={handleKakaoShare} className="share-btn kakao">
@@ -62,12 +104,4 @@ function ResultContent() {
             </Link>
         </div>
     )
-}
-
-export default function Result() {
-    return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <ResultContent />
-        </Suspense>
-    );
 }

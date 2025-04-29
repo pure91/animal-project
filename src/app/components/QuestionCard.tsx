@@ -2,8 +2,8 @@
 
 export default function QuestionCard({ question, options, onSelect } : {
     question: string,
-    options: string[],
-    onSelect: (option: string) => void
+    options: { text: string, score:{ [key: string]: number} } [],
+    onSelect: (score: { [key: string] : number}) => void
 }) {
     return (
         <div className="question-card">
@@ -11,10 +11,10 @@ export default function QuestionCard({ question, options, onSelect } : {
             {options.map((option, idx) => (
                 <button
                     key={idx}
-                    onClick={() => onSelect(option)}
-                    className={`question-option ${option === "예" ? "yes" : "no"}`}
+                    onClick={() => onSelect(option.score)}
+                    className="question-option"
                 >
-                    {option}
+                    {option.text}
                 </button>
             ))}
         </div>
