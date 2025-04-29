@@ -3,10 +3,11 @@
 import {useSearchParams} from "next/navigation";
 import mbtiDescriptions from "@/app/data/mbtiAnimalDescriptions.json";
 import Link from "next/link";
+import { Suspense } from "react";
 import TraitBar from "@/app/components/TraitBar";
 
 /** 결과 표시 페이지 */
-export default function Result() {
+function ResultContent() {
     const searchParams = useSearchParams();
     const type = searchParams.get("type") || "Unknown";
     const mbtiData = mbtiDescriptions[type as keyof typeof mbtiDescriptions];
@@ -104,4 +105,12 @@ export default function Result() {
             </Link>
         </div>
     )
+}
+
+export default function Result() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResultContent />
+        </Suspense>
+    );
 }
