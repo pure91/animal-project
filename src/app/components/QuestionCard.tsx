@@ -1,4 +1,5 @@
 /** 공통 질문 컴포넌트 */
+// 25.04.29 re-run 임시
 
 export default function QuestionCard({ question, options, onSelect } : {
     question: string,

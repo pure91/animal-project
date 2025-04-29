@@ -1,4 +1,5 @@
 "use client";
+// 25.04.29 re-run 임시
 
 import {useSearchParams} from "next/navigation";
 import mbtiDescriptions from "@/app/data/mbtiAnimalDescriptions.json";

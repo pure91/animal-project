@@ -1,4 +1,5 @@
 /** MBTI 질문을 위한 단순 데이터 모음 */
+// 25.04.29 re-run 임시
 
 export interface Option {
     text: string;

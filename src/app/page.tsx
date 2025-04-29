@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import QuestionCard from "@/app/components/QuestionCard";
 import questions from "@/app/data/questions";
+// 25.04.29 re-run 임시
 
 /** 메인 페이지 */
 export default function Home() {

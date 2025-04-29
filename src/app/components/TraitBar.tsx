@@ -1,4 +1,5 @@
 import React from "react";
+// 25.04.29 re-run 임시
 
 /** 수치 막대바 표시 컴포넌트 */
 interface TraitBarProps {
