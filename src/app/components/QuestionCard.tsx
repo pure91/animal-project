@@ -2,9 +2,9 @@
 // 25.04.29 re-run 임시
 
 export default function QuestionCard({ question, options, onSelect } : {
-    question: string,
-    options: { text: string, score:{ [key: string]: number} } [],
-    onSelect: (score: { [key: string] : number}) => void
+    question: string;
+    options: { text: string, score:{ [key: string]: number} } [];
+    onSelect: (score: { [key: string] : number}) => void;
 }) {
     return (
         <div className="question-card">

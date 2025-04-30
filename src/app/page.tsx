@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import QuestionCard from "@/app/components/QuestionCard";
 import questions from "@/app/data/questions";
-// 25.04.29 re-run 임시
 
 /** 메인 페이지 */
 export default function Home() {
@@ -44,7 +43,6 @@ export default function Home() {
     const handleSelect = (selectedScore: { [key: string]: number }) => {
         // 답변 저장
         setAnswers((prev) => [...prev, JSON.stringify(selectedScore)]);
-
         console.log("selectedScore:", JSON.stringify(selectedScore));
 
         // 점수 업데이트
@@ -92,7 +90,7 @@ export default function Home() {
     // mbti 유형 계산
     const calculateMbti = () => {
         const totalScore = Object.values(scores).reduce((acc, val) => acc + val, 0);
-        console.log("totalScore:",totalScore);
+        console.log("totalScore:", totalScore);
 
         // 모든 대답이 0이면, 특수 타입 반환
         if (totalScore === 0) {
@@ -115,7 +113,13 @@ export default function Home() {
                 if (prev >= 100) {
                     clearInterval(interval); // 로딩이 완료되면 인터벌을 중지
                     const mbti = calculateMbti();
-                    router.push(`/result?type=${mbti}`);
+                    const scoreParams = new URLSearchParams(
+                        Object.entries(scores).reduce((acc, [key, value]) => {
+                            acc[key] = value.toString();
+                            return acc;
+                        }, {} as Record<string, string>)
+                    ).toString();
+                    router.push(`/result?type=${mbti}&${scoreParams}`);
                     return 100;
                 }
                 return prev + 2; // 진행 상태 업데이트

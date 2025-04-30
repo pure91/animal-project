@@ -1,4 +1,4 @@
-/** 질문을 데이터 모음 */
+/** 질문 데이터 모음 */
 
 export interface Option {
     text: string;

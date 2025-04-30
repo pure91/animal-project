@@ -4,15 +4,20 @@ import React from "react";
 interface TraitBarProps {
     leftLabel: string;
     rightLabel: string;
-    leftValue: number; // 0~100 기준
+    leftValue: number;
+    rightValue: number;
 }
 
 const TraitBar: React.FC<TraitBarProps> = ({
                                                leftLabel,
                                                rightLabel,
                                                leftValue,
+                                               rightValue,
                                            }) => {
-    const rightValue = 100 - leftValue;
+
+    const total = leftValue + rightValue;
+    const leftPercent = total === 0 ? 50 : (leftValue / total) * 100;
+    const rightPercent = 100 - leftPercent;
 
     return (
         <div style={{
@@ -35,15 +40,15 @@ const TraitBar: React.FC<TraitBarProps> = ({
                 }}>
                     <div
                         style={{
-                            width: `${leftValue}%`,
-                            background: "linear-gradient(to right, #60a5fa, #3b82f6)", // blue tone
+                            width: `${leftPercent}%`,
+                            background: "linear-gradient(to right, #60a5fa, #3b82f6)",
                             transition: "width 0.6s ease",
                         }}
                     />
                     <div
                         style={{
-                            width: `${rightValue}%`,
-                            background: "linear-gradient(to right, #fca5a5, #f87171)", // red tone
+                            width: `${rightPercent}%`,
+                            background: "linear-gradient(to right, #fca5a5, #f87171)",
                             transition: "width 0.6s ease",
                         }}
                     />
@@ -52,11 +57,11 @@ const TraitBar: React.FC<TraitBarProps> = ({
                     display: "flex",
                     justifyContent: "space-between",
                     fontSize: "12px",
-                    color: "#6b7280", // gray-500
+                    color: "#6b7280",
                     marginTop: "4px",
                 }}>
-                    <span>{leftValue}%</span>
-                    <span>{rightValue}%</span>
+                    <span>{leftPercent.toFixed(1)}%</span>
+                    <span>{rightPercent.toFixed(1)}%</span>
                 </div>
             </div>
         </div>
