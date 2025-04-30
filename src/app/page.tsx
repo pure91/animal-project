@@ -91,15 +91,21 @@ export default function Home() {
 
     // mbti 유형 계산
     const calculateMbti = () => {
-        const mbti = [
+        const totalScore = Object.values(scores).reduce((acc, val) => acc + val, 0);
+        console.log("totalScore:",totalScore);
+
+        // 모든 대답이 0이면, 특수 타입 반환
+        if (totalScore === 0) {
+            return "SPECIAL";
+        }
+
+        return [
             scores.I >= scores.E ? "I" : "E",
             scores.S >= scores.N ? "S" : "N",
             scores.F >= scores.T ? "F" : "T",
             scores.J >= scores.P ? "J" : "P",
-        ];
-        console.log("최종 scores:", scores);
-        return mbti.join("");
-    }
+        ].join("");
+    };
 
     // 결과 보기
     const handleShowResult = () => {
