@@ -1,5 +1,4 @@
 "use client";
-// 25.04.29 re-run 임시
 
 import {useSearchParams} from "next/navigation";
 import mbtiDescriptions from "@/app/data/mbtiAnimalDescriptions.json";
@@ -18,21 +17,21 @@ function ResultContent() {
         description: string;
         I: number;
         S: number;
-        T: number;
+        F: number;
         J: number;
     };
 
     // 측정값에 따른 subtypes 선택
     const determineSubtype = (
-        userTraits: { I: number; S: number; T: number; J: number },
+        userTraits: { I: number; S: number; F: number; J: number },
         subtypes: SubType[]
     ): SubType | null => {
         let bestMatch : SubType | null = null;
         let smallestDiff = Infinity;
 
         subtypes?.forEach(sub => {
-            const diff = ["I", "S", "T", "J"].reduce((acc, key) => {
-                const traitKey = key as "I" | "S" | "T" | "J";
+            const diff = ["I", "S", "F", "J"].reduce((acc, key) => {
+                const traitKey = key as "I" | "S" | "F" | "J";
                 return acc + Math.abs(userTraits[traitKey] - sub[traitKey]);
             }, 0);
 
@@ -88,7 +87,7 @@ function ResultContent() {
 
             <TraitBar leftLabel="I" rightLabel="E" leftValue={traits.I} />
             <TraitBar leftLabel="S" rightLabel="N" leftValue={traits.S} />
-            <TraitBar leftLabel="T" rightLabel="F" leftValue={traits.T} />
+            <TraitBar leftLabel="F" rightLabel="T" leftValue={traits.F} />
             <TraitBar leftLabel="J" rightLabel="P" leftValue={traits.J} />
 
             <h3>세부타입은 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h3>
@@ -110,7 +109,7 @@ function ResultContent() {
 
 export default function Result() {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense>
             <ResultContent />
         </Suspense>
     );
