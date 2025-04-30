@@ -119,7 +119,12 @@ export default function Home() {
                             return acc;
                         }, {} as Record<string, string>)
                     ).toString();
-                    router.push(`/result?type=${mbti}&${scoreParams}`);
+
+                    // 렌더링 중 push() 사이드 이펙트 실행 문제로 setTimeout 추가 -> 푸시 지연
+                    setTimeout(() => {
+                        router.push(`/result?type=${mbti}&${scoreParams}`);
+                    }, 0);
+
                     return 100;
                 }
                 return prev + 2; // 진행 상태 업데이트
