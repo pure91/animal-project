@@ -8,12 +8,12 @@ export default function QuestionCard({ question, options, onSelect } : {
 }) {
     return (
         <div className="question-card">
-            <h2>{question}</h2>
+            <h2>💡{question}</h2>
             {options.map((option, idx) => (
                 <button
                     key={idx}
                     onClick={() => onSelect(option.score)}
-                    className="question-option"
+                    className={`question-option option-${idx}`}
                 >
                     {option.text}
                 </button>

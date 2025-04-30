@@ -115,7 +115,7 @@ const questions: Question[] = [
         ]
     },
     {
-        question: "친구가 갑자기 전화를 안 받는다. 당신의 생각은?",
+        question: "친구가 전화를 안 받는다. 당신의 생각은?",
         dimension: "S/N",
         options: [
             {text: "배터리 없나보다~", score: {S: 2}},

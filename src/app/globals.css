@@ -1,90 +1,107 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Pretendard', sans-serif;
-  background-color: #f9fafb;
-  color: #333;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', sans-serif;
+    background-color: #f9fafb;
+    color: #333;
 }
 
-/*********** 질문 버튼 시작 ***********/
 button {
-  padding: 10px 20px;
-  margin-top: 20px;
-  background-color: #7e78dd;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s;
+    padding: 10px 20px;
+    background-color: #7e78dd;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
 }
-
-button.yes {
-  background-color: #7BC7DD;
-}
-
-button.no {
-  background-color: #B0BEC5;
-}
-
-button.yes:hover {
-  background-color: #4AA7C3;
-}
-
-button.no:hover {
-  background-color: #90A4AE;
-}
-/*********** 질문 버튼 끝 ***********/
 
 header, footer {
-  background-color: #7e78dd;
-  color: white;
-  padding: 15px;
-  text-align: center;
+    background-color: #7e78dd;
+    color: white;
+    padding: 15px;
+    text-align: center;
 }
 
 main {
-  padding: 20px;
-  min-height: 80vh;
+    padding: 20px;
+    min-height: 80vh;
 }
 
 a {
-  color: white;
-  margin: 0 10px;
-  text-decoration: none;
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 /*********** question-card 스타일 시작 ***********/
 .question-card {
-  background-color: white;
-  border-radius: 12px;
-  padding: 30px;
-  max-width: 500px;
-  margin: 30px auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 16px;
+    padding: 15px 30px 30px 30px;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
 }
 
 .question-option {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #4f46e5;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s;
+    display: block;
+    width: 100%;
+    margin: 15px 0;
+    padding: 12px;
+    background-color: #6366f1; /* 보라색 계열 */
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    transition: all 0.25s ease-in-out;
 }
 
-.question-option:hover {
-  background-color: #4338ca;
+/* 질문 index별 색상 추가 시작 */
+.option-0 {
+  background-color: #818cf8;
 }
+.option-0:hover {
+  background-color: #6366f1;
+}
+
+.option-1 {
+  background-color: #a5b4fc;
+}
+.option-1:hover {
+  background-color: #818cf8;
+}
+
+.option-2 {
+  background-color: #d1d5db;
+}
+.option-2:hover {
+  background-color: #9ca3af;
+}
+
+.option-3 {
+  background-color: #93c5fd;
+}
+.option-3:hover {
+  background-color: #60a5fa;
+}
+
+.option-4 {
+  background-color: #60a5fa;
+}
+.option-4:hover {
+  background-color: #3b82f6;
+}
+/* 질문 index별 색상 추가 끝 */
 /*********** question-card 스타일 끝 ***********/
 
 /*********** 결과 후 링크 스타일 시작 ***********/
@@ -141,4 +158,5 @@ a:hover {
     color: #fff;
     border-color: #007bff;
 }
+
 /*********** 결과 후 링크 스타일 끝 ***********/
