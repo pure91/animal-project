@@ -158,5 +158,32 @@ a:hover {
     color: #fff;
     border-color: #007bff;
 }
-
 /*********** 결과 후 링크 스타일 끝 ***********/
+
+/*********** 결과 div 스타일 시작 ***********/
+/* 기본 스타일 */
+.trait-bar-container {
+    margin-bottom: 24px;
+    place-self: center;
+    width: 100%;
+}
+
+/* 웹 너비 제한 */
+@media (min-width: 768px) {
+    .trait-bar-container {
+        width: 40%;
+    }
+}
+
+/* 모바일 너비 100% */
+@media (max-width: 767px) {
+    .trait-bar-container {
+        width: 100%;
+    }
+}
+
+/* 내부 너비 */
+.trait-bar-inner {
+    width: 100%;
+}
+/*********** 결과 div 스타일 끝 ***********/

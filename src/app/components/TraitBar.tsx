@@ -20,13 +20,8 @@ const TraitBar: React.FC<TraitBarProps> = ({
     const rightPercent = 100 - leftPercent;
 
     return (
-        <div style={{
-            marginBottom: "24px",
-            width: "100%", // 부모 요소에서 크기 조정
-            display: "flex", // flex를 사용해 중앙 정렬
-            justifyContent: "center", // 중앙 정렬
-        }}>
-            <div style={{width: "30%"}}> {/* 자식 요소가 그 안에서 정렬될 수 있도록 설정 */}
+        <div className="trait-bar-container">
+            <div className="trait-bar-inner">
                 <div style={{display: "flex", justifyContent: "space-between", fontWeight: 600, marginBottom: "4px"}}>
                     <span>{leftLabel}</span>
                     <span>{rightLabel}</span>

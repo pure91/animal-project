@@ -103,9 +103,9 @@ function ResultContent() {
     };
 
     return (
-        <div style={{textAlign: "center", marginTop: "50px"}}>
-            <h1>당신은 <b style={{color: "blueviolet"}}>{type}</b> 타입으로 </h1>
-            <h1>⭐{selectedSubtype?.name || "알 수 없음"}⭐</h1>
+        <div style={{textAlign: "center", marginTop: "20px"}}>
+            <h1>당신은 <b style={{color: "blueviolet"}}>{type}</b> 타입 </h1>
+            <h1>⭐ {selectedSubtype?.name || "알 수 없음"} ⭐</h1>
             <p style={{color: "gray"}}><b style={{color: "gray"}}>특징 :</b> {selectedSubtype?.description || "설명이 없습니다."}</p>
             {/*<Image*/}
             {/*    src={`/image/${type.toLowerCase()}.png`}*/}
