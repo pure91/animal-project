@@ -5,6 +5,7 @@ import Link from "next/link";
 import {Suspense} from "react";
 import TraitBar from "@/app/components/TraitBar";
 import rawAnimalTypes from "@/app/data/animalTypes.json";
+import toast, {Toaster} from "react-hot-toast";
 
 // 지표 타입 선언
 type TraitKeys = "In" | "Ex" | "Se" | "Nu" | "Em" | "Lo" | "St" | "Fr";
@@ -95,32 +96,18 @@ function ResultContent() {
 
     // 링크 복사 핸들러
     const handleCopyLink = () => {
-        const currentUrl = window.location.href;
-
-        // 임시 textarea 요소 생성
-        const textarea = document.createElement('textarea');
-        textarea.value = currentUrl;
-        document.body.appendChild(textarea);
-
-        // 텍스트 선택
-        textarea.select();
-        textarea.setSelectionRange(0, 99999); // 모바일 선택 범위 설정
-
-        // 클립보드 복사
-        navigator.clipboard.writeText(textarea.value).then(() => {
-            alert("복사 완료");
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            toast.success("복사 완료");
         }).catch((err) => {
             console.error("링크 복사 실패:", err);
-            alert("복사 실패");
+            toast.error("복사에 실패했습니다.");
         });
-
-        // textarea 요소 삭제
-        document.body.removeChild(textarea);
     };
 
     return (
         <div style={{display: "flex", justifyContent: "center"}}>
-            <div style={{width: "675px", textAlign: "center"}}>
+            <Toaster position="top-center" />
+            <div style={{width: "100%", maxWidth: "675px", margin: "0 auto", padding: "0 16px", textAlign: "center"}}>
                 {type !== "HUMAN" ? <h1>🎉변신 성공!🎉</h1> : <h1>☠️변신 실패☠️</h1>}
                 <h2><b style={{color: "blueviolet"}}>{type}</b> 타입의 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
                 <p style={{color: "gray"}}>{selectedSubtype?.description || "설명이 없습니다."}</p>
@@ -130,7 +117,7 @@ function ResultContent() {
                 <TraitBar leftLabel="Em" rightLabel="Lo" leftValue={userTraitsFull.Em} rightValue={userTraitsFull.Lo}/>
                 <TraitBar leftLabel="St" rightLabel="Fr" leftValue={userTraitsFull.St} rightValue={userTraitsFull.Fr}/>
 
-                <ul style={{width: "80%", placeSelf: "center", textAlign: "left"}}>
+                <ul style={{width: "80%", margin: "0 auto", textAlign: "left"}}>
                     {selectedSubtype?.characteristics?.length ? (
                         selectedSubtype.characteristics.map((char, idx) => (
                             <li key={idx}>{char}</li>
