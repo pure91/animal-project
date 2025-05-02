@@ -68,39 +68,45 @@ a:hover {
 
 /* 질문 index별 색상 추가 시작 */
 .option-0 {
-  background-color: #818cf8;
+    background-color: #818cf8;
 }
+
 .option-0:hover {
-  background-color: #6366f1;
+    background-color: #6366f1;
 }
 
 .option-1 {
-  background-color: #a5b4fc;
+    background-color: #a5b4fc;
 }
+
 .option-1:hover {
-  background-color: #818cf8;
+    background-color: #818cf8;
 }
 
 .option-2 {
-  background-color: #d1d5db;
+    background-color: #d1d5db;
 }
+
 .option-2:hover {
-  background-color: #9ca3af;
+    background-color: #9ca3af;
 }
 
 .option-3 {
-  background-color: #93c5fd;
+    background-color: #93c5fd;
 }
+
 .option-3:hover {
-  background-color: #60a5fa;
+    background-color: #60a5fa;
 }
 
 .option-4 {
-  background-color: #60a5fa;
+    background-color: #60a5fa;
 }
+
 .option-4:hover {
-  background-color: #3b82f6;
+    background-color: #3b82f6;
 }
+
 /* 질문 index별 색상 추가 끝 */
 /*********** question-card 스타일 끝 ***********/
 
@@ -158,15 +164,18 @@ a:hover {
     color: #fff;
     border-color: #007bff;
 }
+
 /*********** 결과 후 링크 스타일 끝 ***********/
 
 /*********** 결과 div 스타일 시작 ***********/
 /* 기본 스타일 */
 .trait-bar-container {
     margin-bottom: 15px;
-    place-self: center;
     text-align: center;
     width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* 웹 너비 제한 */
@@ -185,20 +194,22 @@ a:hover {
 
 /* 내부 너비 */
 .trait-bar-inner {
+    flex-direction: column;
     width: 100%;
     align-items: center;
 }
+
 /*********** 결과 div 스타일 끝 ***********/
 
 /* 입장하기 이미지 */
 .entry-image-style {
-  cursor: pointer;
-  margin-top: 15px;
-  border-radius: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .entry-image-style:hover {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }

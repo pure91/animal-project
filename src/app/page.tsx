@@ -176,7 +176,7 @@ export default function Home() {
                         뒤로가기
                     </button>
 
-                    <button onClick={handleShowResult} style={{background: "darkorchid"}}>변신하기</button>
+                    <button onClick={handleShowResult} style={{background: "darkorchid"}}>결과보기</button>
                 </div>
             ) : (
                 <div>

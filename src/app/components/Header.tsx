@@ -14,7 +14,7 @@ export default function Header() {
             <h1>
                 <nav>
                     <Link href="/" onClick={handleClick} style={{textDecoration: 'none'}}>
-                        16 Animal Types
+                        동물로 보는 성격 유형 테스트
                     </Link>
                 </nav>
             </h1>
