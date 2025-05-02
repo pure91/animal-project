@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import QuestionCard from "@/app/components/QuestionCard";
 import questions from "@/app/data/questions";
+import Image from "next/image";
 
 /** 메인 페이지 */
 export default function Home() {
@@ -140,10 +141,10 @@ export default function Home() {
     // 최초 렌더링
     if (!started) {
         return (
-            <div style={{textAlign: "center", marginTop: "100px"}}>
-                <h1>🎇산중호걸이라 하는 호랑이의 생일잔치에 참여해보세요!🎇</h1>
-                <h3 style={{color: "firebrick"}}>단, 사람으로는 참석할 수 없으니 질문에 답하여 동물로 변신해야합니다!☺️</h3>
-                <button style={{ marginTop: "10px"}} onClick={handleStart}>입장하기</button>
+            <div style={{textAlign: "center", marginTop: "20px"}}>
+                <h1>🎇호랑이의 생일잔치에 참여해보세요!🎇</h1>
+                <h3 style={{color: "firebrick"}}>단, 사람으로는 참석할 수 없으니 질문에 답하여 동물로 변신해야 합니다!☺️</h3>
+                <Image src="/images/entry2.png" alt="입장이미지" width={300} height={400} onClick={handleStart} className="entry-image-style" />
             </div>
         );
     }
@@ -171,11 +172,11 @@ export default function Home() {
                             <p>{progress}%</p>
                         </div>
                     )}
-                    <button onClick={handleBack} style={{marginRight : "10px"}}>
+                    <button onClick={handleBack} style={{marginRight: "10px"}}>
                         뒤로가기
                     </button>
 
-                    <button onClick={handleShowResult} style={{ background : "darkorchid" }}>변신하기</button>
+                    <button onClick={handleShowResult} style={{background: "darkorchid"}}>변신하기</button>
                 </div>
             ) : (
                 <div>
@@ -187,7 +188,7 @@ export default function Home() {
                     <p>{currentQuestion + 1} / {questions.length}</p>
 
                     {currentQuestion > 0 && (
-                        <button onClick={handleBack} style={{marginTop: "20px"}}>
+                        <button onClick={handleBack}>
                             뒤로가기
                         </button>
                     )}
