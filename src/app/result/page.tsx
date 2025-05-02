@@ -96,18 +96,33 @@ function ResultContent() {
     // 링크 복사 핸들러
     const handleCopyLink = () => {
         const currentUrl = window.location.href;
-        navigator.clipboard.writeText(currentUrl).then(() => {
+
+        // 임시 textarea 요소 생성
+        const textarea = document.createElement('textarea');
+        textarea.value = currentUrl;
+        document.body.appendChild(textarea);
+
+        // 텍스트 선택
+        textarea.select();
+        textarea.setSelectionRange(0, 99999); // 모바일 선택 범위 설정
+
+        // 클립보드 복사
+        navigator.clipboard.writeText(textarea.value).then(() => {
             alert("복사 완료");
         }).catch((err) => {
             console.error("링크 복사 실패:", err);
+            alert("복사 실패");
         });
+
+        // textarea 요소 삭제
+        document.body.removeChild(textarea);
     };
 
     return (
         <div style={{display: "flex", justifyContent: "center"}}>
             <div style={{width: "675px", textAlign: "center"}}>
                 {type !== "HUMAN" ? <h1>🎉변신 성공!🎉</h1> : <h1>☠️변신 실패☠️</h1>}
-                <h2><b style={{color: "blueviolet"}}>{type}</b> 타입의⭐{selectedSubtype?.name}⭐</h2>
+                <h2><b style={{color: "blueviolet"}}>{type}</b> 타입의 ⭐{selectedSubtype?.name}⭐</h2>
                 <p style={{color: "gray"}}>{selectedSubtype?.description || "설명이 없습니다."}</p>
 
                 <TraitBar leftLabel="In" rightLabel="Ex" leftValue={userTraitsFull.In} rightValue={userTraitsFull.Ex}/>

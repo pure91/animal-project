@@ -142,7 +142,7 @@ export default function Home() {
     if (!started) {
         return (
             <div style={{textAlign: "center", marginTop: "20px"}}>
-                <h1>🎇호랑이의 생일잔치에 참여해보세요!🎇</h1>
+                <h1>🎉호랑이의 생일잔치에 참여해보세요!🎉</h1>
                 <h3 style={{color: "firebrick"}}>단, 사람으로는 참석할 수 없으니 질문에 답하여 동물로 변신해야 합니다!☺️</h3>
                 <Image src="/images/entry2.png" alt="입장이미지" width={300} height={400} onClick={handleStart} className="entry-image-style" />
             </div>

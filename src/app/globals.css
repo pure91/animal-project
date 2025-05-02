@@ -165,6 +165,7 @@ a:hover {
 .trait-bar-container {
     margin-bottom: 15px;
     place-self: center;
+    text-align: center;
     width: 100%;
 }
 
@@ -185,6 +186,7 @@ a:hover {
 /* 내부 너비 */
 .trait-bar-inner {
     width: 100%;
+    align-items: center;
 }
 /*********** 결과 div 스타일 끝 ***********/
 
