@@ -93,28 +93,22 @@ function ResultContent() {
         // })
     }
 
-    // 인스타그램 공유 핸들러
-    const handleInstagramShare = () => {
-        window.open(
-            `https://www.instagram.com/share?url=${encodeURIComponent(
-                window.location.href
-            )}`,
-            '_blank'
-        );
+    // 링크 복사 핸들러
+    const handleCopyLink = () => {
+        const currentUrl = window.location.href;
+        navigator.clipboard.writeText(currentUrl).then(() => {
+            alert("복사 완료");
+        }).catch((err) => {
+            console.error("링크 복사 실패:", err);
+        });
     };
 
     return (
         <div style={{display: "flex", justifyContent: "center"}}>
-            <div style={{width: "600px", textAlign: "center"}}>
-                <h2>당신은 <b style={{color: "blueviolet"}}>{type}</b> 타입인</h2>
-                <h1>⭐{selectedSubtype?.name}⭐으로 변신하였습니다.</h1>
+            <div style={{width: "650px", textAlign: "center"}}>
+                <h1>🎉변신 성공!🎉</h1>
+                <h2><b style={{color: "blueviolet"}}>{type}</b> 타입의⭐{selectedSubtype?.name}⭐</h2>
                 <p style={{color: "gray"}}>{selectedSubtype?.description || "설명이 없습니다."}</p>
-                {/*<Image*/}
-                {/*    src={`/image/${type.toLowerCase()}.png`}*/}
-                {/*    alt={type}*/}
-                {/*    style={{width: "200px", height: "200px", margin: "20px 0"}}*/}
-                {/*/>*/}
-
 
                 <TraitBar leftLabel="In" rightLabel="Ex" leftValue={userTraitsFull.In} rightValue={userTraitsFull.Ex}/>
                 <TraitBar leftLabel="Se" rightLabel="Nu" leftValue={userTraitsFull.Se} rightValue={userTraitsFull.Nu}/>
@@ -127,16 +121,16 @@ function ResultContent() {
                             <li key={idx}>{char}</li>
                         ))
                     ) : (
-                        <li>특성 정보가 없습니다.</li> // 특성이 없으면 기본 메시지 표시
+                        <li>특성 정보가 없습니다.</li>
                     )}
                 </ul>
 
-                {/* 카카오톡, 인스타그램 공유 버튼 */}
+                {/* 링크 복사, 카카오톡 공유 버튼 */}
+                <button onClick={handleCopyLink} className="share-btn link">
+                    링크 복사
+                </button>
                 <button onClick={handleKakaoShare} className="share-btn kakao">
                     카카오톡 공유
-                </button>
-                <button onClick={handleInstagramShare} className="share-btn instagram">
-                    인스타그램 공유
                 </button>
                 <Link href="/" className="home-link">
                     홈으로 돌아가기
