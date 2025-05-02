@@ -123,8 +123,8 @@ a:hover {
     background-color: #F7E600; /* 카카오톡 색상 */
 }
 
-.share-btn.instagram {
-    background-color: #E1306C; /* 인스타그램 색상 */
+.share-btn.link {
+    background-color: #43cb73; /* 링크복사 색상 */
 }
 
 .share-btn:hover {
@@ -135,8 +135,8 @@ a:hover {
     background-color: #ffcc00; /* 카카오톡 hover 색상 */
 }
 
-.share-btn.instagram:hover {
-    background-color: #f24c8a; /* 인스타그램 hover 색상 */
+.share-btn.link:hover {
+    background-color: #10af34; /* 링크복사 hover 색상 */
 }
 
 /* 홈으로 돌아가기 스타일 */
@@ -187,3 +187,16 @@ a:hover {
     width: 100%;
 }
 /*********** 결과 div 스타일 끝 ***********/
+
+/* 입장하기 이미지 */
+.entry-image-style {
+  cursor: pointer;
+  margin-top: 15px;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.entry-image-style:hover {
+  transform: scale(1.05);
+}
