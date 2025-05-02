@@ -41,7 +41,7 @@ function ResultContent() {
     const searchParams = useSearchParams();
     const type = searchParams.get("type") || "Unknown";
 
-    const animalData = animalTypes[type];
+    const animalData: AnimalData = animalTypes[type];
 
     // 모든 지표 값 추출
     const traitKeys: TraitKeys[] = ["In", "Ex", "Se", "Nu", "Em", "Lo", "St", "Fr"];
@@ -82,7 +82,7 @@ function ResultContent() {
         // window.Kakao.Link.sendDefault({
         //     objectType: "feed",
         //     content: {
-        //         title: `나의 MBTI는 ${type}`,
+        //         title: `나의 유형은 ${type}`,
         //         description: animalTypes[type as keyof typeof animalTypes],
         //         imageUrl: `/image/${type.toLowerCase()}.png`,
         //         link: {
@@ -122,7 +122,7 @@ function ResultContent() {
         <div style={{display: "flex", justifyContent: "center"}}>
             <div style={{width: "675px", textAlign: "center"}}>
                 {type !== "HUMAN" ? <h1>🎉변신 성공!🎉</h1> : <h1>☠️변신 실패☠️</h1>}
-                <h2><b style={{color: "blueviolet"}}>{type}</b> 타입의 ⭐{selectedSubtype?.name}⭐</h2>
+                <h2><b style={{color: "blueviolet"}}>{type}</b> 타입의 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
                 <p style={{color: "gray"}}>{selectedSubtype?.description || "설명이 없습니다."}</p>
 
                 <TraitBar leftLabel="In" rightLabel="Ex" leftValue={userTraitsFull.In} rightValue={userTraitsFull.Ex}/>

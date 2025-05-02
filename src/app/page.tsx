@@ -93,8 +93,8 @@ export default function Home() {
         }
     }
 
-    // mbti 유형 계산
-    const calculateMbti = () => {
+    // 유형 계산
+    const calculateType = () => {
         const totalScore = Object.values(scores).reduce((acc, val) => acc + val, 0);
         console.log("totalScore:", totalScore);
 
@@ -118,7 +118,7 @@ export default function Home() {
             setProgress((prev) => {
                 if (prev >= 100) {
                     clearInterval(interval); // 로딩이 완료되면 인터벌을 중지
-                    const mbti = calculateMbti();
+                    const pattern = calculateType();
                     const scoreParams = new URLSearchParams(
                         Object.entries(scores).reduce((acc, [key, value]) => {
                             acc[key] = value.toString();
@@ -128,14 +128,14 @@ export default function Home() {
 
                     // 렌더링 중 push() 사이드 이펙트 실행 문제로 setTimeout 추가 -> 푸시 지연
                     setTimeout(() => {
-                        router.push(`/result?type=${mbti}&${scoreParams}`);
+                        router.push(`/result?type=${pattern}&${scoreParams}`);
                     }, 0);
 
                     return 100;
                 }
                 return prev + 2; // 진행 상태 업데이트
             });
-        }, 40); // 40ms마다 진행 상태 업데이트 (일부러 느리게 증가)
+        }, 40); // 40ms 마다 진행 상태 업데이트 (일부러 느리게 증가)
     };
 
     // 최초 렌더링
@@ -144,7 +144,7 @@ export default function Home() {
             <div style={{textAlign: "center", marginTop: "20px"}}>
                 <h1>🎉호랑이의 생일잔치에 참여해보세요!🎉</h1>
                 <h3 style={{color: "firebrick"}}>단, 사람으로는 참석할 수 없으니 질문에 답하여 동물로 변신해야 합니다!☺️</h3>
-                <Image src="/images/entry2.png" alt="입장이미지" width={300} height={400} onClick={handleStart} className="entry-image-style" />
+                <Image src="/images/entry.png" alt="입장이미지" width={300} height={400} onClick={handleStart} className="entry-image-style" />
             </div>
         );
     }
