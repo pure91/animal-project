@@ -6,11 +6,12 @@ import {Suspense} from "react";
 import TraitBar from "@/app/components/TraitBar";
 import rawAnimalTypes from "@/app/data/animalTypes.json";
 import toast, {Toaster} from "react-hot-toast";
+import Image from "next/image";
 
 // 지표 타입 선언
 type TraitKeys = "In" | "Ex" | "Se" | "Nu" | "Em" | "Lo" | "St" | "Fr";
 
-// "ISFJ"와 같은 키 객체의 타입 선언
+// 키 객체의 타입 선언
 type AnimalData = {
     types: {
         1: Subtype[];
@@ -34,7 +35,7 @@ type Subtype = {
 };
 
 // 원본 json 데이터를 변수에 할당
-// 타입선언: Record는 객체의 키("ISFJ")와 밸류 타입(그 내부 객체들)을 정의하는 제네릭 유틸리티 타입
+// 타입선언: Record는 객체의 키와 밸류 타입(그 내부 객체들)을 정의하는 제네릭 유틸리티 타입
 const animalTypes: Record<string, AnimalData> = rawAnimalTypes;
 
 /** 결과 표시 페이지 */
@@ -42,7 +43,10 @@ function ResultContent() {
     const searchParams = useSearchParams();
     const type = searchParams.get("type") || "Unknown";
 
+    console.log("type:", type);
+
     const animalData: AnimalData = animalTypes[type];
+    console.log("animalData:", animalData);
 
     // 모든 지표 값 추출
     const traitKeys: TraitKeys[] = ["In", "Ex", "Se", "Nu", "Em", "Lo", "St", "Fr"];
@@ -104,12 +108,44 @@ function ResultContent() {
         });
     };
 
+    // 타입별 동물 이미지 매핑
+    const animalImages: Record<string, string> = {
+        InSeEmSt: "/images/hedgehog.png",
+        InSeLost: "/images/default.png",
+        InNuEmSt: "/images/default.png",
+        InNuLoSt: "/images/default.png",
+        InSeEmFr: "/images/default.png",
+        InSeLoFr: "/images/default.png",
+        InNuEmFr: "/images/default.png",
+        InNuLoFr: "/images/default.png",
+        ExSeEmSt: "/images/default.png",
+        ExSeLoSt: "/images/default.png",
+        ExNuEmSt: "/images/default.png",
+        ExNuLoSt: "/images/default.png",
+        ExSeEmFr: "/images/default.png",
+        ExSeLoFr: "/images/default.png",
+        ExNuEmFr: "/images/default.png",
+        ExNuLoFr: "/images/default.png",
+        HUMAN: "/images/default.png",
+    }
+
+    // 이미지 URL
+    const animalImageUrl = animalImages[type];
+    console.log("animalImageUrl:", animalImageUrl);
+
     return (
         <div style={{display: "flex", justifyContent: "center"}}>
-            <Toaster position="top-center" />
+            <Toaster position="top-center"/>
             <div style={{width: "100%", maxWidth: "675px", margin: "0 auto", padding: "0 16px", textAlign: "center"}}>
                 {type !== "HUMAN" ? <h1>🎉변신 성공!🎉</h1> : <h1>☠️변신 실패☠️</h1>}
                 <h2><b style={{color: "blueviolet"}}>{type}</b> 타입의 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
+                <Image
+                    src={animalImageUrl}
+                    alt={`${type}이미지`}
+                    width={250}
+                    height={250}
+                    style={{ margin: "20px auto" }}
+                />
                 <p style={{color: "gray"}}>{selectedSubtype?.description || "설명이 없습니다."}</p>
 
                 <TraitBar leftLabel="In" rightLabel="Ex" leftValue={userTraitsFull.In} rightValue={userTraitsFull.Ex}/>
