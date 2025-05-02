@@ -110,21 +110,21 @@ function ResultContent() {
 
     // 타입별 동물 이미지 매핑
     const animalImages: Record<string, string> = {
-        InSeEmSt: "/images/hedgehog.png",
-        InSeLost: "/images/default.png",
-        InNuEmSt: "/images/default.png",
-        InNuLoSt: "/images/default.png",
-        InSeEmFr: "/images/default.png",
+        InSeEmSt: "/images/hedgehog1.png",
+        InSeLost: "/images/turtle.png",
+        InNuEmSt: "/images/cat.png",
+        InNuLoSt: "/images/penguin.png",
+        InSeEmFr: "/images/rabbit.png",
         InSeLoFr: "/images/default.png",
-        InNuEmFr: "/images/default.png",
+        InNuEmFr: "/images/fox.png",
         InNuLoFr: "/images/default.png",
-        ExSeEmSt: "/images/default.png",
+        ExSeEmSt: "/images/dog.png",
         ExSeLoSt: "/images/default.png",
-        ExNuEmSt: "/images/default.png",
-        ExNuLoSt: "/images/default.png",
+        ExNuEmSt: "/images/lion.png",
+        ExNuLoSt: "/images/elephant.png",
         ExSeEmFr: "/images/default.png",
         ExSeLoFr: "/images/default.png",
-        ExNuEmFr: "/images/default.png",
+        ExNuEmFr: "/images/squirrel.png",
         ExNuLoFr: "/images/default.png",
         HUMAN: "/images/default.png",
     }
@@ -136,16 +136,23 @@ function ResultContent() {
     return (
         <div style={{display: "flex", justifyContent: "center"}}>
             <Toaster position="top-center"/>
-            <div style={{width: "100%", maxWidth: "675px", margin: "0 auto", padding: "0 16px", textAlign: "center"}}>
+            <div className="character-card">
                 {type !== "HUMAN" ? <h1>🎉변신 성공!🎉</h1> : <h1>☠️변신 실패☠️</h1>}
                 <h2><b style={{color: "blueviolet"}}>{type}</b> 타입의 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
-                <Image
-                    src={animalImageUrl}
-                    alt={`${type}이미지`}
-                    width={250}
-                    height={250}
-                    style={{ margin: "20px auto" }}
-                />
+                <div>
+                    <Image
+                        src="/images/hedgehog.png"
+                        alt={`${type}이미지`}
+                        width={200}
+                        height={200}
+                    />
+                    <Image
+                        src={animalImageUrl}
+                        alt={`${type}이미지`}
+                        width={200}
+                        height={200}
+                    />
+                </div>
                 <p style={{color: "gray"}}>{selectedSubtype?.description || "설명이 없습니다."}</p>
 
                 <TraitBar leftLabel="In" rightLabel="Ex" leftValue={userTraitsFull.In} rightValue={userTraitsFull.Ex}/>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
 body {
     margin: 0;
     padding: 0;
@@ -111,6 +113,58 @@ a:hover {
 /*********** question-card 스타일 끝 ***********/
 
 /*********** 결과 후 링크 스타일 시작 ***********/
+.character-card {
+    max-width: 675px;
+    margin: 40px auto;
+    padding: 10px 30px 30px 30px;
+    background: radial-gradient(circle, #f9f1ff 0%, #e0eaff 100%);
+    border-radius: 24px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    text-align: center;
+    font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
+    border: 4px solid #ba5df1;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 타입 표시 강조 */
+.character-card h2 b {
+    background: #dfe6e9;
+    padding: 4px 10px;
+    border-radius: 12px;
+    color: #6c5ce7;
+    border: 1px solid #b2bec3;
+    font-size: 16px;
+}
+
+/* 이미지 박스 주변 */
+.character-card img {
+    width: 200px;
+    height: auto;
+    margin: 10px;
+    border-radius: 16px;
+    border: 2px solid #dfe6e9;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+/* 특성 리스트 */
+.character-card ul {
+    background: #f1f2f6;
+    padding: 16px;
+    border-radius: 16px;
+    list-style-type: none;
+    border: 2px dashed #cfd3d6;
+}
+
+.character-card li::before {
+    content: "🎈 ";
+    margin-right: 5px;
+}
+
+.character-card li {
+    margin-bottom: 6px;
+}
+
 .share-btn {
     display: inline-block;
     padding: 10px 20px;
@@ -125,24 +179,24 @@ a:hover {
     margin: 10px;
 }
 
-.share-btn.kakao {
-    background-color: #F7E600; /* 카카오톡 색상 */
+.share-btn:hover {
+    transform: scale(1.05);
 }
 
 .share-btn.link {
     background-color: #43cb73; /* 링크복사 색상 */
 }
 
-.share-btn:hover {
-    transform: scale(1.05);
+.share-btn.link:hover {
+    background-color: #10af34; /* 링크복사 hover 색상 */
+}
+
+.share-btn.kakao {
+    background-color: rgba(244, 212, 48, 0.9); /* 카카오톡 색상 */
 }
 
 .share-btn.kakao:hover {
     background-color: #ffcc00; /* 카카오톡 hover 색상 */
-}
-
-.share-btn.link:hover {
-    background-color: #10af34; /* 링크복사 hover 색상 */
 }
 
 /* 홈으로 돌아가기 스타일 */
@@ -167,7 +221,7 @@ a:hover {
 
 /*********** 결과 후 링크 스타일 끝 ***********/
 
-/*********** 결과 div 스타일 시작 ***********/
+/*********** 결과 지표 bar 스타일 시작 ***********/
 /* 기본 스타일 */
 .trait-bar-container {
     margin-bottom: 15px;
@@ -181,7 +235,7 @@ a:hover {
 /* 웹 너비 제한 */
 @media (min-width: 768px) {
     .trait-bar-container {
-        width: 80%;
+        width: 90%;
     }
 }
 
