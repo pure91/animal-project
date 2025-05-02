@@ -7,7 +7,7 @@ import TraitBar from "@/app/components/TraitBar";
 import rawAnimalTypes from "@/app/data/animalTypes.json";
 
 // 지표 타입 선언
-type TraitKeys = "I" | "E" | "S" | "N" | "F" | "T" | "J" | "P";
+type TraitKeys = "In" | "Ex" | "Se" | "Nu" | "Em" | "Lo" | "St" | "Fr";
 
 // "ISFJ"와 같은 키 객체의 타입 선언
 type AnimalData = {
@@ -24,11 +24,12 @@ type Subtype = {
     name: string;
     description: string;
     traits: {
-        I: number;
-        S: number;
-        F: number;
-        J: number;
+        In: number;
+        Se: number;
+        Em: number;
+        St: number;
     };
+    characteristics: string[];
 };
 
 // 원본 json 데이터를 변수에 할당
@@ -43,7 +44,7 @@ function ResultContent() {
     const animalData = animalTypes[type];
 
     // 모든 지표 값 추출
-    const traitKeys: TraitKeys[] = ["I", "E", "S", "N", "F", "T", "J", "P"];
+    const traitKeys: TraitKeys[] = ["In", "Ex", "Se", "Nu", "Em", "Lo", "St", "Fr"];
     const userTraitsFull: Record<TraitKeys, number> = traitKeys.reduce((acc, key) => {
         acc[key] = Number(searchParams.get(key)) || 0;
         return acc;
@@ -51,20 +52,20 @@ function ResultContent() {
 
     // 하위 타입 결정 로직
     const determineSubtype = (
-        userTraits: { I: number; S: number; F: number; J: number },
+        userTraits: { In: number; Se: number; Em: number; St: number },
         subtypesByLevel: AnimalData["types"]
-    ): { name: string; description: string } | null => {
+    ): Subtype | null => {
         let bestMatch = null;
         let smallestDiff = Infinity;
 
         Object.values(subtypesByLevel).flat().forEach((sub) => {
-            const diff = ["I", "S", "F", "J"].reduce((acc, key) => {
+            const diff = ["In", "Se", "Em", "St"].reduce((acc, key) => {
                 return acc + Math.abs(userTraits[key as keyof typeof userTraits] - sub.traits[key as keyof typeof sub.traits]);
             }, 0);
 
             if (diff < smallestDiff) {
                 smallestDiff = diff;
-                bestMatch = {name: sub.name, description: sub.description};
+                bestMatch = sub;
             }
         });
 
@@ -72,7 +73,7 @@ function ResultContent() {
     };
     // 세부타입 결정
     const selectedSubtype = determineSubtype(
-        {I: userTraitsFull.I, S: userTraitsFull.S, F: userTraitsFull.F, J: userTraitsFull.J},
+        {In: userTraitsFull.In, Se: userTraitsFull.Se, Em: userTraitsFull.Em, St: userTraitsFull.St},
         animalData.types
     );
 
@@ -103,31 +104,44 @@ function ResultContent() {
     };
 
     return (
-        <div style={{textAlign: "center", marginTop: "20px"}}>
-            <h1>당신은 <b style={{color: "blueviolet"}}>{type}</b> 타입 </h1>
-            <h1>⭐ {selectedSubtype?.name || "알 수 없음"} ⭐</h1>
-            <p style={{color: "gray"}}><b style={{color: "gray"}}>특징 :</b> {selectedSubtype?.description || "설명이 없습니다."}</p>
-            {/*<Image*/}
-            {/*    src={`/image/${type.toLowerCase()}.png`}*/}
-            {/*    alt={type}*/}
-            {/*    style={{width: "200px", height: "200px", margin: "20px 0"}}*/}
-            {/*/>*/}
+        <div style={{display: "flex", justifyContent: "center"}}>
+            <div style={{width: "600px", textAlign: "center"}}>
+                <h2>당신은 <b style={{color: "blueviolet"}}>{type}</b> 타입인</h2>
+                <h1>⭐{selectedSubtype?.name}⭐으로 변신하였습니다.</h1>
+                <p style={{color: "gray"}}>{selectedSubtype?.description || "설명이 없습니다."}</p>
+                {/*<Image*/}
+                {/*    src={`/image/${type.toLowerCase()}.png`}*/}
+                {/*    alt={type}*/}
+                {/*    style={{width: "200px", height: "200px", margin: "20px 0"}}*/}
+                {/*/>*/}
 
-            <TraitBar leftLabel="I" rightLabel="E" leftValue={userTraitsFull.I} rightValue={userTraitsFull.E}/>
-            <TraitBar leftLabel="S" rightLabel="N" leftValue={userTraitsFull.S} rightValue={userTraitsFull.N}/>
-            <TraitBar leftLabel="F" rightLabel="T" leftValue={userTraitsFull.F} rightValue={userTraitsFull.T}/>
-            <TraitBar leftLabel="J" rightLabel="P" leftValue={userTraitsFull.J} rightValue={userTraitsFull.P}/>
 
-            {/* 카카오톡, 인스타그램 공유 버튼 */}
-            <button onClick={handleKakaoShare} className="share-btn kakao">
-                카카오톡 공유
-            </button>
-            <button onClick={handleInstagramShare} className="share-btn instagram">
-                인스타그램 공유
-            </button>
-            <Link href="/" className="home-link">
-                홈으로 돌아가기
-            </Link>
+                <TraitBar leftLabel="In" rightLabel="Ex" leftValue={userTraitsFull.In} rightValue={userTraitsFull.Ex}/>
+                <TraitBar leftLabel="Se" rightLabel="Nu" leftValue={userTraitsFull.Se} rightValue={userTraitsFull.Nu}/>
+                <TraitBar leftLabel="Em" rightLabel="Lo" leftValue={userTraitsFull.Em} rightValue={userTraitsFull.Lo}/>
+                <TraitBar leftLabel="St" rightLabel="Fr" leftValue={userTraitsFull.St} rightValue={userTraitsFull.Fr}/>
+
+                <ul style={{width: "80%", placeSelf: "center", textAlign: "left"}}>
+                    {selectedSubtype?.characteristics?.length ? (
+                        selectedSubtype.characteristics.map((char, idx) => (
+                            <li key={idx}>{char}</li>
+                        ))
+                    ) : (
+                        <li>특성 정보가 없습니다.</li> // 특성이 없으면 기본 메시지 표시
+                    )}
+                </ul>
+
+                {/* 카카오톡, 인스타그램 공유 버튼 */}
+                <button onClick={handleKakaoShare} className="share-btn kakao">
+                    카카오톡 공유
+                </button>
+                <button onClick={handleInstagramShare} className="share-btn instagram">
+                    인스타그램 공유
+                </button>
+                <Link href="/" className="home-link">
+                    홈으로 돌아가기
+                </Link>
+            </div>
         </div>
     )
 }
