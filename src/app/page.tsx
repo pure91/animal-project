@@ -16,9 +16,9 @@ export default function Home() {
 
     // 점수 계산
     const [scores, setScores] = useState<{
-        I: number; E: number; S: number; N: number; F: number; T: number; J: number; P: number;
+        In: number; Ex: number; Se: number; Nu: number; Em: number; Lo: number; St: number; Fr: number;
     }>({
-        I: 0, E: 0, S: 0, N: 0, F: 0, T: 0, J: 0, P: 0,
+        In: 0, Ex: 0, Se: 0, Nu: 0, Em: 0, Lo: 0, St: 0, Fr: 0,
     });
 
     const router = useRouter();
@@ -30,7 +30,7 @@ export default function Home() {
             setStarted(false);
             setCurrentQuestion(0);
             setAnswers([]);
-            setScores({I: 0, E: 0, S: 0, N: 0, F: 0, T: 0, J: 0, P: 0});
+            setScores({In: 0, Ex: 0, Se: 0, Nu: 0, Em: 0, Lo: 0, St: 0, Fr: 0});
         }
     }, [pathname]);
 
@@ -84,6 +84,11 @@ export default function Home() {
 
             // 이전 질문으로 돌아가기
             setCurrentQuestion(currentQuestion - 1);
+
+            if (showResult) {
+                setShowResult(false); // 결과 보기 전에도 뒤로가기 가능하도록
+                setCurrentQuestion(currentQuestion);
+            }
         }
     }
 
@@ -94,14 +99,14 @@ export default function Home() {
 
         // 모든 대답이 0이면, 특수 타입 반환
         if (totalScore === 0) {
-            return "SPECIAL";
+            return "HUMAN";
         }
 
         return [
-            scores.I >= scores.E ? "I" : "E",
-            scores.S >= scores.N ? "S" : "N",
-            scores.F >= scores.T ? "F" : "T",
-            scores.J >= scores.P ? "J" : "P",
+            scores.In >= scores.Ex ? "In" : "Ex",
+            scores.Se >= scores.Nu ? "Se" : "Nu",
+            scores.Em >= scores.Lo ? "Em" : "Lo",
+            scores.St >= scores.Fr ? "St" : "Fr",
         ].join("");
     };
 
@@ -136,9 +141,9 @@ export default function Home() {
     if (!started) {
         return (
             <div style={{textAlign: "center", marginTop: "100px"}}>
-                <h1>나의 동물 유형은?</h1>
-                <p>간단한 질문에 답하고 알아보세요!</p>
-                <button onClick={handleStart}>시작하기</button>
+                <h1>🎇산중호걸이라 하는 호랑이의 생일잔치에 참여해보세요!🎇</h1>
+                <h3 style={{color: "firebrick"}}>단, 사람으로는 참석할 수 없으니 질문에 답하여 동물로 변신해야합니다!☺️</h3>
+                <button style={{ marginTop: "10px"}} onClick={handleStart}>입장하기</button>
             </div>
         );
     }
@@ -148,7 +153,7 @@ export default function Home() {
             {showResult ? (
                 // 결과 보기 버튼
                 <div>
-                    <h2>결과를 준비하는 중...</h2>
+                    <h2>변신술 준비 중...</h2>
                     <h2>👇 PUSH 👇</h2>
                     {loading && (
                         <div>
@@ -166,7 +171,11 @@ export default function Home() {
                             <p>{progress}%</p>
                         </div>
                     )}
-                    <button onClick={handleShowResult}>결과보기</button>
+                    <button onClick={handleBack} style={{marginRight : "10px"}}>
+                        뒤로가기
+                    </button>
+
+                    <button onClick={handleShowResult} style={{ background : "darkorchid" }}>변신하기</button>
                 </div>
             ) : (
                 <div>
