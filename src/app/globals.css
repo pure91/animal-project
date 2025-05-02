@@ -163,7 +163,7 @@ a:hover {
 /*********** 결과 div 스타일 시작 ***********/
 /* 기본 스타일 */
 .trait-bar-container {
-    margin-bottom: 24px;
+    margin-bottom: 15px;
     place-self: center;
     width: 100%;
 }
@@ -171,14 +171,14 @@ a:hover {
 /* 웹 너비 제한 */
 @media (min-width: 768px) {
     .trait-bar-container {
-        width: 40%;
+        width: 80%;
     }
 }
 
-/* 모바일 너비 100% */
+/* 모바일 너비 90% */
 @media (max-width: 767px) {
     .trait-bar-container {
-        width: 100%;
+        width: 90%;
     }
 }
 
