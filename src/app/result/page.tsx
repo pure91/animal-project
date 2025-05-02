@@ -105,8 +105,8 @@ function ResultContent() {
 
     return (
         <div style={{display: "flex", justifyContent: "center"}}>
-            <div style={{width: "650px", textAlign: "center"}}>
-                <h1>🎉변신 성공!🎉</h1>
+            <div style={{width: "675px", textAlign: "center"}}>
+                {type !== "HUMAN" ? <h1>🎉변신 성공!🎉</h1> : <h1>☠️변신 실패☠️</h1>}
                 <h2><b style={{color: "blueviolet"}}>{type}</b> 타입의⭐{selectedSubtype?.name}⭐</h2>
                 <p style={{color: "gray"}}>{selectedSubtype?.description || "설명이 없습니다."}</p>
 
@@ -124,7 +124,6 @@ function ResultContent() {
                         <li>특성 정보가 없습니다.</li>
                     )}
                 </ul>
-
                 {/* 링크 복사, 카카오톡 공유 버튼 */}
                 <button onClick={handleCopyLink} className="share-btn link">
                     링크 복사
