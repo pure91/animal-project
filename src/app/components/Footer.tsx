@@ -4,7 +4,7 @@
 export default function Footer() {
     return (
         <footer>
-            <p>이 웹사이트는 MBTI®와 무관하며, 비공식 테스트로 결과는 단순 재미와 참고용입니다.😊</p>
+            <p>이 웹사이트는 MBTI®와 무관한 비공식 테스트입니다. 단순 재미로 즐겨주세요.😊</p>
         </footer>
     )
 }
