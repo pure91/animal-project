@@ -134,33 +134,33 @@ function ResultContent() {
     console.log("animalImageUrl:", animalImageUrl);
 
     return (
-        <div style={{display: "flex", justifyContent: "center"}}>
+        <div className="character-card-parent">
             <Toaster position="top-center"/>
             <div className="character-card">
-                {type !== "HUMAN" ? <h1>🎉변신 성공!🎉</h1> : <h1>☠️변신 실패☠️</h1>}
-                <h2><b style={{color: "blueviolet"}}>{type}</b> 타입의 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
+                {type !== "HUMAN" ? <h1>🎉변신 성공🎉</h1> : <h1>☠️변신 실패☠️</h1>}
+                <h2><b>{type}</b> 타입의 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
                 <div>
                     <Image
                         src="/images/hedgehog.png"
                         alt={`${type}이미지`}
-                        width={200}
-                        height={200}
+                        width={250}
+                        height={250}
                     />
                     <Image
                         src={animalImageUrl}
                         alt={`${type}이미지`}
-                        width={200}
-                        height={200}
+                        width={250}
+                        height={250}
                     />
                 </div>
-                <p style={{color: "gray"}}>{selectedSubtype?.description || "설명이 없습니다."}</p>
 
                 <TraitBar leftLabel="In" rightLabel="Ex" leftValue={userTraitsFull.In} rightValue={userTraitsFull.Ex}/>
                 <TraitBar leftLabel="Se" rightLabel="Nu" leftValue={userTraitsFull.Se} rightValue={userTraitsFull.Nu}/>
                 <TraitBar leftLabel="Em" rightLabel="Lo" leftValue={userTraitsFull.Em} rightValue={userTraitsFull.Lo}/>
                 <TraitBar leftLabel="St" rightLabel="Fr" leftValue={userTraitsFull.St} rightValue={userTraitsFull.Fr}/>
 
-                <ul style={{width: "80%", margin: "0 auto", textAlign: "left"}}>
+                <h3>👇 {selectedSubtype?.description || "설명이 없습니다."}의 특징</h3>
+                <ul>
                     {selectedSubtype?.characteristics?.length ? (
                         selectedSubtype.characteristics.map((char, idx) => (
                             <li key={idx}>{char}</li>

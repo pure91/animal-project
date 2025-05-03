@@ -144,39 +144,38 @@ export default function Home() {
             <div style={{textAlign: "center", marginTop: "20px"}}>
                 <h1>🎉호랑이의 생일잔치에 참여해보세요!🎉</h1>
                 <h3 style={{color: "firebrick"}}>단, 사람으로는 참석할 수 없으니 질문에 답하여 동물로 변신해야 합니다!☺️</h3>
-                <Image src="/images/entry.png" alt="입장이미지" width={300} height={400} onClick={handleStart} className="entry-image-style" />
+                <Image src="/images/entry.png" alt="입장이미지" width={300} height={400} onClick={handleStart}
+                       className="entry-image-style"/>
             </div>
         );
     }
 
     return (
-        <div style={{textAlign: "center"}}>
+        <div className="result-section">
             {showResult ? (
                 // 결과 보기 버튼
                 <div>
                     <h2>변신술 준비 중...</h2>
                     <h2>👇 PUSH 👇</h2>
                     {loading && (
-                        <div>
-                            <div style={{width: "100%", height: "20px", background: "#e0e0e0", borderRadius: "10px"}}>
+                        <div className="loading-wrapper">
+                            <div className="progress-container">
                                 <div
-                                    style={{
-                                        width: `${progress}%`,
-                                        height: "100%",
-                                        background: "#7e78dd",
-                                        borderRadius: "10px",
-                                        transition: "width 0.1s ease-out"
-                                    }}
+                                    className="progress-fill"
+                                    style={{width: `${progress}%`}}
                                 ></div>
                             </div>
                             <p>{progress}%</p>
                         </div>
                     )}
-                    <button onClick={handleBack} style={{marginRight: "10px"}}>
-                        뒤로가기
-                    </button>
-
-                    <button onClick={handleShowResult} style={{background: "darkorchid"}}>결과보기</button>
+                    <div>
+                        <button className="back-button" onClick={handleBack}>
+                            ⬅️ 뒤로가기
+                        </button>
+                        <button className="submit-button" onClick={handleShowResult}>
+                            결과보기
+                        </button>
+                    </div>
                 </div>
             ) : (
                 <div>
@@ -184,14 +183,11 @@ export default function Home() {
                         question={questions[currentQuestion].question}
                         options={questions[currentQuestion].options}
                         onSelect={handleSelect}
+                        current={currentQuestion + 1}
+                        total={questions.length}
+                        onBack={handleBack}
+                        showBackButton={currentQuestion > 0}
                     />
-                    <p>{currentQuestion + 1} / {questions.length}</p>
-
-                    {currentQuestion > 0 && (
-                        <button onClick={handleBack}>
-                            뒤로가기
-                        </button>
-                    )}
                 </div>
             )}
         </div>

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
 
+/*********** 공통 css 시작 ***********/
 body {
     margin: 0;
     padding: 0;
@@ -40,79 +41,168 @@ a {
 a:hover {
     text-decoration: underline;
 }
+/*********** 공통 css 끝 ***********/
+
+/*********** 입장하기 이미지 시작 ***********/
+.entry-image-style {
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.entry-image-style:hover {
+    transform: scale(1.05);
+}
+/*********** 입장하기 이미지 끝 ***********/
 
 /*********** question-card 스타일 시작 ***********/
 .question-card {
-    background-color: white;
-    border-radius: 16px;
-    padding: 15px 30px 30px 30px;
-    max-width: 500px;
-    margin: 20px auto;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
+    background: radial-gradient(circle at top left, #e0eaff, #f9f1ff);
+    border-radius: 24px;
+    padding: 30px 40px;
+    max-width: 600px;
+    margin: 30px auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
+    border: 4px solid #a78bfa;
+    position: relative;
 }
 
 .question-option {
     display: block;
     width: 100%;
     margin: 15px 0;
-    padding: 12px;
-    background-color: #6366f1; /* 보라색 계열 */
+    padding: 14px 20px;
+    font-size: 17px;
+    font-weight: bold;
     color: white;
+    background: linear-gradient(135deg, #7c3aed, #6366f1);
+    border-radius: 16px;
     border: none;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 500;
+    box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+}
+
+.question-option:hover {
+    transform: scale(1.03);
+    background: linear-gradient(135deg, #6d28d9, #4f46e5);
+}
+
+.progress-wrapper {
+    height: 12px;
+    width: 100%;
+    background-color: #e0e7ff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, #7e78dd, #6366f1);
+    transition: width 0.3s ease;
+}
+
+.question-index {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #6b7280;
+}
+
+.back-button {
+    background-color: #f3f4f6;
+    color: #333;
+    border: 1px solid #cbd5e1;
+    padding: 10px 16px;
+    border-radius: 12px;
+    margin-top: 10px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-    transition: all 0.25s ease-in-out;
+    transition: all 0.3s ease;
 }
 
-/* 질문 index별 색상 추가 시작 */
-.option-0 {
-    background-color: #818cf8;
+.back-button:hover {
+    background-color: #e5e7eb;
+    color: #111827;
 }
-
-.option-0:hover {
-    background-color: #6366f1;
-}
-
-.option-1 {
-    background-color: #a5b4fc;
-}
-
-.option-1:hover {
-    background-color: #818cf8;
-}
-
-.option-2 {
-    background-color: #d1d5db;
-}
-
-.option-2:hover {
-    background-color: #9ca3af;
-}
-
-.option-3 {
-    background-color: #93c5fd;
-}
-
-.option-3:hover {
-    background-color: #60a5fa;
-}
-
-.option-4 {
-    background-color: #60a5fa;
-}
-
-.option-4:hover {
-    background-color: #3b82f6;
-}
-
-/* 질문 index별 색상 추가 끝 */
 /*********** question-card 스타일 끝 ***********/
 
+/*********** 뒤로가기 or 결과보기 스타일 시작 ***********/
+.result-section {
+    text-align: center;
+    padding: 20px;
+}
+
+.loading-wrapper {
+    margin: 20px 0;
+}
+
+.progress-container {
+    width: 80%;
+    height: 20px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #7e78dd;
+    transition: width 0.2s ease-in-out;
+}
+
+/* 버튼 스타일 */
+.back-button, .submit-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+}
+
+/* 뒤로가기 버튼 */
+.back-button {
+    background-color: #f0f0f0;
+    color: #555;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(110, 72, 170, 0.3);
+}
+
+.back-button:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}
+
+/* 결과보기 버튼 */
+.submit-button {
+    background: linear-gradient(135deg, #9d50bb, #6e48aa);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(110, 72, 170, 0.3);
+    margin-left: 20px;
+}
+
+.submit-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(110, 72, 170, 0.4);
+}
+/*********** 뒤로가기 or 결과보기 스타일 끝 ***********/
+
 /*********** 결과 후 링크 스타일 시작 ***********/
+.character-card-parent {
+    display: flex;
+    justify-content: center;
+}
+
 .character-card {
     max-width: 675px;
     margin: 40px auto;
@@ -122,9 +212,19 @@ a:hover {
     box-shadow: 0 12px 25px rgba(0,0,0,0.2);
     text-align: center;
     font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
-    border: 4px solid #ba5df1;
+    border: 4px solid #6983da;
     position: relative;
     overflow: hidden;
+}
+
+/* 이미지 박스 주변 */
+.character-card img {
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+    border-radius: 16px;
+    border: 2px solid #dfe6e9;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 
 /* 타입 표시 강조 */
@@ -134,17 +234,11 @@ a:hover {
     border-radius: 12px;
     color: #6c5ce7;
     border: 1px solid #b2bec3;
-    font-size: 16px;
+    font-size: 18px;
 }
 
-/* 이미지 박스 주변 */
-.character-card img {
-    width: 200px;
-    height: auto;
-    margin: 10px;
-    border-radius: 16px;
-    border: 2px solid #dfe6e9;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+.character-card h3 {
+    text-align: left;
 }
 
 /* 특성 리스트 */
@@ -162,7 +256,7 @@ a:hover {
 }
 
 .character-card li {
-    margin-bottom: 6px;
+    text-align: left;
 }
 
 .share-btn {
@@ -235,14 +329,14 @@ a:hover {
 /* 웹 너비 제한 */
 @media (min-width: 768px) {
     .trait-bar-container {
-        width: 90%;
+        width: 100%;
     }
 }
 
-/* 모바일 너비 90% */
+/* 모바일 너비 100% */
 @media (max-width: 767px) {
     .trait-bar-container {
-        width: 90%;
+        width: 100%;
     }
 }
 
@@ -253,17 +347,26 @@ a:hover {
     align-items: center;
 }
 
+.trait-bar-inner-label {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.trait-bar {
+    display: flex;
+    height: 12px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.trait-bar-percentage-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 3px;
+}
+
 /*********** 결과 div 스타일 끝 ***********/
-
-/* 입장하기 이미지 */
-.entry-image-style {
-    cursor: pointer;
-    margin-top: 15px;
-    border-radius: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.entry-image-style:hover {
-    transform: scale(1.05);
-}

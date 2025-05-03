@@ -22,17 +22,11 @@ const TraitBar: React.FC<TraitBarProps> = ({
     return (
         <div className="trait-bar-container">
             <div className="trait-bar-inner">
-                <div style={{display: "flex", justifyContent: "space-between", fontWeight: 600, marginBottom: "4px"}}>
+                <div className="trait-bar-inner-label">
                     <span>{leftLabel}</span>
                     <span>{rightLabel}</span>
                 </div>
-                <div style={{
-                    display: "flex",
-                    height: "16px",
-                    borderRadius: "8px",
-                    overflow: "hidden",
-                    background: "#e5e7eb", // gray-200
-                }}>
+                <div className="trait-bar">
                     <div
                         style={{
                             width: `${leftPercent}%`,
@@ -48,13 +42,7 @@ const TraitBar: React.FC<TraitBarProps> = ({
                         }}
                     />
                 </div>
-                <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontSize: "12px",
-                    color: "#6b7280",
-                    marginTop: "4px",
-                }}>
+                <div className="trait-bar-percentage-text">
                     <span>{leftPercent.toFixed(1)}%</span>
                     <span>{rightPercent.toFixed(1)}%</span>
                 </div>
