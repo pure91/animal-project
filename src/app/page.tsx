@@ -12,6 +12,7 @@ export default function Home() {
     const [currentQuestion, setCurrentQuestion] = useState(0); //현재 질문
     const [answers, setAnswers] = useState<string[]>([]); // 답변 저장
     const [showResult, setShowResult] = useState(false); // 결과보기
+    const [backDisabled, setBackDisabled] = useState(false);
     const [loading, setLoading] = useState(false); // 로딩 상태
     const [progress, setProgress] = useState(0); // 로딩바의 진행 상태
 
@@ -113,6 +114,7 @@ export default function Home() {
 
     // 결과 보기
     const handleShowResult = () => {
+        setBackDisabled(true);
         setLoading(true); // 로딩 상태 시작
         const interval = setInterval(() => {
             setProgress((prev) => {
@@ -169,7 +171,7 @@ export default function Home() {
                         </div>
                     )}
                     <div>
-                        <button className="back-button" onClick={handleBack}>
+                        <button className="back-button" onClick={handleBack} disabled={backDisabled}>
                             ⬅️ 뒤로가기
                         </button>
                         <button className="submit-button" onClick={handleShowResult}>

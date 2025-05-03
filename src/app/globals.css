@@ -128,6 +128,19 @@ a:hover {
     background-color: #e5e7eb;
     color: #111827;
 }
+
+.back-button:disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    border-color: #d1d5db;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.back-button:hover:disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+}
 /*********** question-card 스타일 끝 ***********/
 
 /*********** 뒤로가기 or 결과보기 스타일 시작 ***********/
