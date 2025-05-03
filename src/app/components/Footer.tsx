@@ -1,6 +1,5 @@
 /** 공통 푸터 컴포넌트 */
 
-// 25.04.29 re-run 임시
 export default function Footer() {
     return (
         <footer>
