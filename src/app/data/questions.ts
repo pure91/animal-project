@@ -172,7 +172,7 @@ const questions: Question[] = [
         ]
     },
     {
-        question: "결정을 내릴 때 어떤 기준을 더 많이 따르나요?",
+        question: "결정을 내릴 때 어떤 기준을 많이 따르나요?",
         dimension: "F/T",
         options: [
             {text: "사람의 감정을 우선 시 한다", score: {Em: 2}},
