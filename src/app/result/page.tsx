@@ -177,7 +177,7 @@ function ResultContent() {
                     카카오톡 공유
                 </button>
                 <Link href="/" className="home-link">
-                    홈으로 돌아가기
+                    Home
                 </Link>
             </div>
         </div>
