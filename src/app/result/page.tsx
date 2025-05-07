@@ -138,20 +138,13 @@ function ResultContent() {
             <Toaster position="top-center"/>
             <div className="character-card">
                 {type !== "HUMAN" ? <h1>🎉변신 성공🎉</h1> : <h1>☠️변신 실패☠️</h1>}
-                <h2><b>{type}</b> 타입</h2>
-                <h2>⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
+                <h2><b>{type}</b> 타입 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
                 <div>
-                    <Image
-                        src="/images/hedgehog.png"
-                        alt={`${type}이미지`}
-                        width={250}
-                        height={250}
-                    />
                     <Image
                         src={animalImageUrl}
                         alt={`${type}이미지`}
-                        width={250}
-                        height={250}
+                        width={200}
+                        height={300}
                     />
                 </div>
 
