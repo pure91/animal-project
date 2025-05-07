@@ -43,7 +43,16 @@ a:hover {
 }
 /*********** 공통 css 끝 ***********/
 
-/*********** 입장하기 이미지 시작 ***********/
+/*********** 입장하기 화면***********/
+.start-page {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.start-page h3 {
+    color: firebrick;
+}
+
 .entry-image-style {
     cursor: pointer;
     margin-top: 15px;
@@ -55,7 +64,7 @@ a:hover {
 .entry-image-style:hover {
     transform: scale(1.05);
 }
-/*********** 입장하기 이미지 끝 ***********/
+/*********** 입장하기 화면 끝 ***********/
 
 /*********** question-card 스타일 시작 ***********/
 .question-card {
@@ -372,11 +381,11 @@ a:hover {
 
 /********** 모바일 화면 처리 시작 **********/
 @media (max-width: 768px) {
-    h1 {
+    .start-page h1 {
         font-size: 20px;
     }
 
-    h3 {
+    .start-page h3 {
         font-size: 12px;
     }
 
@@ -401,7 +410,7 @@ a:hover {
     }
 
     .question-option {
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .back-button, .submit-button {
@@ -429,6 +438,7 @@ a:hover {
     }
 
     .home-link {
+        margin: 5px;
         font-size: 12px;
     }
 }

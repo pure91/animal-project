@@ -138,7 +138,8 @@ function ResultContent() {
             <Toaster position="top-center"/>
             <div className="character-card">
                 {type !== "HUMAN" ? <h1>🎉변신 성공🎉</h1> : <h1>☠️변신 실패☠️</h1>}
-                <h2><b>{type}</b> 타입의 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
+                <h2><b>{type}</b> 타입</h2>
+                <h2>⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
                 <div>
                     <Image
                         src="/images/hedgehog.png"
@@ -159,7 +160,7 @@ function ResultContent() {
                 <TraitBar leftLabel="Em" rightLabel="Lo" leftValue={userTraitsFull.Em} rightValue={userTraitsFull.Lo}/>
                 <TraitBar leftLabel="St" rightLabel="Fr" leftValue={userTraitsFull.St} rightValue={userTraitsFull.Fr}/>
 
-                <h3>👇 {selectedSubtype?.description || "설명이 없습니다."}의 특징</h3>
+                <h3>👇 {selectedSubtype?.description || "설명이 없습니다."}</h3>
                 <ul>
                     {selectedSubtype?.characteristics?.length ? (
                         selectedSubtype.characteristics.map((char, idx) => (
