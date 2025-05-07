@@ -41,8 +41,8 @@ jobs:
             IMAGE="ghcr.io/${{ github.repository }}:latest"
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull $IMAGE
-            docker stop mbti || true && docker rm mbti || true
-            docker run -d --name mbti --network mbti-net \
+            docker stop animal || true && docker rm animal || true
+            docker run -d --name animal --network animal-net \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_USER=${{ secrets.DB_USER }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
