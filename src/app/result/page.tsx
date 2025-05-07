@@ -170,16 +170,17 @@ function ResultContent() {
                         <li>특성 정보가 없습니다.</li>
                     )}
                 </ul>
-                {/* 링크 복사, 카카오톡 공유 버튼 */}
-                <button onClick={handleCopyLink} className="share-btn link">
-                    링크 복사
-                </button>
-                <button onClick={handleKakaoShare} className="share-btn kakao">
-                    카카오톡 공유
-                </button>
-                <Link href="/" className="home-link">
-                    Home
-                </Link>
+                <div className="button-group">
+                    <button onClick={handleCopyLink} className="share-btn link">
+                        링크 복사
+                    </button>
+                    <button onClick={handleKakaoShare} className="share-btn kakao">
+                        카카오톡 공유
+                    </button>
+                    <Link href="/" className="home-link">
+                        Home
+                    </Link>
+                </div>
             </div>
         </div>
     )

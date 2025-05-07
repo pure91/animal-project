@@ -34,7 +34,6 @@ main {
 
 a {
     color: white;
-    margin: 0 10px;
     text-decoration: none;
 }
 
@@ -295,9 +294,16 @@ a:hover {
     text-align: left;
 }
 
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .share-btn {
     display: inline-block;
-    padding: 10px 20px;
     font-size: 16px;
     text-align: center;
     border: none;
@@ -306,11 +312,7 @@ a:hover {
     transition: all 0.3s;
     font-weight: bold;
     color: white;
-    margin: 10px;
-}
-
-.share-btn:hover {
-    transform: scale(1.05);
+    /*margin: 5px;*/
 }
 
 .share-btn.link {
@@ -326,12 +328,10 @@ a:hover {
 }
 
 .share-btn.kakao:hover {
-    background-color: #ffcc00; /* 카카오톡 hover 색상 */
+    background-color: #f3c50c; /* 카카오톡 hover 색상 */
 }
 
-/* 홈으로 돌아가기 스타일 */
 .home-link {
-    margin-top: 20px;
     display: inline-block;
     font-size: 16px;
     font-weight: bold;
