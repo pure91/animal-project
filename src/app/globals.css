@@ -339,20 +339,6 @@ a:hover {
     margin-right: auto;
 }
 
-/* 웹 너비 제한 */
-@media (min-width: 768px) {
-    .trait-bar-container {
-        width: 100%;
-    }
-}
-
-/* 모바일 너비 100% */
-@media (max-width: 767px) {
-    .trait-bar-container {
-        width: 100%;
-    }
-}
-
 /* 내부 너비 */
 .trait-bar-inner {
     flex-direction: column;
@@ -383,3 +369,67 @@ a:hover {
 }
 
 /*********** 결과 div 스타일 끝 ***********/
+
+/********** 모바일 화면 처리 시작 **********/
+@media (max-width: 768px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 12px;
+    }
+
+    p {
+        font-size: 12px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .entry-image-style {
+        margin-top: 30px;
+    }
+
+    .question-card {
+        padding: 15px;
+    }
+
+    .question-card h2{
+        font-size: 16px;
+    }
+
+    .question-option {
+        font-size: 12px;
+    }
+
+    .back-button, .submit-button {
+        padding : 10px;
+        font-size: 12px;
+        min-width: 100px;
+    }
+
+    .question-index {
+        font-size: 12px;
+    }
+
+    .character-card img {
+        width: 130px;
+        height: 130px;
+    }
+
+    li {
+        font-size: 12px;
+    }
+
+    .share-btn {
+        margin: 5px;
+        font-size: 12px;
+    }
+
+    .home-link {
+        font-size: 12px;
+    }
+}
+/********** 모바일 화면 처리 끝 **********/
