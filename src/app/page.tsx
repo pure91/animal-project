@@ -161,11 +161,14 @@ export default function Home() {
                     <h2>👇 PUSH 👇</h2>
                     {loading && (
                         <div className="loading-wrapper">
-                            <div className="progress-container">
-                                <div
-                                    className="progress-fill"
-                                    style={{width: `${progress}%`}}
-                                ></div>
+                            <div className="rotating-card-container">
+                                <Image
+                                    src="/images/hedgehog.png"
+                                    alt="물음표 카드"
+                                    width={200}
+                                    height={300}
+                                    className="rotating-card"
+                                />
                             </div>
                             <p>{progress}%</p>
                         </div>
