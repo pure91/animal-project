@@ -88,7 +88,7 @@ const questions: Question[] = [
             {text: "우산 챙겨야겠다!", score: {Se: 2}},
             {text: "신발 젖겠다… 불편하네", score: {Se: 1}},
             {text: "비? 뭐 어쩔", score: {}},
-            {text: "비 오는 날 감성… 집에서 플레이리스트 틀어야지", score: {Nu: 1}},
+            {text: "비 오는 감성… 집에서 플레이리스트 틀어야지", score: {Nu: 1}},
             {text: "비 오는 날에는 뭔가 운명적인 일이 생기더라", score: {Nu: 2}},
         ]
     },
