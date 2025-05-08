@@ -9,7 +9,7 @@ import toast, {Toaster} from "react-hot-toast";
 import Image from "next/image";
 
 // 지표 타입 선언
-type TraitKeys = "In" | "Ex" | "Se" | "Nu" | "Em" | "Lo" | "St" | "Fr";
+type TraitKeys = "W" | "X" | "A" | "I" | "F" | "T" | "S" | "U";
 
 // 키 객체의 타입 선언
 type AnimalData = {
@@ -26,10 +26,10 @@ type Subtype = {
     name: string;
     description: string;
     traits: {
-        In: number;
-        Se: number;
-        Em: number;
-        St: number;
+        W: number;
+        A: number;
+        F: number;
+        S: number;
     };
     characteristics: string[];
 };
@@ -49,7 +49,7 @@ function ResultContent() {
     console.log("animalData:", animalData);
 
     // 모든 지표 값 추출
-    const traitKeys: TraitKeys[] = ["In", "Ex", "Se", "Nu", "Em", "Lo", "St", "Fr"];
+    const traitKeys: TraitKeys[] = ["W", "X", "A", "I", "F", "T", "S", "U"];
     const userTraitsFull: Record<TraitKeys, number> = traitKeys.reduce((acc, key) => {
         acc[key] = Number(searchParams.get(key)) || 0;
         return acc;
@@ -57,14 +57,14 @@ function ResultContent() {
 
     // 하위 타입 결정 로직
     const determineSubtype = (
-        userTraits: { In: number; Se: number; Em: number; St: number },
+        userTraits: { W: number; A: number; F: number; S: number },
         subtypesByLevel: AnimalData["types"]
     ): Subtype | null => {
         let bestMatch = null;
         let smallestDiff = Infinity;
 
         Object.values(subtypesByLevel).flat().forEach((sub) => {
-            const diff = ["In", "Se", "Em", "St"].reduce((acc, key) => {
+            const diff = ["W", "A", "F", "S"].reduce((acc, key) => {
                 return acc + Math.abs(userTraits[key as keyof typeof userTraits] - sub.traits[key as keyof typeof sub.traits]);
             }, 0);
 
@@ -78,7 +78,7 @@ function ResultContent() {
     };
     // 세부타입 결정
     const selectedSubtype = determineSubtype(
-        {In: userTraitsFull.In, Se: userTraitsFull.Se, Em: userTraitsFull.Em, St: userTraitsFull.St},
+        {W: userTraitsFull.W, A: userTraitsFull.A, F: userTraitsFull.F, S: userTraitsFull.S},
         animalData.types
     );
 
@@ -148,22 +148,22 @@ function ResultContent() {
 
     // 타입별 동물 이미지 매핑
     const animalImages: Record<string, string> = {
-        InSeEmSt: "/images/hedgehog.png",
-        InSeLost: "/images/turtle.png",
-        InNuEmSt: "/images/cat.png",
-        InNuLoSt: "/images/penguin.png",
-        InSeEmFr: "/images/rabbit.png",
-        InSeLoFr: "/images/default.png",
-        InNuEmFr: "/images/fox.png",
-        InNuLoFr: "/images/default.png",
-        ExSeEmSt: "/images/dog.png",
-        ExSeLoSt: "/images/default.png",
-        ExNuEmSt: "/images/lion.png",
-        ExNuLoSt: "/images/elephant.png",
-        ExSeEmFr: "/images/default.png",
-        ExSeLoFr: "/images/default.png",
-        ExNuEmFr: "/images/squirrel.png",
-        ExNuLoFr: "/images/default.png",
+        WAFS: "/images/hedgehog.png",
+        WATS: "/images/turtle.png",
+        WIFS: "/images/cat.png",
+        WITS: "/images/penguin.png",
+        WAFU: "/images/rabbit.png",
+        WATU: "/images/default.png",
+        WIFU: "/images/fox.png",
+        WITU: "/images/default.png",
+        XSFS: "/images/dog.png",
+        XATS: "/images/default.png",
+        XIFS: "/images/lion.png",
+        XITS: "/images/elephant.png",
+        XAFU: "/images/default.png",
+        XATU: "/images/default.png",
+        XIFU: "/images/squirrel.png",
+        XITU: "/images/default.png",
         HUMAN: "/images/default.png",
     }
 
@@ -186,10 +186,10 @@ function ResultContent() {
                     />
                 </div>
 
-                <TraitBar leftLabel="In" rightLabel="Ex" leftValue={userTraitsFull.In} rightValue={userTraitsFull.Ex}/>
-                <TraitBar leftLabel="Se" rightLabel="Nu" leftValue={userTraitsFull.Se} rightValue={userTraitsFull.Nu}/>
-                <TraitBar leftLabel="Em" rightLabel="Lo" leftValue={userTraitsFull.Em} rightValue={userTraitsFull.Lo}/>
-                <TraitBar leftLabel="St" rightLabel="Fr" leftValue={userTraitsFull.St} rightValue={userTraitsFull.Fr}/>
+                <TraitBar leftLabel="W" rightLabel="X" leftValue={userTraitsFull.W} rightValue={userTraitsFull.X}/>
+                <TraitBar leftLabel="A" rightLabel="I" leftValue={userTraitsFull.A} rightValue={userTraitsFull.I}/>
+                <TraitBar leftLabel="F" rightLabel="T" leftValue={userTraitsFull.F} rightValue={userTraitsFull.T}/>
+                <TraitBar leftLabel="S" rightLabel="U" leftValue={userTraitsFull.S} rightValue={userTraitsFull.U}/>
 
                 <h3>👇 {selectedSubtype?.description || "설명이 없습니다."}</h3>
                 <ul>

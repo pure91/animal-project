@@ -18,9 +18,9 @@ export default function Home() {
 
     // 점수 계산
     const [scores, setScores] = useState<{
-        In: number; Ex: number; Se: number; Nu: number; Em: number; Lo: number; St: number; Fr: number;
+        W: number; X: number; A: number; I: number; F: number; T: number; S: number; U: number;
     }>({
-        In: 0, Ex: 0, Se: 0, Nu: 0, Em: 0, Lo: 0, St: 0, Fr: 0,
+        W: 0, X: 0, A: 0, I: 0, F: 0, T: 0, S: 0, U: 0,
     });
 
     const router = useRouter();
@@ -32,7 +32,7 @@ export default function Home() {
             setStarted(false);
             setCurrentQuestion(0);
             setAnswers([]);
-            setScores({In: 0, Ex: 0, Se: 0, Nu: 0, Em: 0, Lo: 0, St: 0, Fr: 0});
+            setScores({W: 0, X: 0, A: 0, I: 0, F: 0, T: 0, S: 0, U: 0});
         }
     }, [pathname]);
 
@@ -105,10 +105,10 @@ export default function Home() {
         }
 
         return [
-            scores.In >= scores.Ex ? "In" : "Ex",
-            scores.Se >= scores.Nu ? "Se" : "Nu",
-            scores.Em >= scores.Lo ? "Em" : "Lo",
-            scores.St >= scores.Fr ? "St" : "Fr",
+            scores.W >= scores.X ? "W" : "X",
+            scores.A >= scores.I ? "A" : "I",
+            scores.F >= scores.T ? "F" : "T",
+            scores.S >= scores.U ? "S" : "U",
         ].join("");
     };
 
