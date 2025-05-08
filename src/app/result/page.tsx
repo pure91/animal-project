@@ -142,15 +142,7 @@ function ResultContent() {
                 toast.error("공유 실패😿");
             }
         } else {
-            toast(
-                "공유 기능이 지원되지 않는 환경입니다.<br />링크 복사 또는 카카오톡으로 공유해 주세요.",
-                {
-                    duration: 3000,
-                    style: {
-                        whiteSpace: "pre-line", // 텍스트 내 줄바꿈 허용
-                    },
-                }
-            );
+            toast("공유 기능이 지원되지 않는 환경이에요.\n링크를 복사하거나, 카카오톡으로 공유해 주세요.");
         }
     }
 
