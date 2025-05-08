@@ -164,7 +164,7 @@ function ResultContent() {
         XATU: "/images/default.png",
         XIFU: "/images/squirrel.png",
         XITU: "/images/default.png",
-        HUMAN: "/images/default.png",
+        HUMAN: "/images/human.png",
     }
 
     // 이미지 URL
