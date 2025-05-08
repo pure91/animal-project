@@ -315,20 +315,28 @@ a:hover {
     /*margin: 5px;*/
 }
 
+.share-btn.native {
+    background-color: #4a90e2;
+}
+
+.share-btn.native:hover {
+    background-color: #357ae8;
+}
+
 .share-btn.link {
-    background-color: #43cb73; /* 링크복사 색상 */
+    background-color: #43cb73;
 }
 
 .share-btn.link:hover {
-    background-color: #10af34; /* 링크복사 hover 색상 */
+    background-color: #10af34;
 }
 
 .share-btn.kakao {
-    background-color: rgba(244, 212, 48, 0.9); /* 카카오톡 색상 */
+    background-color: rgba(244, 212, 48, 0.9);
 }
 
 .share-btn.kakao:hover {
-    background-color: #f3c50c; /* 카카오톡 hover 색상 */
+    background-color: #f3c50c;
 }
 
 .home-link {

@@ -2,7 +2,7 @@
 
 import {useSearchParams} from "next/navigation";
 import Link from "next/link";
-import {Suspense} from "react";
+import {Suspense, useEffect} from "react";
 import TraitBar from "@/app/components/TraitBar";
 import rawAnimalTypes from "@/app/data/animalTypes.json";
 import toast, {Toaster} from "react-hot-toast";
@@ -82,21 +82,6 @@ function ResultContent() {
         animalData.types
     );
 
-    // 카카오톡 공유 핸들러
-    const handleKakaoShare = () => {
-        // window.Kakao.Link.sendDefault({
-        //     objectType: "feed",
-        //     content: {
-        //         title: `나의 유형은 ${type}`,
-        //         description: animalTypes[type as keyof typeof animalTypes],
-        //         imageUrl: `/image/${type.toLowerCase()}.png`,
-        //         link: {
-        //             mobileWebUrl: window.location.href,
-        //             webUrl: window.location.href,
-        //         }
-        //     }
-        // })
-    }
 
     // 링크 복사 핸들러
     const handleCopyLink = () => {
@@ -107,6 +92,53 @@ function ResultContent() {
             toast.error("복사에 실패했습니다.");
         });
     };
+
+    // 키 초기화
+    useEffect(() => {
+        if (typeof window !== "undefined" && window.Kakao) {
+            if (!window.Kakao.isInitialized()) {
+                window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_SHARE);
+            }
+        }
+    }, []);
+
+    // 카카오톡 공유 핸들러
+    const handleKakaoShare = () => {
+        if (window.Kakao) {
+            window.Kakao.Link.sendDefault({
+                objectType: "feed",
+                content: {
+                    title: `나의 유형은 ${type}`,
+                    description: `⭐${selectedSubtype?.name}⭐`,
+                    imageUrl: `${animalImageUrl}`,
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href,
+                    },
+                },
+            });
+        } else {
+            toast.error("카카오톡 공유 기능을 사용할 수 없습니다.");
+        }
+    };
+
+    // 모바일 공유 기능
+    const handleWebShare = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: `나의 유형은${type}`,
+                    text: `⭐${selectedSubtype?.name}⭐`,
+                    url: window.location.href,
+                });
+            } catch (err) {
+                console.error(err);
+                toast.error("공유 실패😿");
+            }
+        } else {
+            toast("공유 기능이 지원되지 않는 환경이에요. 링크를 복사하거나, 카카오톡으로 공유해 주세요.");
+        }
+    }
 
     // 타입별 동물 이미지 매핑
     const animalImages: Record<string, string> = {
@@ -164,6 +196,9 @@ function ResultContent() {
                     )}
                 </ul>
                 <div className="button-group">
+                    <button onClick={handleWebShare} className="share-btn native">
+                        모바일 공유
+                    </button>
                     <button onClick={handleCopyLink} className="share-btn link">
                         링크 복사
                     </button>
