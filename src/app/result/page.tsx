@@ -95,9 +95,15 @@ function ResultContent() {
 
     // 키 초기화
     useEffect(() => {
+        const kakaoAppKey = process.env.NEXT_PUBLIC_KAKAO_SHARE;
+        if (!kakaoAppKey) {
+            console.error("Kakao key is missing.");
+            return;
+        }
+
         if (typeof window !== "undefined" && window.Kakao) {
             if (!window.Kakao.isInitialized()) {
-                window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_SHARE);
+                window.Kakao.init(kakaoAppKey);
             }
         }
     }, []);
@@ -142,7 +148,7 @@ function ResultContent() {
 
     // 타입별 동물 이미지 매핑
     const animalImages: Record<string, string> = {
-        InSeEmSt: "/images/hedgehog1.png",
+        InSeEmSt: "/images/hedgehog.png",
         InSeLost: "/images/turtle.png",
         InNuEmSt: "/images/cat.png",
         InNuLoSt: "/images/penguin.png",

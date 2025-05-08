@@ -163,7 +163,7 @@ export default function Home() {
                         <div className="loading-wrapper">
                             <div className="rotating-card-container">
                                 <Image
-                                    src="/images/hedgehog.png"
+                                    src="/images/animalAll.png"
                                     alt="물음표 카드"
                                     width={200}
                                     height={300}
