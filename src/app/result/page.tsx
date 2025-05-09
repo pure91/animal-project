@@ -152,18 +152,18 @@ function ResultContent() {
         WATS: "/images/turtle.png",
         WIFS: "/images/cat.png",
         WITS: "/images/penguin.png",
-        WAFU: "/images/rabbit.png",
-        WATU: "/images/default.png",
+        WAFU: "/images/b_rabbit.png",
+        WATU: "/images/b_badger.png",
         WIFU: "/images/fox.png",
-        WITU: "/images/default.png",
-        XSFS: "/images/dog.png",
-        XATS: "/images/default.png",
+        WITU: "/images/b_weasel.png",
+        XAFS: "/images/b_dog.png",
+        XATS: "/images/b_wolf.png",
         XIFS: "/images/lion.png",
         XITS: "/images/elephant.png",
-        XAFU: "/images/default.png",
-        XATU: "/images/default.png",
+        XAFU: "/images/b_dolphin.png",
+        XATU: "/images/b_shark.png",
         XIFU: "/images/squirrel.png",
-        XITU: "/images/default.png",
+        XITU: "/images/b_octopus.png",
         HUMAN: "/images/human.png",
     }
 
@@ -191,7 +191,7 @@ function ResultContent() {
                 <TraitBar leftLabel="F" rightLabel="T" leftValue={userTraitsFull.F} rightValue={userTraitsFull.T}/>
                 <TraitBar leftLabel="S" rightLabel="U" leftValue={userTraitsFull.S} rightValue={userTraitsFull.U}/>
 
-                <h3>👇 {selectedSubtype?.description || "설명이 없습니다."}</h3>
+                <h3>{selectedSubtype?.description || "설명이 없습니다."}</h3>
                 <ul>
                     {selectedSubtype?.characteristics?.length ? (
                         selectedSubtype.characteristics.map((char, idx) => (
