@@ -93,15 +93,12 @@ function ResultContent() {
     // 로컬용 키 초기화
     useEffect(() => {
         const kakaoAppKey = process.env.NEXT_PUBLIC_KAKAO_SHARE;
-        console.log("kakaoAppKey:",kakaoAppKey);
-        console.log("process.env.NEXT_PUBLIC_KAKAO_SHARE:",process.env.NEXT_PUBLIC_KAKAO_SHARE);
         if (!kakaoAppKey) {
             console.error("app key missing");
             return;
         }
 
         if (typeof window !== "undefined" && window.Kakao) {
-            console.log("window.Kakao exist", window.Kakao.isInitialized());
             if (!window.Kakao.isInitialized()) {
                 window.Kakao.init(kakaoAppKey);
                 console.log("app key init complete");
