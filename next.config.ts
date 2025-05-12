@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
         ],
     },
     env: {
-        NEXT_PUBLIC_KAKAO_SHARE: process.env.NEXT_PUBLIC_KAKAO_SHARE,
+        NEXT_PUBLIC_KAKAO_SHARE: process.env.NEXT_PUBLIC_KAKAO_SHARE || '',
     },
 };
 
