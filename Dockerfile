@@ -2,6 +2,12 @@
 FROM node:18-alpine AS build
 WORKDIR /app
 
+# 빌드 시 환경 변수를 받기 위한 ARG 추가
+ARG NEXT_PUBLIC_KAKAO_SHARE
+
+# 환경 변수 설정
+ENV NEXT_PUBLIC_KAKAO_SHARE=${NEXT_PUBLIC_KAKAO_SHARE}
+
 COPY package*.json ./
 RUN npm ci --no-optional
 COPY . .

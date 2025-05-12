@@ -16,9 +16,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # ---------- (1) Docker 이미지 빌드, 노 캐시로 예전 이미지 확실히 삭제 ----------
+      # ---------- (1) Docker 이미지 빌드, 노 캐시로 기존 이미지 확실히 삭제, arg 명령어로 환경변수 전달 ----------
       - name: Build Docker image
-        run: docker build --no-cache -t $IMAGE_NAME .
+        run: |
+          docker build --no-cache \
+            --build-arg NEXT_PUBLIC_KAKAO_SHARE=${{ secrets.NEXT_PUBLIC_KAKAO_SHARE }} \
+            -t $IMAGE_NAME .
 
       # ---------- (2) GHCR에 로그인 ----------
       - name: Login to GHCR

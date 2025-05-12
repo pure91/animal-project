@@ -107,7 +107,7 @@ function ResultContent() {
                 console.log("app key init complete");
             }
         }
-    }, [process.env.NEXT_PUBLIC_KAKAO_SHARE]);
+    }, []);
 
     // 카카오톡 공유 핸들러
     const handleKakaoShare = () => {
