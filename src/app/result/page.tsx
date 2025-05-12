@@ -43,10 +43,7 @@ function ResultContent() {
     const searchParams = useSearchParams();
     const type = searchParams.get("type") || "Unknown";
 
-    console.log("type:", type);
-
     const animalData: AnimalData = animalTypes[type];
-    console.log("animalData:", animalData);
 
     // 모든 지표 값 추출
     const traitKeys: TraitKeys[] = ["W", "X", "A", "I", "F", "T", "S", "U"];
@@ -148,18 +145,18 @@ function ResultContent() {
 
     // 타입별 동물 이미지 매핑
     const animalImages: Record<string, string> = {
-        WAFS: "/images/hedgehog.png",
+        WAFS: "/images/b_hedgehog.png",
         WATS: "/images/turtle.png",
-        WIFS: "/images/cat.png",
+        WIFS: "/images/b_cat.png",
         WITS: "/images/penguin.png",
         WAFU: "/images/b_rabbit.png",
         WATU: "/images/b_badger.png",
-        WIFU: "/images/fox.png",
+        WIFU: "/images/b_fox.png",
         WITU: "/images/b_weasel.png",
         XAFS: "/images/b_dog.png",
         XATS: "/images/b_wolf.png",
-        XIFS: "/images/lion.png",
-        XITS: "/images/elephant.png",
+        XIFS: "/images/b_lion.png",
+        XITS: "/images/b_elephant.png",
         XAFU: "/images/b_dolphin.png",
         XATU: "/images/b_shark.png",
         XIFU: "/images/squirrel.png",
@@ -169,7 +166,6 @@ function ResultContent() {
 
     // 이미지 URL
     const animalImageUrl = animalImages[type];
-    console.log("animalImageUrl:", animalImageUrl);
 
     return (
         <div className="character-card-parent">
