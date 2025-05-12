@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
             },
         ],
     },
+    env: {
+        NEXT_PUBLIC_KAKAO_SHARE: process.env.NEXT_PUBLIC_KAKAO_SHARE,
+    },
 };
 
 export default nextConfig;
