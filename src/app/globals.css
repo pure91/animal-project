@@ -120,35 +120,6 @@ a:hover {
     margin-bottom: 16px;
     color: #6b7280;
 }
-
-.back-button {
-    background-color: #f3f4f6;
-    color: #333;
-    border: 1px solid #cbd5e1;
-    padding: 10px 16px;
-    border-radius: 12px;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.back-button:hover {
-    background-color: #e5e7eb;
-    color: #111827;
-}
-
-.back-button:disabled {
-    background-color: #e5e7eb;
-    color: #9ca3af;
-    border-color: #d1d5db;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.back-button:hover:disabled {
-    background-color: #e5e7eb;
-    color: #9ca3af;
-}
 /*********** question-card 스타일 끝 ***********/
 
 /*********** 뒤로가기 or 결과보기 스타일 시작 ***********/
@@ -210,11 +181,20 @@ a:hover {
     color: #555;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(110, 72, 170, 0.3);
+    margin-top: 10px;
 }
 
 .back-button:hover {
-    background-color: #ddd;
     transform: scale(1.05);
+}
+
+.back-button:disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    border-color: #d1d5db;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
 }
 
 /* 결과보기 버튼 */
@@ -228,7 +208,14 @@ a:hover {
 
 .submit-button:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 14px rgba(110, 72, 170, 0.4);
+}
+
+.submit-button:disabled {
+    background: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
 }
 /*********** 뒤로가기 or 결과보기 스타일 끝 ***********/
 
