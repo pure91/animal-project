@@ -90,24 +90,26 @@ function ResultContent() {
         });
     };
 
-    // 키 초기화
+    // 로컬용 키 초기화
     useEffect(() => {
         const kakaoAppKey = process.env.NEXT_PUBLIC_KAKAO_SHARE;
         if (!kakaoAppKey) {
-            console.error("Kakao key is missing.");
+            console.error("local key missing");
             return;
         }
 
         if (typeof window !== "undefined" && window.Kakao) {
+            console.log("window.Kakao 있음", window.Kakao.isInitialized());
             if (!window.Kakao.isInitialized()) {
                 window.Kakao.init(kakaoAppKey);
+                console.log("카카오 초기화 완료");
             }
         }
     }, []);
 
     // 카카오톡 공유 핸들러
     const handleKakaoShare = () => {
-        if (window.Kakao) {
+        if (window.Kakao && window.Kakao.isInitialized()) {
             window.Kakao.Link.sendDefault({
                 objectType: "feed",
                 content: {
@@ -127,19 +129,26 @@ function ResultContent() {
 
     // 모바일 공유 기능
     const handleWebShare = async () => {
-        if (navigator.share) {
+        if (!navigator.share) {
+            toast("공유 기능이 지원되지 않는 환경이에요.\n링크를 복사하거나, 카카오톡으로 공유해 주세요.");
+        } else {
             try {
                 await navigator.share({
                     title: `나의 유형은${type}`,
                     text: `⭐${selectedSubtype?.name}⭐`,
                     url: window.location.href,
                 });
-            } catch (err) {
-                console.error(err);
-                toast.error("공유 실패😿");
+            } catch (err: unknown) {
+                // 단순 공유 취소는 에러를 출력 X
+                if (err instanceof Error) {
+                    if (err.name !== 'AbortError') {
+                        console.error(err);
+                        toast.error("공유 실패😿");
+                    }
+                } else {
+                    console.error("에러 발생:", err);
+                }
             }
-        } else {
-            toast("공유 기능이 지원되지 않는 환경이에요.\n링크를 복사하거나, 카카오톡으로 공유해 주세요.");
         }
     }
 
