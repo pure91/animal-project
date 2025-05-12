@@ -1,6 +1,9 @@
 # ---- build stage ----
 FROM node:18-alpine AS build
 WORKDIR /app
+
+# .env.local도 빌드 단계에 추가 2025.05.12
+COPY .env.local .env.local
 COPY package*.json ./
 RUN npm ci --no-optional
 COPY . .
