@@ -114,7 +114,7 @@ function ResultContent() {
                 content: {
                     title: `나의 유형은 ${type}`,
                     description: `⭐${selectedSubtype?.name}⭐`,
-                    imageUrl: `${animalImageUrl}`,
+                    imageUrl: animalImageUrlForKakao,
                     link: {
                         mobileWebUrl: window.location.href,
                         webUrl: window.location.href,
@@ -173,7 +173,9 @@ function ResultContent() {
     }
 
     // 이미지 URL
-    const animalImageUrl = animalImages[type];
+    const animalImageUrl = animalImages[type]; // 내부 이미지 (상대 경로)
+    const animalImageUrlForKakao = `${window.location.origin}${animalImageUrl}`; // 카카오 공유용 (절대 경로)
+    console.log("animalImageUrlForKakao:",animalImageUrlForKakao);
 
     return (
         <div className="character-card-parent">
