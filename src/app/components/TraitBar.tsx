@@ -6,6 +6,8 @@ interface TraitBarProps {
     rightLabel: string;
     leftValue: number;
     rightValue: number;
+    description?: string;
+    element?: string;     // "성향적요소"
 }
 
 const TraitBar: React.FC<TraitBarProps> = ({
@@ -13,39 +15,51 @@ const TraitBar: React.FC<TraitBarProps> = ({
                                                rightLabel,
                                                leftValue,
                                                rightValue,
+                                               description,
+                                               element
                                            }) => {
 
     const total = leftValue + rightValue;
     const leftPercent = total === 0 ? 50 : (leftValue / total) * 100;
     const rightPercent = 100 - leftPercent;
 
+    const [leftDesc, rightDesc] = description ? description.split(",") : ["", ""];
+
     return (
-        <div className="trait-bar-container">
+        <div className="trait-bar-wrapper">
+            {(leftDesc || rightDesc || element) && (
+                <div className="trait-bar-description">
+                    <span className="desc-left">{leftDesc}</span>
+                    {element && <span className="desc-element">{element}</span>}
+                    <span className="desc-right">{rightDesc}</span>
+                </div>
+            )}
+
             <div className="trait-bar-inner">
-                <div className="trait-bar-inner-label">
-                    <span>{leftLabel}</span>
-                    <span>{rightLabel}</span>
+                <div className="trait-bar-left" style={{width: `${leftPercent}%`}}>
+                    {leftPercent > 0 && (
+                        <span className="bar-text bar-text-left">
+                            <strong>{leftLabel}</strong><span>{leftPercent.toFixed(1)}%</span>
+                        </span>
+                    )}
                 </div>
-                <div className="trait-bar">
-                    <div
-                        style={{
-                            width: `${leftPercent}%`,
-                            background: "linear-gradient(to right, #60a5fa, #3b82f6)",
-                            transition: "width 0.6s ease",
-                        }}
-                    />
-                    <div
-                        style={{
-                            width: `${rightPercent}%`,
-                            background: "linear-gradient(to right, #fca5a5, #f87171)",
-                            transition: "width 0.6s ease",
-                        }}
-                    />
+                <div className="trait-bar-right" style={{width: `${rightPercent}%`}}>
+                    {rightPercent > 0 && (
+                        <span className="bar-text bar-text-right">
+                            <span>{rightPercent.toFixed(1)}%</span><strong>{rightLabel}</strong>
+                        </span>
+                    )}
                 </div>
-                <div className="trait-bar-percentage-text">
-                    <span>{leftPercent.toFixed(1)}%</span>
-                    <span>{rightPercent.toFixed(1)}%</span>
-                </div>
+                {leftPercent === 0 && (
+                    <span className="bar-text bar-text-left fixed-text">
+                        <strong>{leftLabel}</strong> 0.0%
+                    </span>
+                )}
+                {rightPercent === 0 && (
+                    <span className="bar-text bar-text-right fixed-text">
+                        0.0% <strong>{rightLabel}</strong>
+                    </span>
+                )}
             </div>
         </div>
     );

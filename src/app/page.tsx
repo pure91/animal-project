@@ -44,7 +44,6 @@ export default function Home() {
     const handleSelect = (selectedScore: { [key: string]: number }) => {
         // 답변 저장
         setAnswers((prev) => [...prev, JSON.stringify(selectedScore)]);
-        console.log("selectedScore:", JSON.stringify(selectedScore));
 
         // 점수 업데이트
         setScores((prev) => {

@@ -94,7 +94,7 @@ function ResultContent() {
     useEffect(() => {
         const kakaoAppKey = process.env.NEXT_PUBLIC_KAKAO_SHARE;
         if (!kakaoAppKey) {
-            console.error("app key missing");
+            console.log("app key missing");
             return;
         }
 
@@ -175,14 +175,13 @@ function ResultContent() {
     // 이미지 URL
     const animalImageUrl = animalImages[type]; // 내부 이미지 (상대 경로)
     const animalImageUrlForKakao = `${window.location.origin}${animalImageUrl}`; // 카카오 공유용 (절대 경로)
-    console.log("animalImageUrlForKakao:",animalImageUrlForKakao);
 
     return (
         <div className="character-card-parent">
             <Toaster position="top-center"/>
             <div className="character-card">
                 {type !== "HUMAN" ? <h1>🎉변신 성공🎉</h1> : <h1>☠️변신 실패☠️</h1>}
-                <h2><b>{type}</b> 타입 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
+                <h2>⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
                 <div>
                     <Image
                         src={animalImageUrl}
@@ -192,11 +191,13 @@ function ResultContent() {
                     />
                 </div>
 
-                <TraitBar leftLabel="W" rightLabel="X" leftValue={userTraitsFull.W} rightValue={userTraitsFull.X}/>
-                <TraitBar leftLabel="A" rightLabel="I" leftValue={userTraitsFull.A} rightValue={userTraitsFull.I}/>
-                <TraitBar leftLabel="F" rightLabel="T" leftValue={userTraitsFull.F} rightValue={userTraitsFull.T}/>
-                <TraitBar leftLabel="S" rightLabel="U" leftValue={userTraitsFull.S} rightValue={userTraitsFull.U}/>
-
+                <div className="trait-bar-container">
+                    <p className="trait-type-label">{type}</p>
+                    <TraitBar description="내성적인,외향적인" element="에너지" leftLabel="W" rightLabel="X" leftValue={userTraitsFull.W} rightValue={userTraitsFull.X}/>
+                    <TraitBar description="감각적인,직관적인" element="인식" leftLabel="A" rightLabel="I" leftValue={userTraitsFull.A} rightValue={userTraitsFull.I}/>
+                    <TraitBar description="감성적인,이성적인" element="의사결정" leftLabel="F" rightLabel="T" leftValue={userTraitsFull.F} rightValue={userTraitsFull.T}/>
+                    <TraitBar description="계획적인,자유로운" element="라이프" leftLabel="S" rightLabel="U" leftValue={userTraitsFull.S} rightValue={userTraitsFull.U}/>
+                </div>
                 <h3>{selectedSubtype?.description || "설명이 없습니다."}</h3>
                 <ul>
                     {selectedSubtype?.characteristics?.length ? (
