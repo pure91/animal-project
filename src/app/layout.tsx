@@ -16,10 +16,15 @@ export default function RootLayout({children}: { children: ReactNode }) {
         <html>
         <head>
             {/* Google AdSense */}
-            <Script async
-                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3666035347659822"
-                    crossOrigin="anonymous"></Script>
-            <meta name="google-adsense-account" content="ca-pub-3666035347659822"/>
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3666035347659822"
+                crossOrigin="anonymous"
+            />
+            <meta
+                name="google-adsense-account"
+                content="ca-pub-3666035347659822"
+            />
         </head>
         <body>
         {/* Kakao Share */}
