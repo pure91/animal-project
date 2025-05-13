@@ -7,7 +7,7 @@ interface TraitBarProps {
     leftValue: number;
     rightValue: number;
     description?: string;
-    element?: string;     // "성향적요소"
+    element?: string;
 }
 
 const TraitBar: React.FC<TraitBarProps> = ({
@@ -27,13 +27,11 @@ const TraitBar: React.FC<TraitBarProps> = ({
 
     return (
         <div className="trait-bar-wrapper">
-            {(leftDesc || rightDesc || element) && (
-                <div className="trait-bar-description">
-                    <span className="desc-left">{leftDesc}</span>
-                    {element && <span className="desc-element">{element}</span>}
-                    <span className="desc-right">{rightDesc}</span>
-                </div>
-            )}
+            <div className="trait-bar-description">
+                <span className="desc-left">{leftDesc}</span>
+                <span className="desc-element">{element}</span>
+                <span className="desc-right">{rightDesc}</span>
+            </div>
 
             <div className="trait-bar-inner">
                 <div className="trait-bar-left" style={{width: `${leftPercent}%`}}>

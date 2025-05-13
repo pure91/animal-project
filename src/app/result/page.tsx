@@ -133,8 +133,8 @@ function ResultContent() {
         } else {
             try {
                 await navigator.share({
-                    title: `나의 유형은${type}`,
-                    text: `⭐${selectedSubtype?.name}⭐`,
+                    title: `나의 유형은 ${type}`,
+                    text: `⭐ ${selectedSubtype?.name} ⭐`,
                     url: window.location.href,
                 });
             } catch (err: unknown) {
@@ -180,8 +180,8 @@ function ResultContent() {
         <div className="character-card-parent">
             <Toaster position="top-center"/>
             <div className="character-card">
-                {type !== "HUMAN" ? <h1>🎉변신 성공🎉</h1> : <h1>☠️변신 실패☠️</h1>}
-                <h2>⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
+                {type !== "HUMAN" ? <h1>🎉 변신 성공 🎉</h1> : <h1>☠️ 변신 실패 ☠️</h1>}
+                <h2>⭐ {selectedSubtype?.name || "알 수 없음"} ⭐</h2>
                 <div>
                     <Image
                         src={animalImageUrl}
