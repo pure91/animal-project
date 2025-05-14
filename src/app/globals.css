@@ -40,6 +40,7 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
 /*********** 공통 css 끝 ***********/
 
 /*********** 입장하기 화면***********/
@@ -63,6 +64,7 @@ a:hover {
 .entry-image-style:hover {
     transform: scale(1.05);
 }
+
 /*********** 입장하기 화면 끝 ***********/
 
 /*********** question-card 스타일 시작 ***********/
@@ -120,6 +122,7 @@ a:hover {
     margin-bottom: 16px;
     color: #6b7280;
 }
+
 /*********** question-card 스타일 끝 ***********/
 
 /*********** 뒤로가기 or 결과보기 스타일 시작 ***********/
@@ -147,7 +150,7 @@ a:hover {
     animation: spin 1.5s linear infinite, sparkle 3s ease-in-out infinite;
     transform-style: preserve-3d;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3),
-                0 0 30px rgba(255, 255, 255, 0.2);
+    0 0 30px rgba(255, 255, 255, 0.2);
     border-radius: 12px;
 }
 
@@ -217,6 +220,7 @@ a:hover {
     opacity: 0.6;
     transform: none;
 }
+
 /*********** 뒤로가기 or 결과보기 스타일 끝 ***********/
 
 /*********** 결과 후 링크 스타일 시작 ***********/
@@ -229,7 +233,7 @@ a:hover {
     padding: 10px 30px 30px 30px;
     background: radial-gradient(circle, #f9f1ff 0%, #e0eaff 100%);
     border-radius: 24px;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
     text-align: center;
     font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
     position: relative;
@@ -245,7 +249,7 @@ a:hover {
     margin-bottom: 10px;
     border-radius: 16px;
     border: 2px solid #dfe6e9;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .character-card h3 {
@@ -271,11 +275,11 @@ a:hover {
 }
 
 .button-group {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .share-btn {
@@ -332,6 +336,7 @@ a:hover {
     color: #fff;
     border-color: #007bff;
 }
+
 /*********** 결과 후 링크 스타일 끝 ***********/
 
 /*********** 결과 지표 bar 스타일 시작 ***********/
@@ -443,7 +448,35 @@ a:hover {
     font-size: 12px;
     right: 5px;
 }
+
 /*********** 결과 div 스타일 끝 ***********/
+
+/********** 스피너 시작 **********/
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #7e78dd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/********** 스피너 끝 **********/
 
 /********** 모바일 화면 처리 시작 **********/
 @media (max-width: 768px) {
@@ -471,7 +504,7 @@ a:hover {
         padding: 15px;
     }
 
-    .question-card h2{
+    .question-card h2 {
         font-size: 14px;
     }
 
@@ -480,7 +513,7 @@ a:hover {
     }
 
     .back-button, .submit-button {
-        padding : 10px;
+        padding: 10px;
         font-size: 12px;
         min-width: 100px;
     }
@@ -494,7 +527,7 @@ a:hover {
         height: 100%;
     }
 
-    .trait-bar-description{
+    .trait-bar-description {
         font-size: 13px;
     }
 
@@ -514,4 +547,5 @@ a:hover {
         font-size: 11px;
     }
 }
+
 /********** 모바일 화면 처리 끝 **********/
