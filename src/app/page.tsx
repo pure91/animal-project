@@ -48,7 +48,7 @@ export default function Home() {
     }, []);
 
     const fetchParticipantCount = async () => {
-        setLoading(true);
+        setInitLoading(true);
         try {
             const res = await fetch("/api/participants/count");
             const data = await res.json();
@@ -72,15 +72,16 @@ export default function Home() {
 
     // 질문 시작 + 참여자 수 증가
     const handleStart = async () => {
+        setStarted(true);
         // 중복 클릭 방지
         if (isClicked) return;
         setIsClicked(true);
+
         try {
             await fetch("/api/participants/add", {
                 method: "POST",
             });
             fetchParticipantCount();
-            setStarted(true);
         } catch (error) {
             console.error("add fail", error);
         }

@@ -147,7 +147,7 @@ a:hover {
     width: 200px;
     height: 300px;
     transform: rotateY(0deg) rotateZ(-20deg);
-    animation: spin 1.5s linear infinite, sparkle 3s ease-in-out infinite;
+    animation: spin-card 1.5s linear infinite, sparkle 3s ease-in-out infinite;
     transform-style: preserve-3d;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3),
     0 0 30px rgba(255, 255, 255, 0.2);
@@ -155,7 +155,7 @@ a:hover {
 }
 
 /* 회전 애니메이션 */
-@keyframes spin {
+@keyframes spin-card {
     0% {
         transform: rotateY(0deg) rotateZ(-20deg);
     }
@@ -239,6 +239,7 @@ a:hover {
     font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
     position: relative;
     overflow: hidden;
+    max-width: 550px;
 }
 
 /* 이미지 박스 주변 */
@@ -264,6 +265,7 @@ a:hover {
     border-radius: 16px;
     list-style-type: none;
     border: 2px dashed #cfd3d6;
+    max-width: 550px;
 }
 
 .character-card li::before {
@@ -277,7 +279,7 @@ a:hover {
 
 .button-group {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -293,7 +295,6 @@ a:hover {
     transition: all 0.3s;
     font-weight: bold;
     color: white;
-    /*margin: 5px;*/
 }
 
 .share-btn.native {
@@ -393,7 +394,7 @@ a:hover {
 /* 각 bar container */
 .trait-bar-inner {
     display: flex;
-    height: 30px;
+    height: 28px;
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 10px;
@@ -425,6 +426,7 @@ a:hover {
     white-space: nowrap;
     pointer-events: none;
     font-size: 13px;
+    z-index: 1;
 }
 
 /* label 텍스트*/
@@ -467,10 +469,10 @@ a:hover {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    animation: spin 1s linear infinite;
+    animation: spin-spinner 1s linear infinite;
 }
 
-@keyframes spin {
+@keyframes spin-spinner {
     0% {
         transform: rotate(0deg);
     }
@@ -541,12 +543,16 @@ a:hover {
         font-size: 11px;
     }
 
+    .button-group {
+        gap: 7px;
+    }
+
     .share-btn {
-        font-size: 11px;
+        font-size: 8px;
     }
 
     .home-link {
-        font-size: 11px;
+        font-size: 8px;
     }
 }
 
