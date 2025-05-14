@@ -5,15 +5,21 @@ import {usePathname, useRouter} from "next/navigation";
 import QuestionCard from "@/app/components/QuestionCard";
 import questions from "@/app/data/questions";
 import Image from "next/image";
+import Spinner from "@/app/components/Spinner";
 
 /** 메인 페이지 */
 export default function Home() {
+    const [initLoading, setInitLoading] = useState(true); // 최초 페이지 로딩 상태
+    const [isClicked, setIsClicked] = useState(false);
     const [started, setStarted] = useState(false); // 시작하기
-    const [currentQuestion, setCurrentQuestion] = useState(0); //현재 질문
+    const [participantCount, setParticipantCount] = useState<number | 0>(0); // 참여자 수
+
+    const [currentQuestion, setCurrentQuestion] = useState(0); // 현재 질문
     const [answers, setAnswers] = useState<string[]>([]); // 답변 저장
+
     const [showResult, setShowResult] = useState(false); // 결과보기
-    const [loading, setLoading] = useState(false); // 로딩 상태
-    const [progress, setProgress] = useState(0); // 로딩바의 진행 상태
+    const [loading, setLoading] = useState(false); // 결과 로딩 상태
+    const [progress, setProgress] = useState(0); // 결과 로딩바 상태
 
     // 점수 계산
     const [scores, setScores] = useState<{
@@ -35,9 +41,62 @@ export default function Home() {
         }
     }, [pathname]);
 
-    // 질문 시작
-    const handleStart = () => {
-        setStarted(true);
+
+    // 참여자 수 조회
+    useEffect(() => {
+        fetchParticipantCount();
+    }, []);
+
+    const fetchParticipantCount = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch("/api/participants/count");
+            const data = await res.json();
+            console.log("data:", data);
+            setParticipantCount(data.count);
+        } catch (error) {
+            console.error("error:", error);
+        } finally {
+            setInitLoading(false);
+        }
+    };
+
+    // 페이지 최상단 로딩
+    if (initLoading) {
+        return (
+            <div className="loading-container">
+                <Spinner/>
+            </div>
+        );
+    }
+
+    // 질문 시작 + 참여자 수 증가
+    const handleStart = async () => {
+        // 중복 클릭 방지
+        if (isClicked) return;
+        setIsClicked(true);
+        try {
+            await fetch("/api/participants/add", {
+                method: "POST",
+            });
+            fetchParticipantCount();
+            setStarted(true);
+        } catch (error) {
+            console.error("add fail", error);
+        }
+    };
+
+    // 최초 렌더링
+    if (!started) {
+        return (
+            <div className="start-page">
+                <h1>🎉 호랑이의 생일잔치에 참여해보세요 🎉</h1>
+                <h3>단, 사람으로는 참석할 수 없으니 질문에 답하여 동물로 변신해야 합니다!</h3>
+                <Image src="/images/entry.png" alt="입장이미지" width={300} height={400} onClick={handleStart}
+                       className="entry-image-style"/>
+                <p>전체 참여 횟수 : {participantCount.toLocaleString()}회</p>
+            </div>
+        )
     }
 
     // 사용자가 선택한 값
@@ -135,18 +194,6 @@ export default function Home() {
             });
         }, 40); // 40ms 마다 진행 상태 업데이트 (일부러 느리게 증가)
     };
-
-    // 최초 렌더링
-    if (!started) {
-        return (
-            <div className="start-page">
-                <h1>🎉호랑이의 생일잔치에 참여해보세요!🎉</h1>
-                <h3>단, 사람으로는 참석할 수 없으니 질문에 답하여 동물로 변신해야 합니다☺️</h3>
-                <Image src="/images/entry.png" alt="입장이미지" width={300} height={400} onClick={handleStart}
-                       className="entry-image-style"/>
-            </div>
-        );
-    }
 
     return (
         <div className="result-section">
