@@ -16,10 +16,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # ---------- (1) Docker 이미지 빌드, 노 캐시로 기존 이미지 확실히 삭제, arg 명령어로 환경변수 전달 ----------
+      # ---------- (1) Docker 이미지 빌드, arg 명령어로 환경변수 전달 ----------
       - name: Build Docker image
         run: |
-          docker build --no-cache \
+          docker build \
             --build-arg NEXT_PUBLIC_KAKAO_SHARE=${{ secrets.NEXT_PUBLIC_KAKAO_SHARE }} \
             -t $IMAGE_NAME .
 
@@ -54,9 +54,3 @@ jobs:
               -p 3000:3000 --restart=always $IMAGE
             docker image prune -f
           EOF
-
-      # ---------- (5) 최신 이미지가 실행되었는지 확인 ----------
-      - name: Verify Docker image version
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22 \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker ps && docker images"
