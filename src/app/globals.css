@@ -261,7 +261,7 @@ a:hover {
 /* 특성 리스트 */
 .character-card ul {
     background: #f1f2f6;
-    padding: 16px;
+    padding: 12px;
     border-radius: 16px;
     list-style-type: none;
     border: 2px dashed #cfd3d6;
@@ -270,7 +270,7 @@ a:hover {
 
 .character-card li::before {
     content: "🎈 ";
-    margin-right: 5px;
+    margin-right: 4px;
 }
 
 .character-card li {
@@ -545,14 +545,18 @@ a:hover {
 
     .button-group {
         gap: 7px;
+        flex-wrap: nowrap;
     }
 
     .share-btn {
-        font-size: 8px;
+        font-size: 12px;
+        padding: 10px 13px 10px 13px;
+        white-space: pre;
     }
 
     .home-link {
-        font-size: 8px;
+        font-size: 12px;
+        padding: 10px 13px 10px 13px;
     }
 }
 
