@@ -1,5 +1,5 @@
 import {NextResponse} from "next/server";
-import {addParticipant} from "@/lib/db";
+import {addParticipant} from "@/lib/participants";
 
 /** 참여자 add */
 export async function POST() {

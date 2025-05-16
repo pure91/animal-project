@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server';
-import {getCount} from "@/lib/db";
+import {getCount} from "@/lib/participants";
 
 /** 참여자 수 count */
 export async function GET() {
