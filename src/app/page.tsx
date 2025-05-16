@@ -6,6 +6,34 @@ import QuestionCard from "@/app/components/QuestionCard";
 import questions from "@/app/data/questions";
 import Image from "next/image";
 import Spinner from "@/app/components/Spinner";
+import rawAnimalTypes from '@/app/data/animalTypes.json';
+
+// AnimalData의 내부 레벨 타입 선언
+type Subtype = {
+    name: string;
+    description: string;
+    traits: {
+        W: number;
+        A: number;
+        F: number;
+        S: number;
+    };
+    characteristics: string[];
+};
+
+// 키 객체의 타입 선언
+type AnimalData = {
+    types: {
+        1: Subtype[];
+        2: Subtype[];
+        3: Subtype[];
+        4: Subtype[];
+    };
+};
+
+// 원본 json 데이터를 변수에 할당
+// 타입선언: Record는 객체의 키와 밸류 타입(그 내부 객체들)을 정의하는 제네릭 유틸리티 타입
+const animalTypes: Record<string, AnimalData> = rawAnimalTypes;
 
 /** 메인 페이지 */
 export default function Home() {
@@ -19,7 +47,6 @@ export default function Home() {
 
     const [showResult, setShowResult] = useState(false); // 결과보기
     const [loading, setLoading] = useState(false); // 결과 로딩 상태
-    const [progress, setProgress] = useState(0); // 결과 로딩바 상태
 
     // 점수 계산
     const [scores, setScores] = useState<{
@@ -50,7 +77,7 @@ export default function Home() {
     const fetchParticipantCount = async () => {
         setInitLoading(true);
         try {
-            const res = await fetch("/api/participants/count");
+            const res = await fetch("/api/participants/get");
             const data = await res.json();
             console.log("data:", data);
             setParticipantCount(data.count);
@@ -169,31 +196,67 @@ export default function Home() {
         ].join("");
     };
 
+    // 하위 타입 level 결정 로직
+    const determineLevel = (
+        userTraits: { W: number; A: number; F: number; S: number },
+        data: AnimalData
+    ): number => {
+        let minDiff = Infinity;
+        let bestLevel = 1;
+
+        for (const levelStr in data.types) {
+            const level = parseInt(levelStr);
+            const subtypes = data.types[level as keyof typeof data.types];
+            for (const subtype of subtypes) {
+                const diff = ['W', 'A', 'F', 'S'].reduce(
+                    (acc, key) => acc + Math.abs(userTraits[key as keyof typeof userTraits] - subtype.traits[key as keyof typeof subtype.traits]), 0
+                );
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    bestLevel = level;
+                }
+            }
+        }
+
+        return bestLevel;
+    };
+
     // 결과 보기
     const handleShowResult = () => {
         setLoading(true);
-        const interval = setInterval(() => {
-            setProgress((prev) => {
-                if (prev >= 100) {
-                    clearInterval(interval); // 로딩이 완료되면 인터벌을 중지
-                    const pattern = calculateType();
-                    const scoreParams = new URLSearchParams(
-                        Object.entries(scores).reduce((acc, [key, value]) => {
-                            acc[key] = value.toString();
-                            return acc;
-                        }, {} as Record<string, string>)
-                    ).toString();
 
-                    // 렌더링 중 push() 사이드 이펙트 실행 문제로 setTimeout 추가 -> 푸시 지연
-                    setTimeout(() => {
-                        router.push(`/result?type=${pattern}&${scoreParams}`);
-                    }, 0);
+        const type = calculateType();
+        const {W, A, F, S} = scores;
+        const traitSubset = {W, A, F, S};
+        const animalData = animalTypes[type];
+        let level = 1;
 
-                    return 100;
-                }
-                return prev + 2; // 진행 상태 업데이트
-            });
-        }, 40); // 40ms 마다 진행 상태 업데이트 (일부러 느리게 증가)
+        if (animalData) {
+            level = determineLevel(traitSubset, animalData);
+        }
+
+        // 사용자 결과 DB 저장
+        fetch("/api/stats/result/add", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({type, level}),
+        }).catch((err) => {
+            console.error("결과 저장 실패:", err);
+        })
+
+        // 최종 전달 파라미터
+        const finalParameter = new URLSearchParams(
+            Object.entries(scores).reduce((acc, [key, value]) => {
+                acc[key] = value.toString();
+                return acc;
+            }, {} as Record<string, string>)
+        );
+
+        finalParameter.append("type", type);
+        finalParameter.append("level", String(level));
+
+        router.push(`/result?${finalParameter.toString()}`);
+
     };
 
     return (
@@ -214,7 +277,6 @@ export default function Home() {
                                     className="rotating-card"
                                 />
                             </div>
-                            <p>{progress}%</p>
                         </div>
                     )}
                     <div>

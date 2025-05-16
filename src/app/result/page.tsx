@@ -2,26 +2,16 @@
 
 import {useSearchParams} from "next/navigation";
 import Link from "next/link";
-import {Suspense, useEffect} from "react";
+import {Suspense, useEffect, useState} from "react";
 import TraitBar from "@/app/components/TraitBar";
-import rawAnimalTypes from "@/app/data/animalTypes.json";
 import toast, {Toaster} from "react-hot-toast";
 import Image from "next/image";
+import rawAnimalTypes from '@/app/data/animalTypes.json';
 
 // 지표 타입 선언
 type TraitKeys = "W" | "X" | "A" | "I" | "F" | "T" | "S" | "U";
 
-// 키 객체의 타입 선언
-type AnimalData = {
-    types: {
-        1: Subtype[];
-        2: Subtype[];
-        3: Subtype[];
-        4: Subtype[];
-    };
-};
-
-// 위 AnimalData의 내부 레벨 타입 선언
+// AnimalData의 내부 레벨 타입 선언
 type Subtype = {
     name: string;
     description: string;
@@ -34,14 +24,50 @@ type Subtype = {
     characteristics: string[];
 };
 
+// 키 객체의 타입 선언
+type AnimalData = {
+    types: {
+        1: Subtype[];
+        2: Subtype[];
+        3: Subtype[];
+        4: Subtype[];
+    };
+};
+
 // 원본 json 데이터를 변수에 할당
 // 타입선언: Record는 객체의 키와 밸류 타입(그 내부 객체들)을 정의하는 제네릭 유틸리티 타입
 const animalTypes: Record<string, AnimalData> = rawAnimalTypes;
+
 
 /** 결과 표시 페이지 */
 function ResultContent() {
     const searchParams = useSearchParams();
     const type = searchParams.get("type") || "Unknown";
+    const levelStr = searchParams.get("level");
+    const level = levelStr ? Number(levelStr) : undefined;
+
+    // 통계 상태
+    const [stats, setStats] = useState<{ totalCount: number; typeCount: number; levelCount: number } | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    // 통계 조회
+    useEffect(() => {
+        if (!type || type === "Unknown") return;
+
+        setLoading(true);
+        fetch(`/api/stats/result/get?type=${type}${level !== undefined ? `&level=${level}` : ""}`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error) {
+                    setError(data.error);
+                } else {
+                    setStats({totalCount: data.totalCount, typeCount: data.typeCount, levelCount: data.levelCount});
+                }
+            })
+            .catch(() => setError("Failed to load stats"))
+            .finally(() => setLoading(false));
+    }, [type, level]);
 
     const animalData: AnimalData = animalTypes[type];
 
@@ -73,6 +99,7 @@ function ResultContent() {
 
         return bestMatch;
     };
+
     // 세부타입 결정
     const selectedSubtype = determineSubtype(
         {W: userTraitsFull.W, A: userTraitsFull.A, F: userTraitsFull.F, S: userTraitsFull.S},
@@ -193,11 +220,28 @@ function ResultContent() {
 
                 <div className="trait-bar-container">
                     <p className="trait-type-label">{type}</p>
-                    <TraitBar description="내성적인,외향적인" element="에너지" leftLabel="W" rightLabel="X" leftValue={userTraitsFull.W} rightValue={userTraitsFull.X}/>
-                    <TraitBar description="감각적인,직관적인" element="인식" leftLabel="A" rightLabel="I" leftValue={userTraitsFull.A} rightValue={userTraitsFull.I}/>
-                    <TraitBar description="감성적인,이성적인" element="의사결정" leftLabel="F" rightLabel="T" leftValue={userTraitsFull.F} rightValue={userTraitsFull.T}/>
-                    <TraitBar description="계획적인,자유로운" element="라이프" leftLabel="S" rightLabel="U" leftValue={userTraitsFull.S} rightValue={userTraitsFull.U}/>
+                    <TraitBar description="내성적인,외향적인" element="에너지" leftLabel="W" rightLabel="X"
+                              leftValue={userTraitsFull.W} rightValue={userTraitsFull.X}/>
+                    <TraitBar description="감각적인,직관적인" element="인식" leftLabel="A" rightLabel="I"
+                              leftValue={userTraitsFull.A} rightValue={userTraitsFull.I}/>
+                    <TraitBar description="감성적인,이성적인" element="의사결정" leftLabel="F" rightLabel="T"
+                              leftValue={userTraitsFull.F} rightValue={userTraitsFull.T}/>
+                    <TraitBar description="계획적인,자유로운" element="라이프" leftLabel="S" rightLabel="U"
+                              leftValue={userTraitsFull.S} rightValue={userTraitsFull.U}/>
                 </div>
+                <div className="stats-section">
+                    {loading && <p>통계 불러오는 중...</p>}
+                    {error && <p className="error">{error}</p>}
+                    {stats && (
+                        <p>
+                            전체 {stats.totalCount}명 중 {type} 타입은 {stats.typeCount}명으로 상위 : {stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%
+                            <br />
+                            {type} 타입 중 레벨 {selectedSubtype?.name}는(은) {stats.levelCount}명으로 상위 : {stats.totalCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%
+                            <br/>
+                        </p>
+                    )}
+                </div>
+
                 <h3>{selectedSubtype?.description || "설명이 없습니다."}</h3>
                 <ul>
                     {selectedSubtype?.characteristics?.length ? (

@@ -101,21 +101,6 @@ a:hover {
     background: linear-gradient(135deg, #6d28d9, #4f46e5);
 }
 
-.progress-wrapper {
-    height: 12px;
-    width: 100%;
-    background-color: #e0e7ff;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 12px;
-}
-
-.progress-bar {
-    height: 100%;
-    background: linear-gradient(to right, #7e78dd, #6366f1);
-    transition: width 0.3s ease;
-}
-
 .question-index {
     font-size: 14px;
     font-weight: bold;
@@ -140,6 +125,7 @@ a:hover {
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+    margin-bottom: 50px;
     perspective: 1000px; /* 입체감 */
 }
 
