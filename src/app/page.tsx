@@ -79,7 +79,6 @@ export default function Home() {
         try {
             const res = await fetch("/api/participants/get");
             const data = await res.json();
-            console.log("data:", data);
             setParticipantCount(data.count);
         } catch (error) {
             console.error("error:", error);
@@ -108,7 +107,6 @@ export default function Home() {
             await fetch("/api/participants/add", {
                 method: "POST",
             });
-            fetchParticipantCount();
         } catch (error) {
             console.error("add fail", error);
         }
@@ -122,7 +120,7 @@ export default function Home() {
                 <h3>단, 사람으로는 참석할 수 없으니 질문에 답하여 동물로 변신해야 합니다!</h3>
                 <Image src="/images/entry.png" alt="입장이미지" width={300} height={400} onClick={handleStart}
                        className="entry-image-style"/>
-                <p>전체 참여 횟수 : {participantCount.toLocaleString()}회</p>
+                <p>🍀전체 참여 횟수 : {participantCount.toLocaleString()}회</p>
             </div>
         )
     }
@@ -221,8 +219,11 @@ export default function Home() {
         return bestLevel;
     };
 
+    // 시각적 효과를 주기 위한 슬립
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
     // 결과 보기
-    const handleShowResult = () => {
+    const handleShowResult = async () => {
         setLoading(true);
 
         const type = calculateType();
@@ -235,28 +236,33 @@ export default function Home() {
             level = determineLevel(traitSubset, animalData);
         }
 
-        // 사용자 결과 DB 저장
-        fetch("/api/stats/result/add", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({type, level}),
-        }).catch((err) => {
-            console.error("결과 저장 실패:", err);
-        })
+        try {
+            // 사용자 결과 DB 저장
+            await fetch("/api/stats/result/add", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({type, level}),
+            }).catch((err) => {
+                console.error("결과 저장 실패:", err);
+            })
 
-        // 최종 전달 파라미터
-        const finalParameter = new URLSearchParams(
-            Object.entries(scores).reduce((acc, [key, value]) => {
-                acc[key] = value.toString();
-                return acc;
-            }, {} as Record<string, string>)
-        );
+            // 최종 전달 파라미터
+            const finalParameter = new URLSearchParams(
+                Object.entries(scores).reduce((acc, [key, value]) => {
+                    acc[key] = value.toString();
+                    return acc;
+                }, {} as Record<string, string>)
+            );
 
-        finalParameter.append("type", type);
-        finalParameter.append("level", String(level));
+            finalParameter.append("type", type);
+            finalParameter.append("level", String(level));
 
-        router.push(`/result?${finalParameter.toString()}`);
+            await sleep(1000);
 
+            router.push(`/result?${finalParameter.toString()}`);
+        } catch (err) {
+            console.error("결과 저장 실패:", err)
+        }
     };
 
     return (

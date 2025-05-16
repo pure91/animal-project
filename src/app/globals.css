@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 /*********** 공통 css 시작 ***********/
 body {
@@ -65,6 +65,11 @@ a:hover {
     transform: scale(1.05);
 }
 
+.start-page p {
+    font-size: 16px;
+    font-weight: 600;
+    color: seagreen;
+}
 /*********** 입장하기 화면 끝 ***********/
 
 /*********** question-card 스타일 시작 ***********/
@@ -99,6 +104,21 @@ a:hover {
 .question-option:hover {
     transform: scale(1.03);
     background: linear-gradient(135deg, #6d28d9, #4f46e5);
+}
+
+.progress-wrapper {
+    height: 12px;
+    width: 100%;
+    background-color: #e0e7ff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, #7e78dd, #6366f1);
+    transition: width 0.3s ease;
 }
 
 .question-index {
@@ -244,9 +264,16 @@ a:hover {
     text-align: left;
 }
 
+/* 통계 섹션 */
+.stats-section {
+    font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
+    color: #333;
+    text-align: left;
+}
+
 /* 특성 리스트 */
 .character-card ul {
-    background: #f1f2f6;
+    background: #ffffff;
     padding: 12px;
     border-radius: 16px;
     list-style-type: none;
@@ -324,7 +351,6 @@ a:hover {
     color: #fff;
     border-color: #007bff;
 }
-
 /*********** 결과 후 링크 스타일 끝 ***********/
 
 /*********** 결과 지표 bar 스타일 시작 ***********/
@@ -341,6 +367,7 @@ a:hover {
     background-color: #558aef;
     color: #ffffff;
     border-radius: 15px;
+    font-family: 'Rubik', sans-serif;
     font-size: 18px;
     margin-bottom: 8px;
     text-align: left;
@@ -438,7 +465,6 @@ a:hover {
     font-size: 12px;
     right: 5px;
 }
-
 /*********** 결과 div 스타일 끝 ***********/
 
 /********** 스피너 시작 **********/

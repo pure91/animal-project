@@ -234,9 +234,9 @@ function ResultContent() {
                     {error && <p className="error">{error}</p>}
                     {stats && (
                         <p>
-                            전체 {stats.totalCount}명 중 {type} 타입은 {stats.typeCount}명으로 상위 : {stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%
+                            🔍 전체 {stats.totalCount}명 중 {type} 타입은 {stats.typeCount}명(상위 : {stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%)
                             <br />
-                            {type} 타입 중 레벨 {selectedSubtype?.name}는(은) {stats.levelCount}명으로 상위 : {stats.totalCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%
+                            🔍 {type} 타입 중 {stats.typeCount}명인 {selectedSubtype?.name}(상위 : {stats.totalCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)
                             <br/>
                         </p>
                     )}
