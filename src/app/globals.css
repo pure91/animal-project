@@ -77,7 +77,7 @@ a:hover {
     background: radial-gradient(circle at top left, #e0eaff, #f9f1ff);
     border-radius: 24px;
     padding: 30px 40px;
-    max-width: 550px;
+    max-width: 600px;
     margin: 30px auto;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
@@ -245,7 +245,7 @@ a:hover {
     font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
     position: relative;
     overflow: hidden;
-    max-width: 550px;
+    max-width: 600px;
 }
 
 /* 이미지 박스 주변 */
@@ -254,7 +254,6 @@ a:hover {
     max-width: 350px;
     height: 100%;
     max-height: 450px;
-    margin-bottom: 10px;
     border-radius: 16px;
     border: 2px solid #dfe6e9;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -278,7 +277,7 @@ a:hover {
     border-radius: 16px;
     list-style-type: none;
     border: 2px dashed #cfd3d6;
-    max-width: 550px;
+    max-width: 600px;
 }
 
 .character-card li::before {
@@ -356,7 +355,7 @@ a:hover {
 /*********** 결과 지표 bar 스타일 시작 ***********/
 .trait-bar-container {
     width: 100%;
-    max-width: 550px;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     place-self: center;
@@ -364,7 +363,7 @@ a:hover {
 
 .trait-type-label {
     padding: 4px 10px;
-    background-color: #558aef;
+    background-color: cornflowerblue;
     color: #ffffff;
     border-radius: 15px;
     font-family: 'Rubik', sans-serif;
@@ -390,6 +389,8 @@ a:hover {
 .trait-bar-description .desc-left,
 .trait-bar-description .desc-right {
     width: 33%;
+    font-size: 14px;
+    margin-top: 5px;
     text-align: left;
 }
 
@@ -400,7 +401,7 @@ a:hover {
 .trait-bar-description .desc-element {
     text-align: center;
     color: #666;
-    font-size: 10pt;
+    font-size: 14px;
     margin-top: 5px;
 }
 
@@ -410,22 +411,30 @@ a:hover {
     height: 28px;
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     position: relative;
     background: #f5f5f5;
 }
 
-/* 왼쪽과 오른쪽 bar */
+/* 왼쪽 오른쪽 bar */
 .trait-bar-left {
-    background: #e5d6f5;
+    background: linear-gradient(to bottom, #d8ccff, #b8a8f2);
+    box-shadow:
+            inset 0 2px 4px rgba(255, 255, 255, 0.6),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.1);
     transition: width 0.6s ease;
     position: relative;
+    border-radius: 12px;
 }
 
 .trait-bar-right {
-    background: #ffe7c7;
+    background: linear-gradient(to bottom, #ffd7c2, #ffb39b);
+    box-shadow:
+            inset 0 2px 4px rgba(255, 255, 255, 0.6),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.1);
     transition: width 0.6s ease;
     position: relative;
+    border-radius: 12px;
 }
 
 /* 텍스트 스타일 */
@@ -445,7 +454,6 @@ a:hover {
 /* label 텍스트*/
 .bar-text strong {
     color: #000;
-    font-size: 15px;
     margin-right: 10px;
     margin-left: 10px;
 }
@@ -547,8 +555,30 @@ a:hover {
         font-size: 13px;
     }
 
+    .character-card h1 {
+        font-size: 24px;
+    }
+
+    .character-card h2 {
+        font-size: 20px;
+    }
+
+    .trait-bar-inner {
+        margin-bottom: 5px;
+    }
+
+    .trait-type-label {
+        font-size: 16px;
+    }
+
+    .trait-bar-description .desc-left,
+    .trait-bar-description .desc-right,
+    .trait-bar-description .desc-element {
+        font-size: 11px;
+    }
+
     .character-card h3 {
-        font-size: 15px;
+        font-size: 14px;
     }
 
     .character-card li {
