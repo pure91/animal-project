@@ -257,7 +257,7 @@ export default function Home() {
             finalParameter.append("type", type);
             finalParameter.append("level", String(level));
 
-            await sleep(1000);
+            await sleep(1500);
 
             router.push(`/result?${finalParameter.toString()}`);
         } catch (err) {

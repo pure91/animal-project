@@ -235,7 +235,7 @@ function ResultContent() {
                     {stats && (
                         <p>
                             🔍 전체 {stats.totalCount}명 중 {type} 타입은 {stats.typeCount}명(상위 : {stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%)
-                            <br />
+                            <br/>
                             🔍 {type} 타입 중 {stats.typeCount}명인 {selectedSubtype?.name}(상위 : {stats.totalCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)
                             <br/>
                         </p>

@@ -1,4 +1,6 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
 
 /*********** 공통 css 시작 ***********/
 body {
@@ -77,10 +79,9 @@ a:hover {
     background: radial-gradient(circle at top left, #e0eaff, #f9f1ff);
     border-radius: 24px;
     padding: 30px 40px;
-    max-width: 600px;
+    max-width: 650px;
     margin: 30px auto;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
     border: 4px solid #a78bfa;
     position: relative;
 }
@@ -237,15 +238,15 @@ a:hover {
 
 .character-card {
     padding: 10px 30px 30px 30px;
-    border : 3px solid ghostwhite;
+    border : 4px solid ghostwhite;
     background: radial-gradient(circle, #f9f1ff 0%, #e0eaff 100%);
     border-radius: 24px;
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
     text-align: center;
-    font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
+    font-family: 'Karla', sans-serif;;
     position: relative;
     overflow: hidden;
-    max-width: 600px;
+    max-width: 650px;
 }
 
 /* 이미지 박스 주변 */
@@ -259,13 +260,17 @@ a:hover {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
+.character-card h2 {
+    font-size: 28px;
+}
+
 .character-card h3 {
     text-align: left;
 }
 
 /* 통계 섹션 */
 .stats-section {
-    font-family: 'Comic Neue', 'Arial Rounded MT Bold', sans-serif;
+    font-family: 'Karla', sans-serif;
     color: #333;
     text-align: left;
 }
@@ -273,20 +278,21 @@ a:hover {
 /* 특성 리스트 */
 .character-card ul {
     background: #ffffff;
-    padding: 12px;
+    padding: 13px;
     border-radius: 16px;
     list-style-type: none;
     border: 2px dashed #cfd3d6;
-    max-width: 600px;
+    max-width: 650px;
 }
 
 .character-card li::before {
-    content: "🎈 ";
+    content: "🎈";
     margin-right: 4px;
 }
 
 .character-card li {
     text-align: left;
+    margin-bottom: 3px;
 }
 
 .button-group {
@@ -355,7 +361,7 @@ a:hover {
 /*********** 결과 지표 bar 스타일 시작 ***********/
 .trait-bar-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 650px;
     display: flex;
     flex-direction: column;
     place-self: center;
@@ -560,7 +566,7 @@ a:hover {
     }
 
     .character-card h2 {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .trait-bar-inner {
