@@ -180,22 +180,22 @@ function ResultContent() {
 
     // 타입별 동물 이미지 매핑
     const animalImages: Record<string, string> = {
-        WAFS: "/images/b_hedgehog.png",
+        WAFS: "/images/hedgehog.png",
         WATS: "/images/turtle.png",
-        WIFS: "/images/b_cat.png",
+        WIFS: "/images/cat.png",
         WITS: "/images/penguin.png",
-        WAFU: "/images/b_rabbit.png",
-        WATU: "/images/b_badger.png",
-        WIFU: "/images/b_fox.png",
-        WITU: "/images/b_weasel.png",
-        XAFS: "/images/b_dog.png",
-        XATS: "/images/b_wolf.png",
-        XIFS: "/images/b_lion.png",
-        XITS: "/images/b_elephant.png",
-        XAFU: "/images/b_dolphin.png",
-        XATU: "/images/b_shark.png",
+        WAFU: "/images/rabbit.png",
+        WATU: "/images/badger.png",
+        WIFU: "/images/fox.png",
+        WITU: "/images/weasel.png",
+        XAFS: "/images/dog.png",
+        XATS: "/images/wolf.png",
+        XIFS: "/images/lion.png",
+        XITS: "/images/elephant.png",
+        XAFU: "/images/dolphin.png",
+        XATU: "/images/shark.png",
         XIFU: "/images/squirrel.png",
-        XITU: "/images/b_octopus.png",
+        XITU: "/images/octopus.png",
         HUMAN: "/images/human.png",
     }
 
@@ -207,8 +207,8 @@ function ResultContent() {
         <div className="character-card-parent">
             <Toaster position="top-center"/>
             <div className="character-card">
-                {type !== "HUMAN" ? <h1>🎉 변신 성공 🎉</h1> : <h1>☠️ 변신 실패 ☠️</h1>}
-                <h2>⭐ {selectedSubtype?.name || "알 수 없음"} ⭐</h2>
+                {type !== "HUMAN" ? <h1>🎉변신 성공🎉</h1> : <h1>☠️ 변신 실패 ☠️</h1>}
+                <h2><span>{type}</span> 타입 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
                 <div>
                     <Image
                         src={animalImageUrl}
@@ -219,7 +219,6 @@ function ResultContent() {
                 </div>
 
                 <div className="trait-bar-container">
-                    <p className="trait-type-label">{type}</p>
                     <TraitBar description="내성적인,외향적인" element="에너지" leftLabel="W" rightLabel="X"
                               leftValue={userTraitsFull.W} rightValue={userTraitsFull.X}/>
                     <TraitBar description="감각적인,직관적인" element="인식" leftLabel="A" rightLabel="I"
@@ -234,15 +233,24 @@ function ResultContent() {
                     {error && <p className="error">{error}</p>}
                     {stats && (
                         <p>
-                            🔍 전체 {stats.totalCount}명 중 {type} 타입은 {stats.typeCount}명(상위 : {stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%)
+                            🔍 전체 <span>{stats.totalCount}</span>명 중 <b>{type}</b> 타입은
+                            <span> {stats.typeCount}명 ({stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%)
+                            </span>
                             <br/>
-                            🔍 {type} 타입 중 {stats.typeCount}명인 {selectedSubtype?.name}(상위 : {stats.totalCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)
-                            <br/>
+                            {type !== 'HUMAN' && (
+                                <>
+                                    🔍 당신은 <b>{type}</b> 타입 중
+                                    <span> {stats.levelCount}명</span>인 <b>⭐{selectedSubtype?.name}⭐</b>
+                                    <span>({stats.typeCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)
+                                    </span>
+                                    <br/>
+                                </>
+                            )}
                         </p>
                     )}
                 </div>
 
-                <h3>{selectedSubtype?.description || "설명이 없습니다."}</h3>
+                <h3>{selectedSubtype?.description || "설명 없음"}의 특징</h3>
                 <ul>
                     {selectedSubtype?.characteristics?.length ? (
                         selectedSubtype.characteristics.map((char, idx) => (
