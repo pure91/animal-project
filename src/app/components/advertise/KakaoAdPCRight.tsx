@@ -24,11 +24,10 @@ export default function KakaoAdPCRight() {
         <div
             style={{
                 position: "absolute",
-                top: "111px", // header 아래
-                right: "0", // 좌측
+                top: "111px",
+                right: "0",
                 width: "160px",
                 height: "600px",
-                zIndex: 10,
             }}
         >
             <ins

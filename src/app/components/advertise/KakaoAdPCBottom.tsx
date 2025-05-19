@@ -26,14 +26,13 @@ export default function KakaoAdPCBottom() {
                 position: "relative",
                 left: "50%",
                 transform: "translateX(-50%)",
-                zIndex: 10,
                 width: "728px",
                 height: "90px",
             }}
         >
             <ins
                 className="kakao_ad_area"
-                style={{display:"none", marginTop:"10px"}}
+                style={{display:"none", marginTop:"15px"}}
                 data-ad-unit="DAN-Dd6IEg8SN5aXtv5R"
                 data-ad-width="728"
                 data-ad-height="90"

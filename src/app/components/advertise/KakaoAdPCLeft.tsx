@@ -28,7 +28,6 @@ export default function KakaoAdPCLeft() {
                 left: "0",
                 width: "160px",
                 height: "600px",
-                zIndex: 10,
             }}
         >
             <ins
