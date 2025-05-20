@@ -38,12 +38,17 @@ export const metadata = {
         index: true,
         follow: true,
     },
+    other: {
+        'naver-site-verification': 'f90d73710976c4dfdcfe0aa2bc8cb235894d2f95',
+    }
 };
 
 export default function RootLayout({children}: { children: ReactNode }) {
     return (
         <html>
         <head>
+            {/*Google Adsense*/}
+            <meta name="google-adsense-account" content="ca-pub-3666035347659822"/>
         </head>
         <body>
         {/* Kakao Share */}
