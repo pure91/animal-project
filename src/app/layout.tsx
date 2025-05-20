@@ -17,11 +17,11 @@ declare global {
 }
 
 export const metadata = {
-    title: '동물 성격 유형 테스트',
-    description: 'Zootypes는 호랑이의 생일잔치를 참가하기 위해 성격 유형 테스트를 통해 동물로 변신하는 웹사이트입니다.',
+    title: '동물 성격 유형 테스트 | 호랑이의 생일잔치에 초대합니다!',
+    description: '호랑이의 생일잔치에 참여해보세요! 단, 성격 유형 테스트를 통해 동물로 변신해야합니다! 만약.. 질문에 제대로 응하지 않는다면 변신에 실패할 수도 있어요!ㅎㅎ',
     openGraph: {
-        title: '동물 성격 유형 테스트',
-        description: 'Zootypes는 호랑이의 생일잔치를 참가하기 위해 성격 유형 테스트를 통해 동물로 변신하는 웹사이트입니다.',
+        title: '동물 성격 유형 테스트 | 호랑이의 생일잔치에 초대합니다!',
+        description: '호랑이의 생일잔치에 참여해보세요! 단, 성격 유형 테스트를 통해 동물로 변신해야합니다! 만약.. 질문에 제대로 응하지 않는다면 변신에 실패할 수도 있어요!ㅎㅎ',
         url: 'https://zootypes.com',
         siteName: 'Zootypes',
         type: 'website',
@@ -30,7 +30,7 @@ export const metadata = {
                 url: 'https://zootypes.com/zootypes-og-image-v2.png',
                 width: 1200,
                 height: 630,
-                alt: 'Zootypes 동물 성격 유형 테스트'
+                alt: '성격 유형 테스트를 통해 동물로 변신하는 재미있는 심리 테스트 검사 | 호랑이 생일잔치 컨셉'
             },
         ],
     },
@@ -63,8 +63,8 @@ export default function RootLayout({children}: { children: ReactNode }) {
             <KakaoAdPCLeft/>
             {children}
             <KakaoAdPCRight/>
-            <KakaoAdPCBottom/>
         </main>
+        <KakaoAdPCBottom/>
         <KakaoAdMobileBottom/>
         <Footer/>
         </body>

@@ -28,7 +28,6 @@ export default function KakaoAdPCBottom() {
                 transform: "translateX(-50%)",
                 width: "728px",
                 height: "90px",
-                top: "19px"
             }}
         >
             <ins

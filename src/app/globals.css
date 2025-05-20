@@ -31,7 +31,7 @@ header, footer {
 
 main {
     padding: 20px;
-    min-height: 80vh;
+    min-height: 100vh;
 }
 
 a {
@@ -514,11 +514,15 @@ a:hover {
 /********** 모바일 화면 처리 시작 **********/
 @media (max-width: 768px) {
     .start-page h1 {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .start-page h3 {
-        font-size: 11px;
+        font-size: 12px;
+    }
+
+    .start-page p {
+        font-size: 13px;
     }
 
     p {
@@ -542,6 +546,7 @@ a:hover {
     }
 
     .question-option {
+        /*margin: 10px 0;*/
         font-size: 12px;
     }
 
