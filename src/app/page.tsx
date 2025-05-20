@@ -181,8 +181,8 @@ export default function Home() {
     const calculateType = () => {
         const totalScore = Object.values(scores).reduce((acc, val) => acc + val, 0);
 
-        // 모든 대답이 0이면, 특수 타입 반환
-        if (totalScore === 0) {
+        // 총점이 40점 이하면, 특수 타입 반환
+        if (totalScore <= 40) {
             return "HUMAN";
         }
 
