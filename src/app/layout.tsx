@@ -27,7 +27,7 @@ export const metadata = {
         type: 'website',
         images: [
             {
-                url: 'https://zootypes.com/zootypes-og-image.png',
+                url: 'https://zootypes.com/zootypes-og-image-v2.png',
                 width: 1200,
                 height: 630,
                 alt: 'Zootypes 동물 성격 유형 테스트'

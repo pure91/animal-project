@@ -28,11 +28,12 @@ export default function KakaoAdPCBottom() {
                 transform: "translateX(-50%)",
                 width: "728px",
                 height: "90px",
+                top: "19px"
             }}
         >
             <ins
                 className="kakao_ad_area"
-                style={{display:"none", marginTop:"15px"}}
+                style={{display:"none"}}
                 data-ad-unit="DAN-Dd6IEg8SN5aXtv5R"
                 data-ad-width="728"
                 data-ad-height="90"
