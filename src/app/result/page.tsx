@@ -7,44 +7,17 @@ import TraitBar from "@/app/components/TraitBar";
 import toast, {Toaster} from "react-hot-toast";
 import Image from "next/image";
 import rawAnimalTypes from '@/app/data/animalTypes.json';
+import {getCharacterProfile} from '@/utils/animalUtils';
+import type { AnimalData, TraitKeys } from '@/types/animalTypes';
 
-// 지표 타입 선언
-type TraitKeys = "W" | "X" | "A" | "I" | "F" | "T" | "S" | "U";
+// json 원시 데이터 할당
+const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
 
-// AnimalData의 내부 레벨 타입 선언
-type Subtype = {
-    name: string;
-    description: string;
-    traits: {
-        W: number;
-        A: number;
-        F: number;
-        S: number;
-    };
-    characteristics: string[];
-};
-
-// 키 객체의 타입 선언
-type AnimalData = {
-    types: {
-        1: Subtype[];
-        2: Subtype[];
-        3: Subtype[];
-        4: Subtype[];
-    };
-};
-
-// 원본 json 데이터를 변수에 할당
-// 타입선언: Record는 객체의 키와 밸류 타입(그 내부 객체들)을 정의하는 제네릭 유틸리티 타입
-const animalTypes: Record<string, AnimalData> = rawAnimalTypes;
-
-
-/** 결과 표시 페이지 */
+/** URL 쿼리 파라미터를 통해 결과 표시(통계, 공유) */
 function ResultContent() {
     const searchParams = useSearchParams();
     const type = searchParams.get("type") || "Unknown";
-    const levelStr = searchParams.get("level");
-    const level = levelStr ? Number(levelStr) : undefined;
+    const level = searchParams.get("level");
 
     // 통계 상태
     const [stats, setStats] = useState<{ totalCount: number; typeCount: number; levelCount: number } | null>(null);
@@ -69,43 +42,20 @@ function ResultContent() {
             .finally(() => setLoading(false));
     }, [type, level]);
 
+    // 동물 데이터
     const animalData: AnimalData = animalTypes[type];
 
-    // 모든 지표 값 추출
+    // traits 키 배열
     const traitKeys: TraitKeys[] = ["W", "X", "A", "I", "F", "T", "S", "U"];
-    const userTraitsFull: Record<TraitKeys, number> = traitKeys.reduce((acc, key) => {
-        acc[key] = Number(searchParams.get(key)) || 0;
-        return acc;
+
+    // URL의 traits 전체 값 받아옴
+    const resultTraits: Record<TraitKeys, number> = traitKeys.reduce((acc, key) => {
+      acc[key] = Number(searchParams.get(key)) || 0;
+      return acc;
     }, {} as Record<TraitKeys, number>);
 
-    // 하위 타입 결정 로직
-    const determineSubtype = (
-        userTraits: { W: number; A: number; F: number; S: number },
-        subtypesByLevel: AnimalData["types"]
-    ): Subtype | null => {
-        let bestMatch = null;
-        let smallestDiff = Infinity;
-
-        Object.values(subtypesByLevel).flat().forEach((sub) => {
-            const diff = ["W", "A", "F", "S"].reduce((acc, key) => {
-                return acc + Math.abs(userTraits[key as keyof typeof userTraits] - sub.traits[key as keyof typeof sub.traits]);
-            }, 0);
-
-            if (diff < smallestDiff) {
-                smallestDiff = diff;
-                bestMatch = sub;
-            }
-        });
-
-        return bestMatch;
-    };
-
-    // 세부타입 결정
-    const selectedSubtype = determineSubtype(
-        {W: userTraitsFull.W, A: userTraitsFull.A, F: userTraitsFull.F, S: userTraitsFull.S},
-        animalData.types
-    );
-
+    // 캐릭터 결정
+    const characterProfile = animalData ? getCharacterProfile(resultTraits, animalData.types) : null;
 
     // 링크 복사 핸들러
     const handleCopyLink = () => {
@@ -140,7 +90,7 @@ function ResultContent() {
                 objectType: "feed",
                 content: {
                     title: `나의 유형은 ${type}`,
-                    description: `⭐${selectedSubtype?.name}⭐`,
+                    description: `⭐${characterProfile?.name}⭐`,
                     imageUrl: animalImageUrlForKakao,
                     link: {
                         mobileWebUrl: window.location.href,
@@ -161,7 +111,7 @@ function ResultContent() {
             try {
                 await navigator.share({
                     title: `나의 유형은 ${type}`,
-                    text: `⭐ ${selectedSubtype?.name} ⭐`,
+                    text: `⭐ ${characterProfile?.name} ⭐`,
                     url: window.location.href,
                 });
             } catch (err: unknown) {
@@ -208,7 +158,7 @@ function ResultContent() {
             <Toaster position="top-center"/>
             <div className="character-card">
                 {type !== "HUMAN" ? <h1>🎉변신 성공🎉</h1> : <h1>☠️ 변신 실패 ☠️</h1>}
-                <h2><span>{type}</span> 타입 ⭐{selectedSubtype?.name || "알 수 없음"}⭐</h2>
+                <h2><span>{type}</span> 타입 ⭐{characterProfile?.name || "알 수 없음"}⭐</h2>
                 <div>
                     <Image
                         src={animalImageUrl}
@@ -220,13 +170,13 @@ function ResultContent() {
 
                 <div className="trait-bar-container">
                     <TraitBar description="내성적인,외향적인" element="에너지" leftLabel="W" rightLabel="X"
-                              leftValue={userTraitsFull.W} rightValue={userTraitsFull.X}/>
+                              leftValue={resultTraits.W} rightValue={resultTraits.X}/>
                     <TraitBar description="감각적인,직관적인" element="인식" leftLabel="A" rightLabel="I"
-                              leftValue={userTraitsFull.A} rightValue={userTraitsFull.I}/>
+                              leftValue={resultTraits.A} rightValue={resultTraits.I}/>
                     <TraitBar description="감성적인,이성적인" element="의사결정" leftLabel="F" rightLabel="T"
-                              leftValue={userTraitsFull.F} rightValue={userTraitsFull.T}/>
+                              leftValue={resultTraits.F} rightValue={resultTraits.T}/>
                     <TraitBar description="계획적인,자유로운" element="라이프" leftLabel="S" rightLabel="U"
-                              leftValue={userTraitsFull.S} rightValue={userTraitsFull.U}/>
+                              leftValue={resultTraits.S} rightValue={resultTraits.U}/>
                 </div>
                 <div className="stats-section">
                     {loading && <p>통계 불러오는 중...</p>}
@@ -239,8 +189,8 @@ function ResultContent() {
                             <br/>
                             {type !== 'HUMAN' && (
                                 <>
-                                    🔍 당신은 <b>{type}</b> 타입 중
-                                    <span> {stats.levelCount}명</span>인 <b>⭐{selectedSubtype?.name}⭐</b>
+                                    🔍 당신은 <b>{type}</b> 타입에서
+                                    <span> {stats.levelCount}명</span>인 <b>⭐{characterProfile?.name}⭐</b>
                                     <span>({stats.typeCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)
                                     </span>
                                     <br/>
@@ -250,10 +200,10 @@ function ResultContent() {
                     )}
                 </div>
 
-                <h3>{selectedSubtype?.description || "설명 없음"}의 특징</h3>
+                <h3>{characterProfile?.description || "설명 없음"}의 특징</h3>
                 <ul>
-                    {selectedSubtype?.characteristics?.length ? (
-                        selectedSubtype.characteristics.map((char, idx) => (
+                    {characterProfile?.characteristics?.length ? (
+                        characterProfile.characteristics.map((char, idx) => (
                             <li key={idx}>{char}</li>
                         ))
                     ) : (

@@ -4,49 +4,34 @@ import {useEffect, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import QuestionCard from "@/app/components/QuestionCard";
 import questions from "@/app/data/questions";
+import addQuestions, {Question} from "@/app/data/addQuestions";
 import Image from "next/image";
 import Spinner from "@/app/components/Spinner";
 import rawAnimalTypes from '@/app/data/animalTypes.json';
+import {calculateTypeAndTies, determineLevel} from "@/utils/animalUtils";
+import type {AnimalData, LevelKeys} from "@/types/animalTypes";
+import toast, {Toaster} from "react-hot-toast";
 
-// AnimalData의 내부 레벨 타입 선언
-type Subtype = {
-    name: string;
-    description: string;
-    traits: {
-        W: number;
-        A: number;
-        F: number;
-        S: number;
-    };
-    characteristics: string[];
-};
+// json 원시 데이터 할당
+const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
 
-// 키 객체의 타입 선언
-type AnimalData = {
-    types: {
-        1: Subtype[];
-        2: Subtype[];
-        3: Subtype[];
-        4: Subtype[];
-    };
-};
-
-// 원본 json 데이터를 변수에 할당
-// 타입선언: Record는 객체의 키와 밸류 타입(그 내부 객체들)을 정의하는 제네릭 유틸리티 타입
-const animalTypes: Record<string, AnimalData> = rawAnimalTypes;
-
-/** 메인 페이지 */
+/** 사용자 상호작용, 질문 진행, 점수 계산, 결과 전달 */
 export default function Home() {
     const [initLoading, setInitLoading] = useState(true); // 최초 페이지 로딩 상태
-    const [isClicked, setIsClicked] = useState(false);
+    const [isClicked, setIsClicked] = useState(false); // 연속 클릭 방지
     const [started, setStarted] = useState(false); // 시작하기
     const [participantCount, setParticipantCount] = useState<number | 0>(0); // 참여자 수
 
-    const [currentQuestion, setCurrentQuestion] = useState(0); // 현재 질문
+    const [currentQuestion, setCurrentQuestion] = useState(0); // 현재 질문 인덱스
     const [answers, setAnswers] = useState<string[]>([]); // 답변 저장
 
     const [showResult, setShowResult] = useState(false); // 결과보기
     const [loading, setLoading] = useState(false); // 결과 로딩 상태
+
+    // 동점 방지
+    const [isTieState, setIsTieState] = useState(false); // 동점 상태
+    const [currentTieQuestion, setCurrentTieQuestion] = useState(0); // 추가 질문 인덱스
+    const [tieQuestionList, setTieQuestionList] = useState<Question[]>([]); // 동점 질문 리스트
 
     // 점수 계산
     const [scores, setScores] = useState<{
@@ -65,9 +50,9 @@ export default function Home() {
             setCurrentQuestion(0);
             setAnswers([]);
             setScores({W: 0, X: 0, A: 0, I: 0, F: 0, T: 0, S: 0, U: 0});
+            setIsTieState(false);
         }
     }, [pathname]);
-
 
     // 참여자 수 조회
     useEffect(() => {
@@ -125,7 +110,7 @@ export default function Home() {
         )
     }
 
-    // 사용자가 선택한 값
+    // 사용자 선택 값
     const handleSelect = (selectedScore: { [key: string]: number }) => {
         // 답변 저장
         setAnswers((prev) => [...prev, JSON.stringify(selectedScore)]);
@@ -138,6 +123,7 @@ export default function Home() {
                     newScores[key as keyof typeof newScores] += selectedScore[key];
                 }
             }
+            console.log("newScores:", newScores);
             return newScores;
         });
 
@@ -171,69 +157,105 @@ export default function Home() {
             setCurrentQuestion(currentQuestion - 1);
 
             if (showResult) {
-                setShowResult(false); // 결과 보기 전에도 뒤로가기 가능하도록
+                setShowResult(false); // 결과보기 클릭 전까진 뒤로가기 가능
                 setCurrentQuestion(currentQuestion);
             }
         }
     }
 
-    // 유형 계산
-    const calculateType = () => {
-        const totalScore = Object.values(scores).reduce((acc, val) => acc + val, 0);
+    // 동점 시 사용자 추가질문 선택 값
+    const handleTieSelect = (selectedScore: { [key: string]: number }) => {
+        // 답변 저장
+        setAnswers((prev) => [...prev, JSON.stringify(selectedScore)]);
 
-        // 총점이 40점 이하면, 특수 타입 반환
-        if (totalScore <= 40) {
-            return "HUMAN";
-        }
-
-        return [
-            scores.W >= scores.X ? "W" : "X",
-            scores.A >= scores.I ? "A" : "I",
-            scores.F >= scores.T ? "F" : "T",
-            scores.S >= scores.U ? "S" : "U",
-        ].join("");
-    };
-
-    // 하위 타입 level 결정 로직
-    const determineLevel = (
-        userTraits: { W: number; A: number; F: number; S: number },
-        data: AnimalData
-    ): number => {
-        let minDiff = Infinity;
-        let bestLevel = 1;
-
-        for (const levelStr in data.types) {
-            const level = parseInt(levelStr);
-            const subtypes = data.types[level as keyof typeof data.types];
-            for (const subtype of subtypes) {
-                const diff = ['W', 'A', 'F', 'S'].reduce(
-                    (acc, key) => acc + Math.abs(userTraits[key as keyof typeof userTraits] - subtype.traits[key as keyof typeof subtype.traits]), 0
-                );
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    bestLevel = level;
+        // 점수 업데이트
+        setScores((prev) => {
+            const newScores = {...prev};
+            for (const key in selectedScore) {
+                if (key in newScores) {
+                    newScores[key as keyof typeof newScores] += selectedScore[key];
                 }
             }
+            console.log("newScores:", newScores);
+            return newScores;
+        });
+
+        // 다음 추가 질문 이동
+        if (currentTieQuestion + 1 < tieQuestionList.length) {
+            setCurrentTieQuestion(currentTieQuestion + 1);
+        } else {
+            setShowResult(true);  // 추가 질문까지 끝났으면 다시 결과보기 버튼 활성화
+        }
+    }
+
+    // 추가 질문 뒤로가기
+    const handleTieBack = () => {
+        if (currentTieQuestion > 0) {
+            const updatedAnswers = answers.slice(0, answers.length - 1); // 마지막 선택지 삭제
+            setAnswers(updatedAnswers);
         }
 
-        return bestLevel;
-    };
+        // 점수 복구
+        const previousScore = JSON.parse(answers[answers.length - 1]);
+        setScores((prev) => {
+            const newScores = {...prev};
+            for (const key in previousScore) {
+                if (key in newScores) {
+                    newScores[key as keyof typeof newScores] -= previousScore[key];
+                }
+            }
+            return newScores;
+        });
 
-    // 시각적 효과를 주기 위한 슬립
-    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+        // 이전 질문으로 돌아가기
+        setCurrentTieQuestion(currentTieQuestion - 1);
+
+        if (showResult) {
+            setShowResult(false); // 결과보기 클릭 전까진 뒤로가기 가능
+            setCurrentTieQuestion(currentTieQuestion);
+        }
+    }
+
+    // 동점에 해당하는 추가 질문만 필터링
+    const getFilteredTieQuestions = (ties: string[]) => {
+        // 추가질문 전체 data에서 해당하는 항목만 필터링
+        return addQuestions.filter((question) => {
+            // flat으로 map 돌려서 추가질문 data의 questions.options.score에 존재하는 key를 뽑아냄
+            const optionKeys = question.options.flatMap(opt => Object.keys(opt.score));
+            // 하나라도 존재하면 true return
+            return ties.some(tie => {
+                const [a, b] = tie.split("/"); // a에 W, b에 X 이런식으로 들어옴
+                return optionKeys.includes(a) && optionKeys.includes(b); // 여기서 score에 W 와 X가 있는 질문을 가져옴
+            })
+        })
+    }
 
     // 결과 보기
     const handleShowResult = async () => {
         setLoading(true);
 
-        const type = calculateType();
-        const {W, A, F, S} = scores;
-        const traitSubset = {W, A, F, S};
-        const animalData = animalTypes[type];
-        let level = 1;
+        // 타입 계산
+        const {type, ties} = calculateTypeAndTies(scores);
+
+        // 동점 발생 시 추가 질문을 위한 결과 보류
+        if (type === "TIE") {
+            toast("🔥동점이 존재하여 추가 질문이 생성됩니다🔥");
+
+            // 동점인 항목만 필터
+            const tieQuestions = getFilteredTieQuestions(ties);
+            setTieQuestionList(tieQuestions);
+
+            setIsTieState(true);
+            setShowResult(false);
+            setLoading(false);
+            return;
+        }
+
+        const animalData = animalTypes[type] as AnimalData | undefined;
+        let level: LevelKeys = "1";
 
         if (animalData) {
-            level = determineLevel(traitSubset, animalData);
+            level = determineLevel(scores, animalData);
         }
 
         try {
@@ -255,9 +277,9 @@ export default function Home() {
             );
 
             finalParameter.append("type", type);
-            finalParameter.append("level", String(level));
+            finalParameter.append("level", level);
 
-            await sleep(1500);
+            await new Promise((resolve) => setTimeout(resolve, 1500));
 
             router.push(`/result?${finalParameter.toString()}`);
         } catch (err) {
@@ -267,6 +289,7 @@ export default function Home() {
 
     return (
         <div className="result-section">
+            <Toaster position="top-center"/>
             {showResult ? (
                 // 결과 보기 버튼
                 <div>
@@ -296,15 +319,28 @@ export default function Home() {
                 </div>
             ) : (
                 <div>
-                    <QuestionCard
-                        question={questions[currentQuestion].question}
-                        options={questions[currentQuestion].options}
-                        onSelect={handleSelect}
-                        current={currentQuestion + 1}
-                        total={questions.length}
-                        onBack={handleBack}
-                        showBackButton={currentQuestion > 0}
-                    />
+                    {!isTieState ? (
+                        <QuestionCard
+                            question={questions[currentQuestion]}
+                            onSelect={handleSelect}
+                            current={currentQuestion + 1}
+                            total={questions.length}
+                            onBack={handleBack}
+                            showBackButton={currentQuestion > 0}
+                            isTieState={isTieState}
+                        />
+                    ) : (
+                        // 동점인 경우 추가질문 카드
+                        <QuestionCard
+                            question={tieQuestionList[currentTieQuestion]}
+                            onSelect={handleTieSelect}
+                            current={currentTieQuestion + 1}
+                            total={tieQuestionList.length}
+                            onBack={handleTieBack}
+                            showBackButton={currentTieQuestion > 0}
+                            isTieState={isTieState}
+                        />
+                    )}
                 </div>
             )}
         </div>
