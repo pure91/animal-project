@@ -18,10 +18,14 @@ declare global {
 
 export const metadata = {
     title: '동물 성격 유형 테스트 | 호랑이의 생일잔치에 초대합니다!',
-    description: '호랑이의 생일잔치에 참여해보세요! 단, 성격 유형 테스트를 통해 동물로 변신해야합니다! 만약.. 질문에 제대로 응하지 않는다면 변신에 실패할 수도 있어요!ㅎㅎ',
+    description: '호랑이의 생일잔치에 참여해보세요! 단, 성격 유형 테스트를 통해 동물로 변신해야합니다. 질문에 제대로 응하지 않는다면 변신에 실패할 수도 있어요!',
+    applicationName: 'Zootypes',
+    appleWebApp: {
+        title: 'Zootypes',
+    },
     openGraph: {
         title: '동물 성격 유형 테스트 | 호랑이의 생일잔치에 초대합니다!',
-        description: '호랑이의 생일잔치에 참여해보세요! 단, 성격 유형 테스트를 통해 동물로 변신해야합니다! 만약.. 질문에 제대로 응하지 않는다면 변신에 실패할 수도 있어요!ㅎㅎ',
+        description: '호랑이의 생일잔치에 참여해보세요! 단, 성격 유형 테스트를 통해 동물로 변신해야합니다. 질문에 제대로 응하지 않는다면 변신에 실패할 수도 있어요!',
         url: 'https://zootypes.com',
         siteName: 'Zootypes',
         type: 'website',
