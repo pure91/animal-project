@@ -1,7 +1,7 @@
 > 본 프로젝트는 MIT 라이선스 하에 배포됩니다.
 >
 
-# 🐯 Zootypes - 동물 성향 테스트
+# 🐯 Zootypes - 동물 성격 유형 테스트
 
 [![Deploy](https://github.com/pure91/animal-project/actions/workflows/deploy.yml/badge.svg)](https://github.com/pure91/animal-project/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -9,17 +9,17 @@
 [![React](https://img.shields.io/badge/React-19.x-purple)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/)
 
-> 성향 테스트를 통해 동물로 변신하여 🐯 호랑이의 생일 파티에 참가해보세요!  
+> 성격 유형 테스트를 통해 동물로 변신하여 🐯 호랑이의 생일 파티에 참가해보세요!  
 > 👉 [https://zootypes.com](https://zootypes.com)
 
 ---
 
 ## 🐾 프로젝트 소개
 
-**Zootypes**는 MBTI® 성격유형 이론에서 영감을 받아 제작된 **동물 성향 테스트 웹사이트**입니다.  
-사용자는 질문에 답하면서 자신의 성향에 맞는 동물로 변신하고, 결과에 따른 설명을 확인하고 공유할 수 있습니다.
+**Zootypes**는 MBTI® 성격 유형 이론에서 영감을 받아 제작된 **동물 성격 유형 테스트 웹사이트**입니다.  
+사용자는 질문에 답하면서 자신의 성격 유형에 맞는 동물로 변신하고, 결과에 따른 설명을 확인하고 공유할 수 있습니다.
 
-> ※ 본 테스트는 MBTI® 성격유형 이론을 참고하여 제작된 자체 콘텐츠로, 공식 MBTI® 검사와는 무관합니다. 단순 재미로 즐겨주세요 😊  
+> ※ 본 테스트는 MBTI® 성격 유형 이론을 참고하여 제작된 자체 콘텐츠로, 공식 MBTI® 검사와는 무관합니다. 단순 재미로 즐겨주세요 😊  
 > MBTI® 및 Myers-Briggs Type Indicator®는 The Myers-Briggs Company의 등록상표입니다.
 
 ---
@@ -73,11 +73,13 @@ animal-project/
 │       ├── api/           # API 라우트
 │       ├── components/    # UI 컴포넌트
 │       ├── data/          # 질문지, 결과 데이터
-│       ├── result/        # 결과 화면 구성 컴포넌트
+│       ├── result/        # 결과 표시 컴포넌트
 │       ├── globals.css    # 전역 스타일
 │       ├── layout.tsx     # 전체 레이아웃
-│       └── page.tsx       # 홈 및 질문 페이지
+│       └── page.tsx       # 사용자 interaction, 질문 페이지
 ├── src/lib/               # DB 설정, 쿼리
+├── src/types/             # 타입 정의
+├── src/utils/             # 공통 함수
 └── ...
 ```
 
@@ -85,12 +87,12 @@ animal-project/
 
 ## 🕒 프로젝트 타임라인
 
-| 날짜                 | 작업 내용                                           |
-|--------------------|-------------------------------------------------|
-| **25/04/22**       | 프로젝트 생성, Naver Cloud 서버 구축, Docker, CI/CD 설정 시작 |
-| **25/04/28**       | 질문/결과 데이터 설계, 주요 레이아웃 및 컴포넌트 개발 시작              |
-| **25/05/14**       | MariaDB 연동, 참여자 수 체크 기능 개발, 사용자 결과 기록 및 통계 구현   |
-| **25/05/18 ~ 진행중** | 콘텐츠 마무리, 반응형 디자인 개선, 최종 배포 단계                   |
+| 날짜                    | 작업 내용                                           |
+|-----------------------|-------------------------------------------------|
+| **25/04/22 ~ 25/04/28** | 프로젝트 생성, Naver Cloud 서버 구축, Docker, CI/CD 설정 시작 |
+| **25/04/28 ~ 25/05/14** | 질문/결과 데이터 설계, 주요 레이아웃 및 컴포넌트 개발 시작              |
+| **25/05/14 ~ 25/05/18** | MariaDB 연동, 참여자 수 체크 기능 개발, 사용자 결과 기록 및 통계 구현   |
+| **25/05/18 ~ 진행중**    | 데이터 계산 세부 조정 작업, 웹/모바일 디자인 개선, seo최적화, 최종 배포    |
 
 ---
 
