@@ -92,6 +92,24 @@ a:hover {
     position: relative;
 }
 
+/* 동점 상태일 때 불타는 느낌의 애니메이션 */
+@keyframes fireGlow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(255, 100, 0, 0.6), 0 0 50px rgba(255, 0, 0, 0.3);
+    border-color: #ff5722;
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 140, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.5);
+    border-color: #ff7043;
+  }
+}
+
+.question-card.tie-mode {
+  animation: fireGlow 1.5s ease-in-out infinite;
+  background: radial-gradient(circle at top left, #ffe0e0, #fff1f1);
+  border-color: #ff5722;
+}
+
 .question-option {
     display: block;
     width: 100%;
@@ -113,6 +131,16 @@ a:hover {
     background: linear-gradient(135deg, #6d28d9, #4f46e5);
 }
 
+/* 동점 시 option도 강조 */
+.question-card.tie-mode .question-option {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  box-shadow: 0 8px 20px rgba(255, 100, 0, 0.4);
+}
+
+.question-card.tie-mode .question-option:hover {
+  background: linear-gradient(135deg, #dc2626, #ea580c);
+}
+
 .progress-wrapper {
     height: 12px;
     width: 100%;
@@ -128,13 +156,17 @@ a:hover {
     transition: width 0.3s ease;
 }
 
+/* 동점 시 진행바도 강조 */
+.question-card.tie-mode .progress-bar {
+    background: linear-gradient(to right, #f97316, #dc2626); /* 오렌지~레드 불타는 색상 */
+}
+
 .question-index {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 16px;
     color: #6b7280;
 }
-
 /*********** question-card 스타일 끝 ***********/
 
 /*********** 뒤로가기 or 결과보기 스타일 시작 ***********/
@@ -301,7 +333,7 @@ a:hover {
 /* 특성 리스트 */
 .character-card ul {
     background: #ffffff;
-    padding: 10px;
+    padding: 15px;
     border-radius: 16px;
     list-style-type: none;
     border: 2px dashed #cfd3d6;
