@@ -21,13 +21,13 @@ export default function CoupangMobileTop() {
     return (
         <div style={{textAlign: "center", marginBottom:"-10px"}}>
             <iframe
-                src="https://ads-partners.coupang.com/widgets.html?id=867980&template=carousel&trackingCode=AF1164133&subId=&width=320&height=50&tsource="
+                src="https://ads-partners.coupang.com/widgets.html?id=868046&template=banner&trackingCode=AF1164133&subId=&width=320&height=50"
                 width="320"
                 height="50"
                 frameBorder="0"
                 scrolling="no"
                 referrerPolicy="unsafe-url"
-            />
+            ></iframe>
         </div>
     );
 }

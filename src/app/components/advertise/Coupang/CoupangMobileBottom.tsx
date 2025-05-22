@@ -37,7 +37,7 @@ export default function CoupangMobileBottom() {
                 frameBorder="0"
                 scrolling="no"
                 referrerPolicy="unsafe-url"
-            />
+            ></iframe>
         </div>
     );
 }

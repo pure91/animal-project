@@ -31,7 +31,7 @@ export default function CoupangPCBottom() {
                 frameBorder="0"
                 scrolling="no"
                 referrerPolicy="unsafe-url"
-            />
+            ></iframe>
         </div>
     );
 }

@@ -32,7 +32,7 @@ export default function CoupangPCLeft() {
             <iframe
                 src="https://ads-partners.coupang.com/widgets.html?id=868017&template=banner&trackingCode=AF1164133&subId=&width=160&height=600"
                 width="160" height="600" frameBorder="0" scrolling="no" referrerPolicy="unsafe-url"
-            />
+            ></iframe>
         </div>
     );
 }
