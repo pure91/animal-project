@@ -21,23 +21,19 @@ export default function CoupangMobileBottom() {
 
     return (
         <div style={{textAlign: "center"}}>
+            <iframe
+                src="https://ads-partners.coupang.com/widgets.html?id=867994&template=banner&trackingCode=AF1164133&subId=&width=320&height=50"
+                width="320" height="50" frameBorder="0" scrolling="no" referrerPolicy="unsafe-url">
+            </iframe>
             <p style={{
                 fontSize: '10px',
                 color: '#888',
                 wordBreak: "keep-all",
                 textAlign: "center",
-                margin: "-5px 0 5px 0"
+                margin: "0 0 5px 0"
             }}>
                 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
             </p>
-            <iframe
-                src="https://ads-partners.coupang.com/widgets.html?id=868040&template=carousel&trackingCode=AF1164133&subId=&width=300&height=250&tsource="
-                width="300"
-                height="250"
-                frameBorder="0"
-                scrolling="no"
-                referrerPolicy="unsafe-url"
-            ></iframe>
         </div>
     );
 }

@@ -20,18 +20,18 @@ export default function CoupangPCBottom() {
     if (!isDesktopBottom) return null;
 
     return (
-        <div style={{textAlign: "center", marginBottom: "-3px"}}>
-            <p style={{fontSize: '14px', color: '#888', wordBreak: "keep-all", textAlign: "center", margin: "0 0 5px 0"}}>
-                쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공 받습니다.
-            </p>
+        <div style={{textAlign: "center", marginBottom: "-33px"}}>
             <iframe
                 src="https://ads-partners.coupang.com/widgets.html?id=867974&template=carousel&trackingCode=AF1164133&subId=&width=680&height=140&tsource="
-                width="680"
-                height="140"
+                width="720"
+                height="100"
                 frameBorder="0"
                 scrolling="no"
                 referrerPolicy="unsafe-url"
             ></iframe>
+            <p style={{fontSize: '14px', color: '#888', wordBreak: "keep-all", textAlign: "center", margin: "5px 0 42px 0"}}>
+                쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공 받습니다.
+            </p>
         </div>
     );
 }

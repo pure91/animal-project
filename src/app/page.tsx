@@ -11,6 +11,9 @@ import rawAnimalTypes from '@/app/data/animalTypes.json';
 import {calculateTypeAndTies, determineLevel} from "@/utils/animalUtils";
 import type {AnimalData, LevelKeys} from "@/types/animalTypes";
 import toast, {Toaster} from "react-hot-toast";
+import CoupangMobileTop from "@/app/components/advertise/Coupang/CoupangMobileTop";
+import CoupangPCLeft from "./components/advertise/Coupang/CoupangPCLeft";
+import CoupangPCRight from "@/app/components/advertise/Coupang/CoupangPCRight";
 
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
@@ -239,7 +242,7 @@ export default function Home() {
 
         // 동점 발생 시 추가 질문을 위한 결과 보류
         if (type === "TIE") {
-            toast("🔥동점이 존재하여 추가 질문이 생성됩니다🔥");
+            toast("🔥동점 발생! 추가 질문이 주어집니다!🔥");
 
             // 동점인 항목만 필터
             const tieQuestions = getFilteredTieQuestions(ties);
@@ -290,9 +293,16 @@ export default function Home() {
     return (
         <div className="result-section">
             <Toaster position="top-center"/>
+            {started &&
+                <>
+                    <CoupangMobileTop/>
+                    <CoupangPCLeft/>
+                    <CoupangPCRight/>
+                </>
+            }
             {showResult ? (
                 // 결과 보기 버튼
-                <div>
+                <>
                     <h2>변신술 준비 중...</h2>
                     <h2>👇 PUSH 👇</h2>
                     {loading && (
@@ -316,9 +326,9 @@ export default function Home() {
                             결과보기
                         </button>
                     </div>
-                </div>
+                </>
             ) : (
-                <div>
+                <>
                     {!isTieState ? (
                         <QuestionCard
                             question={questions[currentQuestion]}
@@ -341,7 +351,7 @@ export default function Home() {
                             isTieState={isTieState}
                         />
                     )}
-                </div>
+                </>
             )}
         </div>
     );

@@ -19,15 +19,11 @@ export default function CoupangMobileTop() {
     if (!isMobileTop) return null;
 
     return (
-        <div style={{textAlign: "center", marginBottom:"-10px"}}>
+        <div style={{textAlign: "center", margin:"-29px 0 0 0"}}>
             <iframe
                 src="https://ads-partners.coupang.com/widgets.html?id=868046&template=banner&trackingCode=AF1164133&subId=&width=320&height=50"
-                width="320"
-                height="50"
-                frameBorder="0"
-                scrolling="no"
-                referrerPolicy="unsafe-url"
-            ></iframe>
+                width="320" height="50" frameBorder="0" scrolling="no" referrerPolicy="unsafe-url">
+            </iframe>
         </div>
     );
 }

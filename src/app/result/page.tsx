@@ -8,7 +8,9 @@ import toast, {Toaster} from "react-hot-toast";
 import Image from "next/image";
 import rawAnimalTypes from '@/app/data/animalTypes.json';
 import {getCharacterProfile} from '@/utils/animalUtils';
-import type { AnimalData, TraitKeys } from '@/types/animalTypes';
+import type {AnimalData, TraitKeys} from '@/types/animalTypes';
+import CoupangPCLeft from "@/app/components/advertise/Coupang/CoupangPCLeft";
+import CoupangPCRight from "@/app/components/advertise/Coupang/CoupangPCRight";
 
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
@@ -50,8 +52,8 @@ function ResultContent() {
 
     // URL의 traits 전체 값 받아옴
     const resultTraits: Record<TraitKeys, number> = traitKeys.reduce((acc, key) => {
-      acc[key] = Number(searchParams.get(key)) || 0;
-      return acc;
+        acc[key] = Number(searchParams.get(key)) || 0;
+        return acc;
     }, {} as Record<TraitKeys, number>);
 
     // 캐릭터 결정
@@ -156,6 +158,12 @@ function ResultContent() {
     return (
         <div className="character-card-parent">
             <Toaster position="top-center"/>
+            {type &&
+                <>
+                    <CoupangPCLeft/>
+                    <CoupangPCRight/>
+                </>
+            }
             <div className="character-card">
                 {type !== "HUMAN" ? <h1>🎉변신 성공🎉</h1> : <h1>☠️ 변신 실패 ☠️</h1>}
                 <h2><span>{type}</span> 타입 ⭐{characterProfile?.name || "알 수 없음"}⭐</h2>

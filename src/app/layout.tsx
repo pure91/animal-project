@@ -60,11 +60,11 @@ export default function RootLayout({children}: { children: ReactNode }) {
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="beforeInteractive"/>
         <Header/>
         {/* Coupang Partners */}
-        <CoupangMobileTop/>
+        {/*<CoupangMobileTop/>*/}
         <main>
-            <CoupangPCLeft/>
+            {/*<CoupangPCLeft/>*/}
             {children}
-            <CoupangPCRight/>
+            {/*<CoupangPCRight/>*/}
         </main>
         <CoupangPCBottom/>
         <CoupangMobileBottom/>
