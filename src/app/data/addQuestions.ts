@@ -17,8 +17,8 @@ const addQuestions: Question[] = [
     {
         question: "혼잣말 하다가 들켰다!",
         options: [
-            {text: "얼굴 빨개짐", score: {W: 1}},
-            {text: "들어도 상관없음", score: {X: 1}},
+            {text: "얼굴 빨개지거나 당황하는 편", score: {W: 1}},
+            {text: "딱히 뭐 들어도 상관없음", score: {X: 1}},
         ]
     },
 
@@ -36,16 +36,16 @@ const addQuestions: Question[] = [
         question: "지인이 울고 있음. 이유는 모름",
         options: [
             {text: "갑자기 나도 눈물 날 것 같음", score: {F: 1}},
-            {text: "울기 전에 원인 분석부터", score: {T: 1}},
+            {text: "왜 울고 있는지 원인을 찾고 있음", score: {T: 1}},
         ]
     },
 
     // S vs U
     {
-        question: "친구가 지금 당장 떠나자고 함",
+        question: "친구가 당장 어디든 떠나자고 함",
         options: [
-            {text: "일단 짐 싸야지. 경로도 알아보고", score: {S: 1}},
-            {text: "오케이~ 바지 챙기면서 나갈 준비", score: {U: 1}},
+            {text: "생각 좀 해보고 어디로 가서 뭘 할지 찾아봄", score: {S: 1}},
+            {text: "오케이~ 바로 나갈 준비부터 함", score: {U: 1}},
         ]
     }
 ];
