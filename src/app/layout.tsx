@@ -3,12 +3,13 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import {ReactNode} from "react";
 import Script from "next/script";
-import KakaoAdMobileBottom from "@/app/components/advertise/KakaoAdMobileBottom";
-import KakaoAdPCLeft from "@/app/components/advertise/KakaoAdPCLeft";
-import KakaoAdPCRight from "@/app/components/advertise/KakaoAdPCRight";
-import KaKaoAdMobileTop from "@/app/components/advertise/KaKaoAdMobileTop";
-import KakaoAdPCBottom from "@/app/components/advertise/KakaoAdPCBottom";
+import CoupangPCBottom from "@/app/components/advertise/Coupang/CoupangPCBottom";
+import CoupangMobileTop from "@/app/components/advertise/Coupang/CoupangMobileTop";
+import CoupangPCLeft from "@/app/components/advertise/Coupang/CoupangPCLeft";
+import CoupangPCRight from "@/app/components/advertise/Coupang/CoupangPCRight";
+import CoupangMobileBottom from "@/app/components/advertise/Coupang/CoupangMobileBottom";
 
+// 카카오 공유 window 객체 타입 선언
 declare global {
     interface Window {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,20 +57,17 @@ export default function RootLayout({children}: { children: ReactNode }) {
         </head>
         <body>
         {/* Kakao Share */}
-        <Script
-            src="https://developers.kakao.com/sdk/js/kakao.js"
-            strategy="beforeInteractive"
-        />
+        <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="beforeInteractive"/>
         <Header/>
-        {/* Kakao Adfit */}
-        <KaKaoAdMobileTop/>
+        {/* Coupang Partners */}
+        <CoupangMobileTop/>
         <main>
-            <KakaoAdPCLeft/>
+            <CoupangPCLeft/>
             {children}
-            <KakaoAdPCRight/>
+            <CoupangPCRight/>
         </main>
-        <KakaoAdPCBottom/>
-        <KakaoAdMobileBottom/>
+        <CoupangPCBottom/>
+        <CoupangMobileBottom/>
         <Footer/>
         </body>
         </html>
