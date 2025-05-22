@@ -104,29 +104,29 @@ function ResultContent() {
     };
 
     // 모바일 공유 기능
-    const handleWebShare = async () => {
-        if (!navigator.share) {
-            toast("공유 기능이 지원되지 않는 환경이에요.\n링크를 복사하거나, 카카오톡으로 공유해 주세요.");
-        } else {
-            try {
-                await navigator.share({
-                    title: `나의 유형은 ${type}`,
-                    text: `⭐ ${characterProfile?.name} ⭐`,
-                    url: window.location.href,
-                });
-            } catch (err: unknown) {
-                // 단순 공유 취소는 에러를 출력 X
-                if (err instanceof Error) {
-                    if (err.name !== 'AbortError') {
-                        console.error(err);
-                        toast.error("공유 실패😿");
-                    }
-                } else {
-                    console.error("에러 발생:", err);
-                }
-            }
-        }
-    }
+    // const handleWebShare = async () => {
+    //     if (!navigator.share) {
+    //         toast("공유 기능이 지원되지 않는 환경이에요.\n링크를 복사하거나, 카카오톡으로 공유해 주세요.");
+    //     } else {
+    //         try {
+    //             await navigator.share({
+    //                 title: `나의 유형은 ${type}`,
+    //                 text: `⭐ ${characterProfile?.name} ⭐`,
+    //                 url: window.location.href,
+    //             });
+    //         } catch (err: unknown) {
+    //             // 단순 공유 취소는 에러를 출력 X
+    //             if (err instanceof Error) {
+    //                 if (err.name !== 'AbortError') {
+    //                     console.error(err);
+    //                     toast.error("공유 실패😿");
+    //                 }
+    //             } else {
+    //                 console.error("에러 발생:", err);
+    //             }
+    //         }
+    //     }
+    // }
 
     // 타입별 동물 이미지 매핑
     const animalImages: Record<string, string> = {
@@ -151,7 +151,7 @@ function ResultContent() {
 
     // 이미지 URL
     const animalImageUrl = animalImages[type]; // 내부 이미지 (상대 경로)
-    const animalImageUrlForKakao = `${window.location.origin}${animalImageUrl}`; // 카카오 공유용 (절대 경로)
+    const animalImageUrlForKakao = typeof window !== "undefined" ? `${window.location.origin}${animalImageUrl}` : ""; // 카카오 공유용 (절대 경로)
 
     return (
         <div className="character-card-parent">
@@ -211,9 +211,9 @@ function ResultContent() {
                     )}
                 </ul>
                 <div className="button-group">
-                    <button onClick={handleWebShare} className="share-btn native">
-                        모바일 공유
-                    </button>
+                    {/*<button onClick={handleWebShare} className="share-btn native">*/}
+                    {/*    모바일 공유*/}
+                    {/*</button>*/}
                     <button onClick={handleCopyLink} className="share-btn link">
                         링크 복사
                     </button>
