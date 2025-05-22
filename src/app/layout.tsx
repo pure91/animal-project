@@ -4,9 +4,6 @@ import Footer from "@/app/components/Footer";
 import {ReactNode} from "react";
 import Script from "next/script";
 import CoupangPCBottom from "@/app/components/advertise/Coupang/CoupangPCBottom";
-import CoupangMobileTop from "@/app/components/advertise/Coupang/CoupangMobileTop";
-import CoupangPCLeft from "@/app/components/advertise/Coupang/CoupangPCLeft";
-import CoupangPCRight from "@/app/components/advertise/Coupang/CoupangPCRight";
 import CoupangMobileBottom from "@/app/components/advertise/Coupang/CoupangMobileBottom";
 
 // 카카오 공유 window 객체 타입 선언
@@ -59,12 +56,8 @@ export default function RootLayout({children}: { children: ReactNode }) {
         {/* Kakao Share */}
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="beforeInteractive"/>
         <Header/>
-        {/* Coupang Partners */}
-        {/*<CoupangMobileTop/>*/}
         <main>
-            {/*<CoupangPCLeft/>*/}
             {children}
-            {/*<CoupangPCRight/>*/}
         </main>
         <CoupangPCBottom/>
         <CoupangMobileBottom/>
