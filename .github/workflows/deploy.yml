@@ -44,7 +44,7 @@ jobs:
             IMAGE="ghcr.io/${{ github.repository }}:latest"
           
             # 점검 모드 ON
-            touch /var/www/maintenance/on
+            sudo touch /var/www/maintenance/on
           
             # 로그인 및 최신 이미지 pull
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -67,5 +67,5 @@ jobs:
             docker image prune -f
             
             # 점검 모드 OFF
-            rm /var/www/maintenance/on
+            sudo rm /var/www/maintenance/on
           EOF
