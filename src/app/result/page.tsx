@@ -105,6 +105,15 @@ function ResultContent() {
         }
     };
 
+    // 트위터 공유 핸들러
+    const handleTwitterShare = () => {
+        const text = `나의 동물 성향은 ${type}타입의⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}\n\n결과 확인👉`;
+        const url = encodeURIComponent(window.location.href);
+        const tweetText = encodeURIComponent(text);
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`;
+        window.open(twitterUrl, "_blank");
+    };
+
     // 모바일 공유 기능
     // const handleWebShare = async () => {
     //     if (!navigator.share) {
@@ -220,13 +229,16 @@ function ResultContent() {
                 </ul>
                 <div className="button-group">
                     {/*<button onClick={handleWebShare} className="share-btn native">*/}
-                    {/*    모바일 공유*/}
+                    {/* 모바일 공유*/}
                     {/*</button>*/}
-                    <button onClick={handleCopyLink} className="share-btn link">
+                    <button onClick={handleCopyLink} className="share-btn link-copy">
                         링크 복사
                     </button>
                     <button onClick={handleKakaoShare} className="share-btn kakao">
                         카카오톡 공유
+                    </button>
+                    <button onClick={handleTwitterShare} className="share-btn twitter">
+                        트위터 공유
                     </button>
                     <Link href="/" className="home-link">
                         Home
