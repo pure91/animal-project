@@ -2,58 +2,67 @@ name: Deploy to Server (Docker)
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:  # GitHub Actions 수동 실행 지원
+    branches: [ main ]            # main 브랜치에 push될 때 자동 실행
+  workflow_dispatch:              # GitHub Actions 수동 실행 지원
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository }}:latest   # GHCR 이미지 이름
+  IMAGE_NAME: ghcr.io/${{ github.repository }}:latest   # GHCR에 업로드될 Docker 이미지 이름
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. 레포지토리 체크아웃
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # ---------- (1) Docker 이미지 빌드, arg 명령어로 환경변수 전달 ----------
+      # 2. Docker 이미지 빌드 (환경변수 전달 포함)
       - name: Build Docker image
         run: |
           docker build \
             --build-arg NEXT_PUBLIC_KAKAO_SHARE=${{ secrets.NEXT_PUBLIC_KAKAO_SHARE }} \
             -t $IMAGE_NAME .
 
-      # ---------- (2) GHCR에 로그인 ----------
+      # 3. GHCR에 로그인
       - name: Login to GHCR
         run: |
           echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      # ---------- (3) GHCR에 이미지 푸시 ----------
+      # 4. GHCR에 Docker 이미지 푸시
       - name: Push image to GHCR
         run: docker push $IMAGE_NAME
 
-      # ---------- (4) 서버에 접속하여 Docker 이미지 Pull 및 실행 ----------
+      # 5. 서버에 배포 진행
       - name: Deploy to server
         run: |
+          # ----- SSH 키 설정 -----
           mkdir -p ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
+          # ----- 정적 점검 페이지 동기화 -----
+          rsync -avz -e "ssh -i ~/.ssh/id_rsa -p 22 -o StrictHostKeyChecking=no" \
+            public/maintenance/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/maintenance/
+
+          # ----- 서버 접속 및 배포 실행 -----
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22 \
               ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+
+            set -e  # 에러 발생 시 즉시 종료
             IMAGE="ghcr.io/${{ github.repository }}:latest"
-          
+
             # 점검 모드 ON
-            sudo touch /var/www/maintenance/on
-          
-            # 로그인 및 최신 이미지 pull
+            touch /var/www/maintenance/on
+
+            # 최신 이미지 Pull
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull $IMAGE
-            
-            # 기존 컨테이너 종료 및 제거
+
+            # 기존 컨테이너 중지 및 삭제
             docker stop animal || true
             docker rm animal || true
-            
+
             # 새 컨테이너 실행
             docker run -d --name animal --network animal-net \
               -e DB_HOST=${{ secrets.DB_HOST }} \
@@ -62,10 +71,10 @@ jobs:
               -e DB_NAME=${{ secrets.DB_NAME }} \
               -e NEXT_PUBLIC_KAKAO_SHARE=${{ secrets.NEXT_PUBLIC_KAKAO_SHARE }} \
               -p 3000:3000 --restart=always $IMAGE
-            
+
             # 이미지 캐시 정리
             docker image prune -f
-            
+
             # 점검 모드 OFF
-            sudo rm /var/www/maintenance/on
+            rm /var/www/maintenance/on
           EOF
