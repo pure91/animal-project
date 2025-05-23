@@ -369,36 +369,44 @@ a:hover {
     color: white;
 }
 
-.share-btn.native {
-    background-color: #4a90e2;
-}
+/* 현재 공용 웹 공유 안쓰는 중 250523 */
+/*.share-btn.native {*/
+/*    background-color: #4a90e2;*/
+/*}*/
 
-.share-btn.native:hover {
-    background-color: #357ae8;
-}
+/*.share-btn.native:hover {*/
+/*    background-color: #357ae8;*/
+/*}*/
 
-.share-btn.link {
+.share-btn.link-copy {
     background-color: #43cb73;
 }
 
-.share-btn.link:hover {
+.share-btn.link-copy:hover {
     background-color: #10af34;
 }
 
 .share-btn.kakao {
-    background-color: rgba(244, 212, 48, 0.9);
+    background-color: #f8cc5f;
 }
 
 .share-btn.kakao:hover {
-    background-color: #f3c50c;
+    background-color: #f8c411;
+}
+
+.share-btn.twitter {
+    background-color: #14cfea;
+}
+
+.share-btn.twitter:hover {
+    background-color: #0bc2dc;
 }
 
 .home-link {
     display: inline-block;
     font-size: 19px;
     font-weight: bold;
-    color: #fff;
-    background-color: #5ba9fb;
+    background-color: #7e76ff;
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 30px;
@@ -406,8 +414,7 @@ a:hover {
 }
 
 .home-link:hover {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #665bfb;
 }
 /*********** 결과 후 링크 스타일 끝 ***********/
 
@@ -597,6 +604,10 @@ a:hover {
         font-size: 12px;
     }
 
+    .character-card {
+        padding: 10px 20px 20px 20px;
+    }
+
     .character-card img {
         width: 100%;
         height: 100%;
@@ -632,6 +643,10 @@ a:hover {
         font-size: 14px;
     }
 
+    .character-card ul {
+        padding: 10px;
+    }
+
     .character-card li {
         font-size: 11px;
     }
@@ -648,7 +663,7 @@ a:hover {
     }
 
     .home-link {
-        font-size: 12px;
+        font-size: 11px;
         padding: 8px 10px 8px 10px;
     }
 }
