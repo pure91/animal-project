@@ -1,7 +1,7 @@
 > 본 프로젝트는 MIT 라이선스 하에 배포됩니다.
 >
 
-# 🐯 Zootypes - 동물 성격 유형 테스트
+# 🐯 Zootypes - 동물 성격 테스트
 
 [![Deploy](https://github.com/pure91/animal-project/actions/workflows/deploy.yml/badge.svg)](https://github.com/pure91/animal-project/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -9,14 +9,14 @@
 [![React](https://img.shields.io/badge/React-19.x-purple)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/)
 
-> 성격 유형 테스트를 통해 동물로 변신하여 🐯 호랑이의 생일 파티에 참가해보세요!  
+> 성격 테스트를 통해 동물로 변신하여 🐯 호랑이의 생일 파티에 참가해보세요!  
 > 👉 [https://zootypes.com](https://zootypes.com)
 
 ---
 
 ## 🐾 프로젝트 소개
 
-**Zootypes**는 MBTI® 성격 유형 이론에서 영감을 받아 제작된 **동물 성격 유형 테스트 웹사이트**입니다.  
+**Zootypes**는 MBTI® 성격 유형 이론에서 영감을 받아 제작된 **동물 성격 테스트 웹사이트**입니다.  
 사용자는 질문에 답하면서 자신의 성격 유형에 맞는 동물로 변신하고, 결과에 따른 설명을 확인하고 공유할 수 있습니다.
 
 > ※ 본 테스트는 MBTI® 성격 유형 이론을 참고하여 제작된 자체 콘텐츠로, 공식 MBTI® 검사와는 무관합니다. 단순 재미로 즐겨주세요 😊  
