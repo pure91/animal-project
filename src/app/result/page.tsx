@@ -186,13 +186,13 @@ function ResultContent() {
                 </div>
 
                 <div className="trait-bar-container">
-                    <TraitBar description="내성적인,외향적인" element="에너지" leftLabel="W" rightLabel="X"
+                    <TraitBar description="내향형,외향형" element="에너지" leftLabel="W" rightLabel="X"
                               leftValue={resultTraits.W} rightValue={resultTraits.X}/>
-                    <TraitBar description="감각적인,직관적인" element="인식" leftLabel="A" rightLabel="I"
+                    <TraitBar description="현실형,추상형" element="인식" leftLabel="A" rightLabel="I"
                               leftValue={resultTraits.A} rightValue={resultTraits.I}/>
-                    <TraitBar description="감성적인,이성적인" element="의사결정" leftLabel="F" rightLabel="T"
+                    <TraitBar description="감성형,이성형" element="의사결정" leftLabel="F" rightLabel="T"
                               leftValue={resultTraits.F} rightValue={resultTraits.T}/>
-                    <TraitBar description="계획적인,자유로운" element="라이프" leftLabel="S" rightLabel="U"
+                    <TraitBar description="계획형,자유형" element="라이프" leftLabel="S" rightLabel="U"
                               leftValue={resultTraits.S} rightValue={resultTraits.U}/>
                 </div>
                 <div className="stats-section">

@@ -464,9 +464,11 @@ a:hover {
     display: flex;
     height: 28px;
     border-radius: 10px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     margin-bottom: 8px;
     position: relative;
+    overflow: visible; /* 툴팁이 바깥으로 나올 수 있게 함 */
+    position: relative; /* 툴팁의 absolute 기준 */
 }
 
 /* 왼쪽 오른쪽 bar */
@@ -497,7 +499,6 @@ a:hover {
     justify-content: center;
     align-items: center;
     white-space: nowrap;
-    pointer-events: none;
     font-size: 13px;
     z-index: 1;
 }
@@ -523,6 +524,44 @@ a:hover {
 .bar-text-right {
     font-size: 12px;
     right: 5px;
+}
+
+/* 지표 툴팁 */
+.tooltip {
+    position: relative;
+    cursor: help;
+    display: inline-block;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: max-content;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 10;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 툴팁이 오른쪽 라벨일 경우 왼쪽으로 맞추기 */
+.tooltip-right .tooltip-text {
+    left: auto;
+    right: 0;
+    transform: translateX(0%);
 }
 
 /*********** 결과 div 스타일 끝 ***********/
