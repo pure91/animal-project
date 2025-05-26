@@ -23,7 +23,7 @@ export default function KaKaoAdMobileTop() {
         <>
             <ins
                 className="kakao_ad_area"
-                style={{display: "none"}}
+                style={{display: "none", marginTop: "-20px"}}
                 data-ad-unit="DAN-Z3dBCJFSTNoWEHvK"
                 data-ad-width="320"
                 data-ad-height="50"

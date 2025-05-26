@@ -3,7 +3,7 @@
 import {useEffect, useState} from "react";
 import Script from "next/script";
 
-/** PC/M 겸용 정사각에 가까운 직사각형 하단 배치 */
+/** 모바일용 가로를 채우는 직사각형 하단 배치 */
 export default function KakaoAdMobileBottom() {
     const [isMobileBottom, setIsMobileBottom] = useState(false);
 
@@ -22,14 +22,11 @@ export default function KakaoAdMobileBottom() {
 
     return (
         <div style={{textAlign: "center"}}>
-            <ins
-                className="kakao_ad_area"
-                style={{display:"none"}}
-                data-ad-unit="DAN-HJOimM1VFybaBUeU"
-                data-ad-width="300"
-                data-ad-height="250"
-            ></ins>
-            <Script src="//t1.daumcdn.net/kas/static/ba.min.js" strategy="lazyOnload" />
+            <ins className="kakao_ad_area" style={{display: "none"}}
+                 data-ad-unit="DAN-HJOimM1VFybaBUeU"
+                 data-ad-width="320"
+                 data-ad-height="100"></ins>
+            <Script src="//t1.daumcdn.net/kas/static/ba.min.js" strategy="lazyOnload"/>
         </div>
     );
 }
