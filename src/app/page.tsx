@@ -11,9 +11,9 @@ import rawAnimalTypes from '@/app/data/animalTypes.json';
 import {calculateTypeAndTies, determineLevel} from "@/utils/animalUtils";
 import type {AnimalData, LevelKeys} from "@/types/animalTypes";
 import toast, {Toaster} from "react-hot-toast";
-import CoupangMobileTop from "@/app/components/advertise/Coupang/CoupangMobileTop";
-import CoupangPCLeft from "./components/advertise/Coupang/CoupangPCLeft";
-import CoupangPCRight from "@/app/components/advertise/Coupang/CoupangPCRight";
+import KaKaoAdMobileTop from "@/app/components/advertise/KaKao/KaKaoAdMobileTop";
+import KakaoAdPCLeft from "@/app/components/advertise/KaKao/KakaoAdPCLeft";
+import KakaoAdPCRight from "@/app/components/advertise/KaKao/KakaoAdPCRight";
 
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
@@ -293,13 +293,6 @@ export default function Home() {
     return (
         <div className="result-section">
             <Toaster position="top-center"/>
-            {started &&
-                <>
-                    <CoupangMobileTop/>
-                    <CoupangPCLeft/>
-                    <CoupangPCRight/>
-                </>
-            }
             {showResult ? (
                 // 결과 보기 버튼
                 <>

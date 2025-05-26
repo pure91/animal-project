@@ -9,8 +9,8 @@ import Image from "next/image";
 import rawAnimalTypes from '@/app/data/animalTypes.json';
 import {getCharacterProfile} from '@/utils/animalUtils';
 import type {AnimalData, TraitKeys} from '@/types/animalTypes';
-import CoupangPCLeft from "@/app/components/advertise/Coupang/CoupangPCLeft";
-import CoupangPCRight from "@/app/components/advertise/Coupang/CoupangPCRight";
+import KakaoAdPCLeft from "@/app/components/advertise/KaKao/KakaoAdPCLeft";
+import KakaoAdPCRight from "@/app/components/advertise/KaKao/KakaoAdPCRight";
 
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
@@ -167,12 +167,6 @@ function ResultContent() {
     return (
         <div className="character-card-parent">
             <Toaster position="top-center"/>
-            {type &&
-                <>
-                    <CoupangPCLeft/>
-                    <CoupangPCRight/>
-                </>
-            }
             <div className="character-card">
                 {type !== "HUMAN" ? <h1>🎉변신 성공🎉</h1> : <h1>☠️ 변신 실패 ☠️</h1>}
                 <h2><span>{type}</span> 타입 ⭐{characterProfile?.name || "알 수 없음"}⭐</h2>
@@ -185,15 +179,18 @@ function ResultContent() {
                     />
                 </div>
 
+
                 <div className="trait-bar-container">
-                    <TraitBar description="내향,외향" element="에너지 방향" leftLabel="I" rightLabel="O"
-                              leftValue={resultTraits.I} rightValue={resultTraits.O}/>
-                    <TraitBar description="현실,추상" element="인식 기능" leftLabel="R" rightLabel="D"
-                              leftValue={resultTraits.R} rightValue={resultTraits.D}/>
-                    <TraitBar description="감성,이성" element="판단 기능" leftLabel="E" rightLabel="C"
-                              leftValue={resultTraits.E} rightValue={resultTraits.C}/>
-                    <TraitBar description="계획,적응" element="생활 방식" leftLabel="S" rightLabel="A"
-                              leftValue={resultTraits.S} rightValue={resultTraits.A}/>
+                    <div className="tooltip">
+                        <TraitBar description="내향,외향" element="에너지 방향" leftLabel="I" rightLabel="O"
+                                  leftValue={resultTraits.I} rightValue={resultTraits.O}/>
+                        <TraitBar description="현실,추상" element="인식 기능" leftLabel="R" rightLabel="D"
+                                  leftValue={resultTraits.R} rightValue={resultTraits.D}/>
+                        <TraitBar description="감성,이성" element="판단 기능" leftLabel="E" rightLabel="C"
+                                  leftValue={resultTraits.E} rightValue={resultTraits.C}/>
+                        <TraitBar description="계획,적응" element="생활 방식" leftLabel="S" rightLabel="A"
+                                  leftValue={resultTraits.S} rightValue={resultTraits.A}/>
+                    </div>
                 </div>
                 <div className="stats-section">
                     {loading && <p>통계 불러오는 중...</p>}
@@ -201,14 +198,17 @@ function ResultContent() {
                     {stats && (
                         <p>
                             🔍 전체 <span className="first-color">{stats.totalCount}명</span> 중 <b>{type}</b> 타입은
-                            <span className="first-color"> {stats.typeCount}명 ({stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%)
+                            <span
+                                className="first-color"> {stats.typeCount}명 ({stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%)
                             </span>
                             <br/>
                             {type !== 'HUMAN' && (
                                 <>
                                     🔍 당신은 <b>{type}</b> 타입 <span className="first-color">{stats.typeCount}명</span> 중
-                                    <span className="second-color"> {stats.levelCount}명</span>인 <b>⭐{characterProfile?.name}⭐</b>
-                                    <span className="second-color"> ({stats.typeCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)
+                                    <span
+                                        className="second-color"> {stats.levelCount}명</span>인 <b>⭐{characterProfile?.name}⭐</b>
+                                    <span
+                                        className="second-color"> ({stats.typeCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)
                                     </span>
                                     <br/>
                                 </>

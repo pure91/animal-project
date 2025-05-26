@@ -23,7 +23,7 @@ const TraitBar: React.FC<TraitBarProps> = ({
 
     const [leftDesc, rightDesc] = description ? description.split(",") : ["", ""];
 
-     const tooltipMap: Record<string, string> = {
+    const tooltipMap: Record<string, string> = {
         I: "Inward",
         O: "Outward",
         R: "Realistic",
@@ -46,7 +46,7 @@ const TraitBar: React.FC<TraitBarProps> = ({
                 <div className="trait-bar-left" style={{width: `${leftPercent}%`}}>
                     {leftPercent > 0 && (
                         <span className="bar-text bar-text-left">
-                            <strong className="tooltip">
+                            <strong>
                                 {leftLabel}
                                 <span className="tooltip-text">{tooltipMap[leftLabel]}</span>
                             </strong>
@@ -58,7 +58,7 @@ const TraitBar: React.FC<TraitBarProps> = ({
                     {rightPercent > 0 && (
                         <span className="bar-text bar-text-right">
                             <span>{rightPercent.toFixed(1)}%</span>
-                            <strong className="tooltip">
+                            <strong>
                                 {rightLabel}
                                 <span className="tooltip-text">{tooltipMap[rightLabel]}</span>
                             </strong>
@@ -68,7 +68,7 @@ const TraitBar: React.FC<TraitBarProps> = ({
 
                 {leftPercent === 0 && (
                     <span className="bar-text bar-text-left fixed-text">
-                        <strong className="tooltip">
+                        <strong>
                             {leftLabel}
                             <span className="tooltip-text">{tooltipMap[leftLabel]}</span>
                         </strong>{" "}
@@ -78,7 +78,7 @@ const TraitBar: React.FC<TraitBarProps> = ({
                 {rightPercent === 0 && (
                     <span className="bar-text bar-text-right fixed-text">
                         0.0%{" "}
-                        <strong className="tooltip">
+                        <strong>
                             {rightLabel}
                             <span className="tooltip-text">{tooltipMap[rightLabel]}</span>
                         </strong>
