@@ -48,7 +48,7 @@ function ResultContent() {
     const animalData: AnimalData = animalTypes[type];
 
     // traits 키 배열
-    const traitKeys: TraitKeys[] = ["W", "X", "A", "I", "F", "T", "S", "U"];
+    const traitKeys: TraitKeys[] = ["I", "O", "R", "D", "E", "C", "S", "A"];
 
     // URL의 traits 전체 값 받아옴
     const resultTraits: Record<TraitKeys, number> = traitKeys.reduce((acc, key) => {
@@ -141,22 +141,22 @@ function ResultContent() {
 
     // 타입별 동물 이미지 매핑
     const animalImages: Record<string, string> = {
-        WAFS: "/images/hedgehog.png",
-        WATS: "/images/turtle.png",
-        WIFS: "/images/cat.png",
-        WITS: "/images/penguin.png",
-        WAFU: "/images/rabbit.png",
-        WATU: "/images/badger.png",
-        WIFU: "/images/fox.png",
-        WITU: "/images/weasel.png",
-        XAFS: "/images/dog.png",
-        XATS: "/images/wolf.png",
-        XIFS: "/images/lion.png",
-        XITS: "/images/elephant.png",
-        XAFU: "/images/dolphin.png",
-        XATU: "/images/shark.png",
-        XIFU: "/images/squirrel.png",
-        XITU: "/images/octopus.png",
+        IRES: "/images/hedgehog.png",
+        IRCS: "/images/turtle.png",
+        IDES: "/images/cat.png",
+        IDCS: "/images/penguin.png",
+        IREA: "/images/rabbit.png",
+        IRCA: "/images/badger.png",
+        IDEA: "/images/fox.png",
+        IDCA: "/images/weasel.png",
+        ORES: "/images/dog.png",
+        ORCS: "/images/wolf.png",
+        ODES: "/images/lion.png",
+        ODCS: "/images/elephant.png",
+        OREA: "/images/dolphin.png",
+        ORCA: "/images/shark.png",
+        ODEA: "/images/squirrel.png",
+        ODCA: "/images/octopus.png",
         HUMAN: "/images/human.png",
     }
 
@@ -186,14 +186,14 @@ function ResultContent() {
                 </div>
 
                 <div className="trait-bar-container">
-                    <TraitBar description="내향형,외향형" element="에너지" leftLabel="W" rightLabel="X"
-                              leftValue={resultTraits.W} rightValue={resultTraits.X}/>
-                    <TraitBar description="현실형,추상형" element="인식" leftLabel="A" rightLabel="I"
-                              leftValue={resultTraits.A} rightValue={resultTraits.I}/>
-                    <TraitBar description="감성형,이성형" element="의사결정" leftLabel="F" rightLabel="T"
-                              leftValue={resultTraits.F} rightValue={resultTraits.T}/>
-                    <TraitBar description="계획형,자유형" element="라이프" leftLabel="S" rightLabel="U"
-                              leftValue={resultTraits.S} rightValue={resultTraits.U}/>
+                    <TraitBar description="내향,외향" element="에너지 방향" leftLabel="I" rightLabel="O"
+                              leftValue={resultTraits.I} rightValue={resultTraits.O}/>
+                    <TraitBar description="현실,추상" element="인식 기능" leftLabel="R" rightLabel="D"
+                              leftValue={resultTraits.R} rightValue={resultTraits.D}/>
+                    <TraitBar description="감성,이성" element="판단 기능" leftLabel="E" rightLabel="C"
+                              leftValue={resultTraits.E} rightValue={resultTraits.C}/>
+                    <TraitBar description="계획,적응" element="생활 방식" leftLabel="S" rightLabel="A"
+                              leftValue={resultTraits.S} rightValue={resultTraits.A}/>
                 </div>
                 <div className="stats-section">
                     {loading && <p>통계 불러오는 중...</p>}

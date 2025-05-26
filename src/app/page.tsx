@@ -38,9 +38,9 @@ export default function Home() {
 
     // 점수 계산
     const [scores, setScores] = useState<{
-        W: number; X: number; A: number; I: number; F: number; T: number; S: number; U: number;
+        I: number; O: number; R: number; D: number; E: number; C: number; S: number; A: number;
     }>({
-        W: 0, X: 0, A: 0, I: 0, F: 0, T: 0, S: 0, U: 0,
+        I: 0, O: 0, R: 0, D: 0, E: 0, C: 0, S: 0, A: 0,
     });
 
     const router = useRouter();
@@ -52,7 +52,7 @@ export default function Home() {
             setStarted(false);
             setCurrentQuestion(0);
             setAnswers([]);
-            setScores({W: 0, X: 0, A: 0, I: 0, F: 0, T: 0, S: 0, U: 0});
+            setScores({I: 0, O: 0, R: 0, D: 0, E: 0, C: 0, S: 0, A: 0});
             setIsTieState(false);
         }
     }, [pathname]);

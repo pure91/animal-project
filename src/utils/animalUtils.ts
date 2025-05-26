@@ -15,10 +15,10 @@ export function calculateTypeAndTies(scores: Record<TraitKeys, number>): {
     }
 
     // 동점이 있다면 ties 배열에 push
-    if (scores.W === scores.X) ties.push("W/X");
-    if (scores.A === scores.I) ties.push("A/I");
-    if (scores.F === scores.T) ties.push("F/T");
-    if (scores.S === scores.U) ties.push("S/U");
+    if (scores.I === scores.O) ties.push("I/O");
+    if (scores.R === scores.D) ties.push("R/D");
+    if (scores.E === scores.C) ties.push("E/C");
+    if (scores.S === scores.A) ties.push("S/A");
 
     // 동점 발생 시 리턴
     if (ties.length > 0) {
@@ -28,10 +28,10 @@ export function calculateTypeAndTies(scores: Record<TraitKeys, number>): {
     // 최종 타입 생성
     return {
         type: [
-            scores.W > scores.X ? "W" : "X",
-            scores.A > scores.I ? "A" : "I",
-            scores.F > scores.T ? "F" : "T",
-            scores.S > scores.U ? "S" : "U",
+            scores.I > scores.O ? "I" : "O",
+            scores.R > scores.D ? "R" : "D",
+            scores.E > scores.C ? "E" : "C",
+            scores.S > scores.A ? "S" : "A",
         ].join(""),
         ties: []
     };
@@ -41,7 +41,7 @@ export function calculateTypeAndTies(scores: Record<TraitKeys, number>): {
 export function determineLevel(Traits: Record<TraitKeys, number>, AnimalData: AnimalData): LevelKeys {
     let minDiff = Infinity;
     let bestLevel: LevelKeys = "1";
-    const keys: TraitKeys[] = ["W", "X", "A", "I", "F", "T", "S", "U"];
+    const keys: TraitKeys[] = ["I", "O", "R", "D", "E", "C", "S", "A"];
 
     // type은 이미 정해졌기에 AnimalData.types의 모든 레벨(1~4) 탐색
     for (const level in AnimalData.types) {
@@ -63,7 +63,7 @@ export function determineLevel(Traits: Record<TraitKeys, number>, AnimalData: An
 export function getCharacterProfile(ResultTraits: Record<TraitKeys, number>, AnimalData: AnimalData["types"]): Subtype | null {
     let minDiff = Infinity;
     let bestProfile: Subtype | null = null;
-    const keys: TraitKeys[] = ["W", "X", "A", "I", "F", "T", "S", "U"];
+    const keys: TraitKeys[] = ["I", "O", "R", "D", "E", "C", "S", "A"];
 
     // AnimalData의 모든 서브타입 중에서 사용자 traits와 가장 차이가 적은 프로필로 선택
     Object.values(AnimalData).flat().forEach((subtypes) => {

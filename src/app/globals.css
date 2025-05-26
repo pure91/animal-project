@@ -444,7 +444,7 @@ a:hover {
 .trait-bar-description .desc-right {
     width: 33%;
     font-size: 14px;
-    margin-top: 5px;
+    margin-top: 8px;
     text-align: left;
 }
 
@@ -533,7 +533,7 @@ a:hover {
     display: inline-block;
 }
 
-.tooltip-text {
+span .tooltip-text {
     visibility: hidden;
     opacity: 0;
     width: max-content;
@@ -541,10 +541,10 @@ a:hover {
     color: #fff;
     text-align: center;
     padding: 4px 8px;
-    border-radius: 6px;
+    border-radius: 10px;
     position: absolute;
     z-index: 10;
-    bottom: 130%;
+    bottom: 180%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 12px;

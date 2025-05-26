@@ -23,24 +23,15 @@ const TraitBar: React.FC<TraitBarProps> = ({
 
     const [leftDesc, rightDesc] = description ? description.split(",") : ["", ""];
 
-    // 이거 시간날때 DB랑 타입 구조 다 바꿀때 뜻도 바꿔야함
-    // I = In 내향형
-    // O = Outgoing 외향형
-    // R = Realistic 현실형
-    // D = Divergent 추상형
-    // E = Empathy 감정형
-    // C = Critical 이성형
-    // S = Structure 계획형
-    // A = Adaptive 자유형
-    const tooltipMap: Record<string, string> = {
-        W: "Withdrawn",
-        X: "Expressive",
-        A: "Aware",
-        I: "Intuitive",
-        F: "Feeling",
-        T: "Thinking",
-        S: "Systematic",
-        U: "Unstructured",
+     const tooltipMap: Record<string, string> = {
+        I: "Inward",
+        O: "Outward",
+        R: "Realistic",
+        D: "Divergent",
+        E: "Empathy",
+        C: "Critical",
+        S: "Structure",
+        A: "Adaptive",
     };
 
     return (
