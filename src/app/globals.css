@@ -326,7 +326,14 @@ a:hover {
 
 .stats-section p span {
     font-weight: bold;
+}
+
+.first-color {
     color: #257ae7;
+}
+
+.second-color {
+    color: #f49419;
 }
 
 /* 특성 리스트 */
