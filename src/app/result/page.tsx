@@ -9,8 +9,6 @@ import Image from "next/image";
 import rawAnimalTypes from '@/app/data/animalTypes.json';
 import {getCharacterProfile} from '@/utils/animalUtils';
 import type {AnimalData, TraitKeys} from '@/types/animalTypes';
-import KakaoAdPCLeft from "@/app/components/advertise/KaKao/KakaoAdPCLeft";
-import KakaoAdPCRight from "@/app/components/advertise/KaKao/KakaoAdPCRight";
 
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;

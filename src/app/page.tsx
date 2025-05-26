@@ -11,9 +11,6 @@ import rawAnimalTypes from '@/app/data/animalTypes.json';
 import {calculateTypeAndTies, determineLevel} from "@/utils/animalUtils";
 import type {AnimalData, LevelKeys} from "@/types/animalTypes";
 import toast, {Toaster} from "react-hot-toast";
-import KaKaoAdMobileTop from "@/app/components/advertise/KaKao/KaKaoAdMobileTop";
-import KakaoAdPCLeft from "@/app/components/advertise/KaKao/KakaoAdPCLeft";
-import KakaoAdPCRight from "@/app/components/advertise/KaKao/KakaoAdPCRight";
 
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
