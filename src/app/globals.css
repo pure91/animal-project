@@ -522,7 +522,7 @@ a:hover {
 .bar-text-left {
     font-size: 12px;
     color: #666;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
 }
 
 .bar-text-right {
@@ -560,13 +560,13 @@ span .tooltip-text {
 /* 왼쪽 라벨 툴팁 */
 .bar-text-left strong .tooltip-text {
     left: 0;
-    transform: translateX(-20%);
+    transform: translateX(-5%);
 }
 
 /* 오른쪽 라벨 툴팁 */
 .bar-text-right strong .tooltip-text {
     right: 0;
-    transform: translateX(15%);
+    transform: translateX(5%);
 }
 
 .tooltip:hover .tooltip-text {
