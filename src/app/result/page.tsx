@@ -103,6 +103,12 @@ function ResultContent() {
         }
     };
 
+    // 페이스북 공유 핸들러
+    const handleFaceBookShare = () => {
+        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://zootypes.com/share/${type}`)}`;
+        window.open(shareUrl, "_blank");
+    }
+
     // 트위터 공유 핸들러
     const handleTwitterShare = () => {
         const text = `나의 동물 성향은 ${type}타입의⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}\n\n결과 확인👉`;
@@ -234,6 +240,9 @@ function ResultContent() {
                     </button>
                     <button onClick={handleKakaoShare} className="share-btn kakao">
                         카카오톡 공유
+                    </button>
+                    <button onClick={handleFaceBookShare} className="share-btn facebook">
+                        페이스북 공유
                     </button>
                     <button onClick={handleTwitterShare} className="share-btn twitter">
                         트위터 공유

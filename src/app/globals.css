@@ -386,11 +386,11 @@ a:hover {
 /*}*/
 
 .share-btn.link-copy {
-    background-color: #43cb73;
+    background-color: #3acc6d;
 }
 
 .share-btn.link-copy:hover {
-    background-color: #10af34;
+    background-color: #13bf3a;
 }
 
 .share-btn.kakao {
@@ -399,6 +399,14 @@ a:hover {
 
 .share-btn.kakao:hover {
     background-color: #f8c411;
+}
+
+.share-btn.facebook {
+    background-color: #1a7aea;
+}
+
+.share-btn.facebook:hover {
+    background-color: #0b65cd;
 }
 
 .share-btn.twitter {
@@ -701,7 +709,7 @@ span .tooltip-text {
 
     .button-group {
         gap: 10px;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
     }
 
     .share-btn {
