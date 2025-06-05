@@ -2,6 +2,7 @@ import {redirect} from 'next/navigation';
 import rawAnimalTypes from '@/app/data/animalTypes.json';
 import {getCharacterProfile} from '@/utils/animalUtils';
 import type {AnimalData} from '@/types/animalTypes';
+import {Metadata} from "next";
 
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
 
@@ -27,7 +28,7 @@ const animalImages: Record<string, string> = {
 };
 
 /** 공유용 SSR 페이지 */
-export async function generateMetadata({params}: { params: { type: string } }) {
+export async function generateMetadata({params}: { params: { type: string } }): Promise<Metadata> {
     const type = params.type;
     const animalData = animalTypes[type] as AnimalData | undefined;
     const imageUrl = `https://zootypes.com${animalImages[type] ?? '/images/animalAll.png'}`;
