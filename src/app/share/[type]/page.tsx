@@ -1,6 +1,6 @@
-import {redirect} from 'next/navigation';
+import { redirect } from "next/navigation";
 
-export default async function ShareRedirectPage({
+export default function ShareRedirectPage({
   params,
 }: {
   params: { type: string | string[] };
