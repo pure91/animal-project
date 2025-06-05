@@ -1,19 +1,10 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
-export default function ShareRedirectPage({
-  params,
-}: {
+type Props = {
   params: { type: string | string[] };
-}) {
-  const router = useRouter();
+};
+
+export default function Page({ params }: Props) {
   const type = Array.isArray(params.type) ? params.type[0] : params.type;
-
-  useEffect(() => {
-    router.push(`/result?type=${type}`);
-  }, [router, type]);
-
-  return null; // 화면에 아무것도 안 그리기
+  redirect(`/result?type=${type}`);
 }
