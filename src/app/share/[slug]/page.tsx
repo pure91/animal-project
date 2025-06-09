@@ -65,7 +65,7 @@ export async function generateMetadata({params}: { params: Promise<{ slug: strin
         },
         // 트위터 메타태그
         twitter: {
-            card: "summary_large_image", // 미리보기 큰 카드, 추후 summary랑 크기 비교해보기
+            card: "summary",
             title: `나의 유형은 ${type}`,
             description: `⭐${characterProfile?.name ?? "알 수 없음"}⭐ - ${characterProfile?.description ?? ""}`,
             images: [imageUrl],
