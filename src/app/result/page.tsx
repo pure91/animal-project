@@ -8,7 +8,8 @@ import toast, {Toaster} from "react-hot-toast";
 import Image from "next/image";
 import rawAnimalTypes from '@/app/data/animalTypes.json';
 import {getCharacterProfile} from '@/utils/animalUtils';
-import type {AnimalData, TraitKeys} from '@/types/animalTypes';
+import type {AnimalData, TraitKeys, LevelKeys} from '@/types/animalTypes';
+import {createShareSlug} from "@/utils/shareUtils";
 
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
@@ -105,7 +106,8 @@ function ResultContent() {
 
     // 페이스북 공유 핸들러
     const handleFaceBookShare = () => {
-        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://zootypes.com/share/${type}`)}`;
+        const slug = createShareSlug(resultTraits, type, level as LevelKeys);
+        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://zootypes.com/share/${slug}`)}`;
         window.open(shareUrl, "_blank");
     }
 
