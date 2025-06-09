@@ -1,4 +1,3 @@
-import {redirect} from "next/navigation";
 import rawAnimalTypes from "@/app/data/animalTypes.json";
 import type {AnimalData} from "@/types/animalTypes";
 import type {Metadata} from "next";
@@ -35,17 +34,17 @@ export async function generateMetadata({params}: { params: Promise<{ slug: strin
 
     const parsed = parseShareSlug(slug);
     if (!parsed) {
-        return { title: "파싱 오류", description: "파싱에 실패하였습니다." };
+        return {title: "파싱 오류", description: "파싱에 실패하였습니다."};
     }
 
     const {traits, type, level} = parsed;
     if (!level) {
-        return { title: "레벨 없음", description: "레벨이 존재하지 않습니다" };
+        return {title: "레벨 없음", description: "레벨이 존재하지 않습니다"};
     }
 
     const animalData = animalTypes[type];
     if (!animalData) {
-      return {title: "알 수 없는 유형", description: "데이터가 존재하지 않습니다.",};
+        return {title: "알 수 없는 유형", description: "데이터가 존재하지 않습니다.",};
     }
 
     const imageUrl = `https://zootypes.com${animalImages[type] ?? "/images/animalAll.png"}`;
@@ -70,9 +69,9 @@ export default async function Page({params}: { params: Promise<{ slug: string }>
     const {slug} = await params;
     const parsed = parseShareSlug(slug);
 
+    // 서버가 html 만들기전에 redirect 해버리면 페이스북은 js를 안 읽어서 그냥 기본 정적 og를 보여줌
     if (!parsed) {
-        redirect(`/result?type=${slug}`);
-        return;
+        return <div>잘못된 링크입니다.</div>;
     }
 
     const searchParams = new URLSearchParams({
@@ -87,5 +86,17 @@ export default async function Page({params}: { params: Promise<{ slug: string }>
         type: parsed.type,
         level: parsed.level,
     });
-    redirect(`/result?${searchParams.toString()}`);
+
+    // 메타태그는 layout에있는 정적 og를 가져가면 안되고 generateMetadata에서 정적으로 메타데이터 og를 추가한걸로 던져줘야됨!
+    // html 먼저 주고 나중에 스크립트를 보내서 동적인 metadata 읽게 해야함
+    return (
+        <div>
+            <p>결과로 이동 중...</p>
+            <script
+                dangerouslySetInnerHTML={{
+                    __html: `window.location.href = "/result?${searchParams.toString()}"`,
+                }}
+            />
+        </div>
+    );
 }
