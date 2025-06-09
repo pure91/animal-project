@@ -1,7 +1,7 @@
-import type {Metadata} from 'next';
-import rawAnimalTypes from '@/app/data/animalTypes.json';
-import {getCharacterProfile} from '@/utils/animalUtils';
-import type {AnimalData} from '@/types/animalTypes';
+import rawAnimalTypes from "@/app/data/animalTypes.json";
+import type {AnimalData} from "@/types/animalTypes";
+import type {Metadata} from "next";
+import {getCharacterProfile} from "@/utils/animalUtils";
 
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
 
@@ -26,6 +26,7 @@ const animalImages: Record<string, string> = {
     HUMAN: "/images/human.png",
 };
 
+// 하나 이상의 메타데이터 필드를 포함하는 Metadata 객체를 반환(동적 페이지 메타데이터 생성 방법 -> use client 쓰면 안됨)
 export async function generateMetadata({params}: { params: { type: string } }): Promise<Metadata> {
     const type = params.type;
     const animalData = animalTypes[type];
