@@ -77,7 +77,6 @@ export default async function Page({params}: { params: Promise<{ slug: string }>
     const {slug} = await params;
     const parsed = parseShareSlug(slug);
 
-    // 서버가 html 만들기전에 redirect 해버리면 페이스북은 js를 안 읽어서 그냥 기본 정적 og를 보여줌
     if (!parsed) {
         return <div>잘못된 링크입니다.</div>;
     }
@@ -99,7 +98,6 @@ export default async function Page({params}: { params: Promise<{ slug: string }>
     // html 먼저 주고 나중에 스크립트를 보내서 동적인 metadata 읽게 해야함
     return (
         <div>
-            <p>결과로 이동 중...</p>
             <script
                 dangerouslySetInnerHTML={{
                     __html: `window.location.href = "/result?${searchParams.toString()}"`,

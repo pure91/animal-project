@@ -3,13 +3,17 @@
 import {useSearchParams} from "next/navigation";
 import Link from "next/link";
 import {Suspense, useEffect, useState} from "react";
-import TraitBar from "@/app/components/TraitBar";
-import toast, {Toaster} from "react-hot-toast";
 import Image from "next/image";
+import TraitBar from "@/app/components/TraitBar";
 import rawAnimalTypes from '@/app/data/animalTypes.json';
+import type {AnimalData, LevelKeys, TraitKeys} from '@/types/animalTypes';
 import {getCharacterProfile} from '@/utils/animalUtils';
-import type {AnimalData, TraitKeys, LevelKeys} from '@/types/animalTypes';
 import {createShareSlug} from "@/utils/shareUtils";
+import InstagramShareModal from "@/app/components/InstagramShareModal";
+import toast, {Toaster} from "react-hot-toast";
+import {IoIosLink} from "react-icons/io";
+import {FaFacebookF, FaTwitter, FaInstagram} from "react-icons/fa";
+import {SiKakaotalk} from "react-icons/si";
 
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
@@ -58,10 +62,13 @@ function ResultContent() {
     // 캐릭터 결정
     const characterProfile = animalData ? getCharacterProfile(resultTraits, animalData.types) : null;
 
+    // 인스타그램 모달 상태
+    const [showInstagramModal, setShowInstagramModal] = useState(false);
+
     // 링크 복사 핸들러
     const handleCopyLink = () => {
         navigator.clipboard.writeText(window.location.href).then(() => {
-            toast.success("복사 완료");
+            toast.success("링크 복사 완료");
         }).catch((err) => {
             console.error("링크 복사 실패:", err);
             toast.error("복사에 실패했습니다.");
@@ -92,7 +99,7 @@ function ResultContent() {
                 content: {
                     title: `나의 유형은 ${type}`,
                     description: `⭐${characterProfile?.name}⭐`,
-                    imageUrl: animalImageUrlForKakao,
+                    imageUrl: animalImageUrlAbsolutePath,
                     link: {
                         mobileWebUrl: window.location.href,
                         webUrl: window.location.href,
@@ -111,40 +118,35 @@ function ResultContent() {
         window.open(shareUrl, "_blank");
     }
 
+    // 인스타그램 공유 핸들러
+    const handleInstagramShare = () => {
+        const slug = createShareSlug(resultTraits, type, level as LevelKeys);
+        const shareUrl = `https://zootypes.com/share/${slug}`;
+
+        // 공유 설명 + 링크 텍스트 구성
+        const shareText =
+            `나의 유형은 ${type} 타입의 ⭐${characterProfile?.name}⭐\n` +
+            `\n🐾 ${characterProfile?.description}\n` +
+            `\n👇 링크를 복사해서 상세정보를 확인해보세요! 👇\n${shareUrl}`;
+
+        navigator.clipboard.writeText(shareText)
+            .then(() => {
+                toast.success("공유 텍스트 복사 완료");
+                setShowInstagramModal(true);
+            }).catch(() => {
+            toast.error("링크 복사 실패 😢")
+        })
+    };
+
     // 트위터 공유 핸들러
     const handleTwitterShare = () => {
-        const text = `나의 동물 성향은 ${type} 타입의⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}`;
+        const text = `나의 유형은 ${type} 타입의 ⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}`;
         const slug = createShareSlug(resultTraits, type, level as LevelKeys);
         const url = encodeURIComponent(`https://zootypes.com/share/${slug}`);
         const tweetText = encodeURIComponent(text);
         const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`;
         window.open(twitterUrl, "_blank");
     };
-
-    // 모바일 공유 기능
-    // const handleWebShare = async () => {
-    //     if (!navigator.share) {
-    //         toast("공유 기능이 지원되지 않는 환경이에요.\n링크를 복사하거나, 카카오톡으로 공유해 주세요.");
-    //     } else {
-    //         try {
-    //             await navigator.share({
-    //                 title: `나의 유형은 ${type}`,
-    //                 text: `⭐ ${characterProfile?.name} ⭐`,
-    //                 url: window.location.href,
-    //             });
-    //         } catch (err: unknown) {
-    //             // 단순 공유 취소는 에러를 출력 X
-    //             if (err instanceof Error) {
-    //                 if (err.name !== 'AbortError') {
-    //                     console.error(err);
-    //                     toast.error("공유 실패😿");
-    //                 }
-    //             } else {
-    //                 console.error("에러 발생:", err);
-    //             }
-    //         }
-    //     }
-    // }
 
     // 타입별 동물 이미지 매핑
     const animalImages: Record<string, string> = {
@@ -169,7 +171,7 @@ function ResultContent() {
 
     // 이미지 URL
     const animalImageUrl = animalImages[type]; // 내부 이미지 (상대 경로)
-    const animalImageUrlForKakao = typeof window !== "undefined" ? `${window.location.origin}${animalImageUrl}` : ""; // 카카오 공유용 (절대 경로)
+    const animalImageUrlAbsolutePath = typeof window !== "undefined" ? `${window.location.origin}${animalImageUrl}` : ""; // 카카오 공유용 (절대 경로)
 
     return (
         <div className="character-card-parent">
@@ -185,7 +187,6 @@ function ResultContent() {
                         height={300}
                     />
                 </div>
-
 
                 <div className="trait-bar-container">
                     <div className="tooltip">
@@ -235,26 +236,42 @@ function ResultContent() {
                     )}
                 </ul>
                 <div className="button-group">
-                    {/*<button onClick={handleWebShare} className="share-btn native">*/}
-                    {/* 모바일 공유*/}
-                    {/*</button>*/}
-                    <button onClick={handleCopyLink} className="share-btn link-copy">
-                        링크 복사
+                    <button onClick={handleCopyLink} className="share-btn link-copy" aria-label="링크 복사">
+                        <IoIosLink size={20}/>
                     </button>
-                    <button onClick={handleKakaoShare} className="share-btn kakao">
-                        카카오톡 공유
+                    <button onClick={handleKakaoShare} className="share-btn kakao" aria-label="카카오톡 공유">
+                        <SiKakaotalk size={20}/>
                     </button>
-                    <button onClick={handleFaceBookShare} className="share-btn facebook">
-                        페이스북 공유
+                    <button onClick={handleFaceBookShare} className="share-btn facebook" aria-label="페이스북 공유">
+                        <FaFacebookF size={20}/>
                     </button>
-                    <button onClick={handleTwitterShare} className="share-btn twitter">
-                        트위터 공유
+                    <button onClick={handleInstagramShare} className="share-btn instagram" aria-label="인스타그램 공유">
+                        <FaInstagram size={20}/>
+                    </button>
+                    <button onClick={handleTwitterShare} className="share-btn twitter" aria-label="트위터 공유">
+                        <FaTwitter size={20}/>
                     </button>
                     <Link href="/" className="home-link">
                         Home
                     </Link>
                 </div>
             </div>
+            {showInstagramModal && (
+                <InstagramShareModal
+                    onClose={() => setShowInstagramModal(false)}
+                    onConfirm={() => {
+                        const link = document.createElement("a");
+                        link.href = animalImageUrlAbsolutePath;
+                        link.download = `${type}_${characterProfile?.name}.png`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+
+                        setShowInstagramModal(false);
+                        window.open("https://www.instagram.com", "_blank");
+                    }}
+                />
+            )}
         </div>
     )
 }

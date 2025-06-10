@@ -4,7 +4,7 @@
 
 /*********** 공통 css 시작 ***********/
 html, body {
-  height: 100%;
+    height: 100%;
 }
 
 body {
@@ -48,6 +48,7 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
 /*********** 공통 css 끝 ***********/
 
 /*********** 입장하기 화면***********/
@@ -76,6 +77,7 @@ a:hover {
     font-weight: 600;
     color: seagreen;
 }
+
 /*********** 입장하기 화면 끝 ***********/
 
 /*********** question-card 스타일 시작 ***********/
@@ -92,20 +94,20 @@ a:hover {
 
 /* 동점 상태일 때 불타는 느낌의 애니메이션 */
 @keyframes fireGlow {
-  0%, 100% {
-    box-shadow: 0 0 25px rgba(255, 100, 0, 0.6), 0 0 50px rgba(255, 0, 0, 0.3);
-    border-color: #ff5722;
-  }
-  50% {
-    box-shadow: 0 0 35px rgba(255, 140, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.5);
-    border-color: #ff7043;
-  }
+    0%, 100% {
+        box-shadow: 0 0 25px rgba(255, 100, 0, 0.6), 0 0 50px rgba(255, 0, 0, 0.3);
+        border-color: #ff5722;
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(255, 140, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.5);
+        border-color: #ff7043;
+    }
 }
 
 .question-card.tie-mode {
-  animation: fireGlow 1.5s ease-in-out infinite;
-  background: radial-gradient(circle at top left, #ffe0e0, #fff1f1);
-  border-color: #ff5722;
+    animation: fireGlow 1.5s ease-in-out infinite;
+    background: radial-gradient(circle at top left, #ffe0e0, #fff1f1);
+    border-color: #ff5722;
 }
 
 .question-option {
@@ -131,12 +133,12 @@ a:hover {
 
 /* 동점 시 option도 강조 */
 .question-card.tie-mode .question-option {
-  background: linear-gradient(135deg, #ef4444, #f97316);
-  box-shadow: 0 8px 20px rgba(255, 100, 0, 0.4);
+    background: linear-gradient(135deg, #ef4444, #f97316);
+    box-shadow: 0 8px 20px rgba(255, 100, 0, 0.4);
 }
 
 .question-card.tie-mode .question-option:hover {
-  background: linear-gradient(135deg, #dc2626, #ea580c);
+    background: linear-gradient(135deg, #dc2626, #ea580c);
 }
 
 .progress-wrapper {
@@ -165,6 +167,7 @@ a:hover {
     margin-bottom: 16px;
     color: #6b7280;
 }
+
 /*********** question-card 스타일 끝 ***********/
 
 /*********** 뒤로가기 or 결과보기 스타일 시작 ***********/
@@ -275,7 +278,7 @@ a:hover {
 
 .character-card {
     padding: 10px 30px 20px 30px;
-    border : 4px solid ghostwhite;
+    border: 4px solid ghostwhite;
     background: radial-gradient(circle, #f9f1ff 0%, #e0eaff 100%);
     border-radius: 24px;
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
@@ -358,7 +361,7 @@ a:hover {
 
 .button-group {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -366,24 +369,16 @@ a:hover {
 
 .share-btn {
     display: inline-block;
-    font-size: 16px;
-    text-align: center;
-    border: none;
-    border-radius: 30px;
     cursor: pointer;
-    transition: all 0.3s;
-    font-weight: bold;
     color: white;
+    border-radius: 50%;
+    width: 50px;
 }
 
-/* 현재 공용 웹 공유 안쓰는 중 250523 */
-/*.share-btn.native {*/
-/*    background-color: #4a90e2;*/
-/*}*/
-
-/*.share-btn.native:hover {*/
-/*    background-color: #357ae8;*/
-/*}*/
+.share-btn svg {
+    margin-top: 3px;
+    margin-left: -5px;
+}
 
 .share-btn.link-copy {
     background-color: #3acc6d;
@@ -406,7 +401,15 @@ a:hover {
 }
 
 .share-btn.facebook:hover {
-    background-color: #0b65cd;
+    background-color: #0f6bd6;
+}
+
+.share-btn.instagram {
+    background-color: #ec4899;
+}
+
+.share-btn.instagram:hover {
+    background-color: #ed3789;
 }
 
 .share-btn.twitter {
@@ -431,6 +434,7 @@ a:hover {
 .home-link:hover {
     background-color: #665bfb;
 }
+
 /*********** 결과 후 링크 스타일 끝 ***********/
 
 /*********** 결과 지표 bar 스타일 시작 ***********/
@@ -608,6 +612,7 @@ span .tooltip-text {
         transform: rotate(360deg);
     }
 }
+
 /********** 스피너 끝 **********/
 
 /********** 모바일 화면 처리 시작 **********/
@@ -713,15 +718,101 @@ span .tooltip-text {
     }
 
     .share-btn {
-        font-size: 11px;
-        padding: 8px 10px 8px 10px;
+        padding: 6px 8px 6px 8px;
         white-space: pre;
+        width: 35px;
+    }
+
+    .share-btn svg {
+        width: 14px;
+        height: 14px;
+        margin-top: 3px;
+        margin-left: 0;
     }
 
     .home-link {
-        font-size: 11px;
+        font-size: 12px;
         padding: 8px 10px 8px 10px;
     }
 }
 
 /********** 모바일 화면 처리 끝 **********/
+
+
+/********** 인스타그램 공유 모달 시작 **********/
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.modal-text {
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.modal-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.modal-btn.cancel {
+    background-color: #acaaaa;
+}
+
+.modal-btn.cancel:hover {
+    background-color: #8e8d8d;
+}
+
+.modal-btn.confirm {
+    background-color: #ec4899;
+    color: white;
+}
+
+.modal-btn.confirm:hover {
+    background-color: #e6438d;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/********** 인스타그램 공유 모달 끝 **********/
