@@ -173,6 +173,11 @@ function ResultContent() {
     const animalImageUrl = animalImages[type]; // 내부 이미지 (상대 경로)
     const animalImageUrlAbsolutePath = typeof window !== "undefined" ? `${window.location.origin}${animalImageUrl}` : ""; // 카카오 공유용 (절대 경로)
 
+    // ios 감지
+    const isIOS = () => {
+        return /iPad|iPhone|iPod/.test(navigator.userAgent);
+    }
+
     return (
         <div className="character-card-parent">
             <Toaster position="top-center"/>
@@ -260,16 +265,23 @@ function ResultContent() {
                 <InstagramShareModal
                     onClose={() => setShowInstagramModal(false)}
                     onConfirm={() => {
-                        const link = document.createElement("a");
-                        link.href = animalImageUrlAbsolutePath;
-                        link.download = `${type}_${characterProfile?.name}.png`;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
+                        if (isIOS()) {
+                            // iphone인 경우 새창이서 이미지 열어야함
+                            window.open(animalImageUrlAbsolutePath, "_blank");
+                            toast.success("이미지를 길게 눌러 사진을 저장하세요 🍎");
+                        } else {
+                            const link = document.createElement("a");
+                            link.href = animalImageUrlAbsolutePath;
+                            link.download = `${type}_${characterProfile?.name}.png`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        }
 
                         setShowInstagramModal(false);
                         window.open("https://www.instagram.com", "_blank");
                     }}
+                    isIOS={isIOS}
                 />
             )}
         </div>
