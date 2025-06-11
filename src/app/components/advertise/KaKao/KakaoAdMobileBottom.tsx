@@ -21,7 +21,7 @@ export default function KakaoAdMobileBottom() {
     if (!isMobileBottom) return null;
 
     return (
-        <div style={{textAlign: "center", marginBottom: '-25px'}}>
+        <div style={{textAlign: "center"}}>
             <ins className="kakao_ad_area" style={{display: "none"}}
                  data-ad-unit="DAN-HJOimM1VFybaBUeU"
                  data-ad-width="320"
