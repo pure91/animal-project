@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 
 interface InstagramShareModalProps {
     onClose: () => void;
@@ -20,6 +19,7 @@ export default function InstagramShareModal({onClose, onConfirm, isIOS, imageUrl
                             👇 이미지를 꾹 눌러 저장하고, 인스타그램 열기를 통해 복사된 텍스트를 게시물에 붙여 넣어 주세요!
                         </p>
                         <div className="modal-image-wrapper" style={{textAlign: 'center'}}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 src={imageUrl}
                                 alt="아이폰 공유 이미지"
