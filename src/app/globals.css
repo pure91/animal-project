@@ -761,20 +761,21 @@ span .tooltip-text {
 }
 
 .modal-title {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: bold;
-    margin-bottom: 1rem;
+    margin-top : 0.3rem;
 }
 
 .modal-text {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     font-size: 0.95rem;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .modal-buttons {
     display: flex;
     justify-content: flex-end;
+    margin-top: 1rem;
     gap: 0.75rem;
 }
 
@@ -808,6 +809,7 @@ span .tooltip-text {
     from {
         opacity: 0;
         transform: scale(0.95);
+        transform-origin: center;
     }
     to {
         opacity: 1;

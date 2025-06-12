@@ -131,7 +131,7 @@ function ResultContent() {
 
         navigator.clipboard.writeText(shareText)
             .then(() => {
-                toast.success("공유 텍스트 복사 완료");
+                toast.success("링크 공유용 텍스트 복사 완료");
                 setShowInstagramModal(true);
             }).catch(() => {
             toast.error("링크 복사 실패 😢")
@@ -175,7 +175,8 @@ function ResultContent() {
 
     // ios 감지
     const isIOS = () => {
-        return /iPad|iPhone|iPod/.test(navigator.userAgent);
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.userAgent.includes("Macintosh") && 'ontouchend' in document);
     }
 
     return (
@@ -265,11 +266,8 @@ function ResultContent() {
                 <InstagramShareModal
                     onClose={() => setShowInstagramModal(false)}
                     onConfirm={() => {
-                        if (isIOS()) {
-                            // iphone인 경우 새창이서 이미지 열어야함
-                            window.open(animalImageUrlAbsolutePath, "_blank");
-                            toast.success("이미지를 길게 눌러 사진을 저장하세요 🍎");
-                        } else {
+                        if (!isIOS()) {
+                            // 아이폰이 아닌경우 자동 다운로드
                             const link = document.createElement("a");
                             link.href = animalImageUrlAbsolutePath;
                             link.download = `${type}_${characterProfile?.name}.png`;
@@ -278,10 +276,11 @@ function ResultContent() {
                             document.body.removeChild(link);
                         }
 
-                        setShowInstagramModal(false);
                         window.open("https://www.instagram.com", "_blank");
+                        setShowInstagramModal(false);
                     }}
                     isIOS={isIOS}
+                    imageUrl={animalImageUrlAbsolutePath}
                 />
             )}
         </div>
