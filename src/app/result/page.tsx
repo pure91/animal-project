@@ -151,7 +151,7 @@ function ResultContent() {
 
     // 이미지 URL
     const animalImageUrl = getAnimalImageUrl(type, level as LevelKeys); // 내부 이미지 (상대 경로)
-    const animalImageUrlAbsolutePath = typeof window !== "undefined" ? `${window.location.origin}${getAnimalImageAbsoluteUrl(type, level as LevelKeys)}` : ""; // 카카오 공유용 (절대 경로)
+    const animalImageUrlAbsolutePath = typeof window !== "undefined" ? getAnimalImageAbsoluteUrl(type, level as LevelKeys) : ""; // 카카오 공유용 (절대 경로)
 
     // ios 감지
     const isIOS = () => {

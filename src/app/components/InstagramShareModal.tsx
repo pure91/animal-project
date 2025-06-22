@@ -12,11 +12,11 @@ export default function InstagramShareModal({onClose, onConfirm, isIOS, imageUrl
     return (
         <div className="modal-overlay">
             <div className="modal-box">
-                <h2 className="modal-title">📷 인스타그램 공유</h2>
+                <h2 className="modal-title">📷 인스타그램 공유 안내</h2>
                 {isIOS() ? (
                     <>
                         <p className="modal-text">
-                            👇 이미지를 꾹 눌러 저장하고, 인스타그램 열기를 통해 복사된 텍스트를 게시물에 붙여 넣어 주세요!
+                            1️⃣ 아래 이미지를 꾹 눌러서 저장<br/>2️⃣ 인스타그램을 열고 피드에 이미지 등록<br/>3️⃣ 현재 복사되어 있는 텍스트를 내용에 붙여넣기
                         </p>
                         <div className="modal-image-wrapper" style={{textAlign: 'center'}}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
