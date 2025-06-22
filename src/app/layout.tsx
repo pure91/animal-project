@@ -19,14 +19,14 @@ declare global {
 
 export const metadata = {
     title: '동물 성격 테스트',
-    description: '호랑이의 생일잔치에 참여해보세요! 단, 성격 테스트를 통해 동물로 변신해야합니다. 질문에 제대로 응하지 않는다면 변신에 실패할 수도 있어요!',
+    description: '성격 테스트 결과에 따라 16가지 동물 캐릭터 중 하나로 변신! 각 동물은 level별 4단계로 나뉘어 총 64장의 이미지로 나만의 동물 아이덴티티를 완성하세요.',
     applicationName: '동물 성격 테스트',
     appleWebApp: {
         title: '동물 성격 테스트',
     },
     openGraph: {
         title: '동물 성격 테스트',
-        description: '호랑이의 생일잔치에 참여해보세요! 단, 성격 테스트를 통해 동물로 변신해야합니다. 질문에 제대로 응하지 않는다면 변신에 실패할 수도 있어요!',
+        description: '성격 테스트 결과에 따라 16가지 동물 캐릭터 중 하나로 변신! 각 동물은 level별 4단계로 나뉘어 총 64장의 이미지로 나만의 동물 아이덴티티를 완성하세요.',
         url: 'https://zootypes.com',
         siteName: '동물 성격 테스트',
         type: 'website',
@@ -35,7 +35,7 @@ export const metadata = {
                 url: 'https://zootypes.com/zootypes-og-image-v2.png',
                 width: 1200,
                 height: 630,
-                alt: '동물 성격 테스트 | zootypes | 호랑이 생일잔치 컨셉'
+                alt: '동물 성격 테스트 | zootypes | 16가지 동물과 64가지 레벨별 이미지'
             },
         ],
     },
@@ -52,6 +52,29 @@ export default function RootLayout({children}: { children: ReactNode }) {
     return (
         <html>
         <head>
+            <meta charSet="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+            {/* Primary Meta Tags */}
+            <title>동물 성격 테스트</title>
+            <meta name="title" content="동물 성격 테스트" />
+            <meta name="description" content="성격 테스트 결과에 따라 16가지 동물 캐릭터 중 하나로 변신! 각 동물은 level별 4단계로 나뉘어 총 64장의 이미지로 나만의 동물 아이덴티티를 완성하세요."/>
+            <meta name="google-site-verification" content="_SXvhzNG-Bm1YpOzbxWw4mvine5IdiCXThUmoMti0R8"/>
+            <meta name="naver-site-verification" content="f90d73710976c4dfdcfe0aa2bc8cb235894d2f95" />
+
+            {/* Open Graph / Facebook */}
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://zootypes.com" />
+            <meta property="og:title" content="동물 성격 테스트" />
+            <meta property="og:description" content="성격 테스트 결과에 따라 16가지 동물 캐릭터 중 하나로 변신! 각 동물은 level별 4단계로 나뉘어 총 64장의 이미지로 나만의 동물 아이덴티티를 완성하세요." />
+            <meta property="og:image" content="https://zootypes.com/zootypes-og-image-v2.png" />
+
+            {/* Twitter */}
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content="동물 성격 테스트" />
+            <meta name="twitter:description" content="성격 테스트 결과에 따라 16가지 동물 캐릭터 중 하나로 변신! 각 동물은 level별 4단계로 나뉘어 총 64장의 이미지로 나만의 동물 아이덴티티를 완성하세요." />
+            <meta name="twitter:image" content="https://zootypes.com/zootypes-og-image-v2.png" />
+
             {/*Google Adsense*/}
             <meta name="google-adsense-account" content="ca-pub-3666035347659822"/>
         </head>
