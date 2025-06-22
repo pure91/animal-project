@@ -9,8 +9,8 @@ export function calculateTypeAndTies(scores: Record<TraitKeys, number>): {
     const totalScore = Object.values(scores).reduce((acc, val) => acc + val, 0);
     const ties: string[] = [];
 
-    // 중립 타입(20개의 문항 모두 중립 시 40점)
-    if (totalScore <= 41) {
+    // 중립 타입(20개의 문항 모두 중립 시 40점, 42점까지는 HUMAN 타입)
+    if (totalScore <= 42) {
         return {type: "HUMAN", ties: []};
     }
 
