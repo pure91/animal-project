@@ -14,6 +14,7 @@ import toast, {Toaster} from "react-hot-toast";
 import {IoIosLink} from "react-icons/io";
 import {FaFacebookF, FaTwitter, FaInstagram} from "react-icons/fa";
 import {SiKakaotalk} from "react-icons/si";
+import {getAnimalImageAbsoluteUrl, getAnimalImageUrl} from "@/utils/getAnimalImageUrl";
 
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
@@ -148,30 +149,9 @@ function ResultContent() {
         window.open(twitterUrl, "_blank");
     };
 
-    // 타입별 동물 이미지 매핑
-    const animalImages: Record<string, string> = {
-        IRES: "/images/hedgehog.png",
-        IRCS: "/images/turtle.png",
-        IDES: "/images/cat.png",
-        IDCS: "/images/penguin.png",
-        IREA: "/images/rabbit.png",
-        IRCA: "/images/badger.png",
-        IDEA: "/images/fox.png",
-        IDCA: "/images/weasel.png",
-        ORES: "/images/dog.png",
-        ORCS: "/images/wolf.png",
-        ODES: "/images/lion.png",
-        ODCS: "/images/elephant.png",
-        OREA: "/images/dolphin.png",
-        ORCA: "/images/shark.png",
-        ODEA: "/images/squirrel.png",
-        ODCA: "/images/octopus.png",
-        HUMAN: "/images/human.png",
-    }
-
     // 이미지 URL
-    const animalImageUrl = animalImages[type]; // 내부 이미지 (상대 경로)
-    const animalImageUrlAbsolutePath = typeof window !== "undefined" ? `${window.location.origin}${animalImageUrl}` : ""; // 카카오 공유용 (절대 경로)
+    const animalImageUrl = getAnimalImageUrl(type, level as LevelKeys); // 내부 이미지 (상대 경로)
+    const animalImageUrlAbsolutePath = typeof window !== "undefined" ? `${window.location.origin}${getAnimalImageAbsoluteUrl(type, level as LevelKeys)}` : ""; // 카카오 공유용 (절대 경로)
 
     // ios 감지
     const isIOS = () => {

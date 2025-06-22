@@ -3,30 +3,10 @@ import type {AnimalData} from "@/types/animalTypes";
 import type {Metadata} from "next";
 import {getCharacterProfile} from "@/utils/animalUtils";
 import {parseShareSlug} from "@/utils/shareUtils";
+import {getAnimalImageUrl} from "@/utils/getAnimalImageUrl";
 
 /** 동적 메타데이터 공유용 서버 사이드 페이지 */
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
-
-// 타입별 동물 이미지 매핑
-const animalImages: Record<string, string> = {
-    IRES: "/images/hedgehog.png",
-    IRCS: "/images/turtle.png",
-    IDES: "/images/cat.png",
-    IDCS: "/images/penguin.png",
-    IREA: "/images/rabbit.png",
-    IRCA: "/images/badger.png",
-    IDEA: "/images/fox.png",
-    IDCA: "/images/weasel.png",
-    ORES: "/images/dog.png",
-    ORCS: "/images/wolf.png",
-    ODES: "/images/lion.png",
-    ODCS: "/images/elephant.png",
-    OREA: "/images/dolphin.png",
-    ORCA: "/images/shark.png",
-    ODEA: "/images/squirrel.png",
-    ODCA: "/images/octopus.png",
-    HUMAN: "/images/human.png",
-};
 
 // 하나 이상의 메타데이터 필드를 포함하는 Metadata 객체를 반환(동적 페이지 메타데이터 생성 방법 -> use client 쓰면 안됨)
 export async function generateMetadata({params}: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -47,7 +27,7 @@ export async function generateMetadata({params}: { params: Promise<{ slug: strin
         return {title: "알 수 없는 유형", description: "데이터가 존재하지 않습니다.",};
     }
 
-    const imageUrl = `https://zootypes.com${animalImages[type] ?? "/images/animalAll.png"}`;
+    const imageUrl = `https://zootypes.com${getAnimalImageUrl(type, level)}`;
 
     const characterProfile = animalData?.types
         ? getCharacterProfile(traits, animalData.types)
