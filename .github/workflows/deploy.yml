@@ -65,6 +65,9 @@ jobs:
 
             # 새 컨테이너 실행
             docker run -d --name animal --network animal-net \
+              --log-driver json-file \
+              --log-opt max-size=10m \
+              --log-opt max-file=3 \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_USER=${{ secrets.DB_USER }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
@@ -72,7 +75,7 @@ jobs:
               -e NEXT_PUBLIC_KAKAO_SHARE=${{ secrets.NEXT_PUBLIC_KAKAO_SHARE }} \
               -p 3000:3000 --restart=always $IMAGE
 
-            # 이미지 캐시 정리
+            # dangling 이미지들만 정리(오래된 빌드 캐시 등)
             docker image prune -f
 
             # 점검 모드 OFF
