@@ -52,29 +52,6 @@ export default function RootLayout({children}: { children: ReactNode }) {
     return (
         <html>
         <head>
-            <meta charSet="UTF-8"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-            {/* Primary Meta Tags */}
-            <title>동물 성격 테스트</title>
-            <meta name="title" content="동물 성격 테스트" />
-            <meta name="description" content="성격 테스트 결과에 따라 16가지 동물 캐릭터 중 하나로 변신! 각 동물은 level별 4단계로 나뉘어 총 64장의 이미지로 나만의 동물 아이덴티티를 완성하세요."/>
-            <meta name="google-site-verification" content="_SXvhzNG-Bm1YpOzbxWw4mvine5IdiCXThUmoMti0R8"/>
-            <meta name="naver-site-verification" content="f90d73710976c4dfdcfe0aa2bc8cb235894d2f95" />
-
-            {/* Open Graph / Facebook */}
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content="https://zootypes.com" />
-            <meta property="og:title" content="동물 성격 테스트" />
-            <meta property="og:description" content="성격 테스트 결과에 따라 16가지 동물 캐릭터 중 하나로 변신! 각 동물은 level별 4단계로 나뉘어 총 64장의 이미지로 나만의 동물 아이덴티티를 완성하세요." />
-            <meta property="og:image" content="https://zootypes.com/zootypes-og-image-v2.png" />
-
-            {/* Twitter */}
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content="동물 성격 테스트" />
-            <meta name="twitter:description" content="성격 테스트 결과에 따라 16가지 동물 캐릭터 중 하나로 변신! 각 동물은 level별 4단계로 나뉘어 총 64장의 이미지로 나만의 동물 아이덴티티를 완성하세요." />
-            <meta name="twitter:image" content="https://zootypes.com/zootypes-og-image-v2.png" />
-
             {/*Google Adsense*/}
             <meta name="google-adsense-account" content="ca-pub-3666035347659822"/>
         </head>

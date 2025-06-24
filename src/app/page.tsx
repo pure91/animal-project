@@ -105,7 +105,10 @@ export default function Home() {
                 <h3>단, 사람으로는 참석할 수 없으니 질문에 답하여 동물로 변신해야 합니다!</h3>
                 <Image src="/images/entry.png" alt="입장이미지" width={300} height={400} onClick={handleStart}
                        className="entry-image-style"/>
-                <p>🍀지금까지 생일잔치에 다녀온 사람들 : 총 {participantCount.toLocaleString()}명</p>
+                <p>
+                    🍀지금까지 생일잔치에 다녀온 사람들 : 총{" "}
+                    {(participantCount ?? 0).toLocaleString()}명
+                </p>
             </div>
         )
     }
