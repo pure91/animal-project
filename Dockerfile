@@ -22,8 +22,11 @@ RUN npm run build
 FROM node:18-alpine AS prod
 WORKDIR /app
 
-# 빌드된 결과만 복사
-COPY --from=build /app ./
+# 필요한 파일만 복사(이미지 용량 축소)
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/node_modules ./node_modules
 
 # 필요한 포트 노출
 EXPOSE 3000
