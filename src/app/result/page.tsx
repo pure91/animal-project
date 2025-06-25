@@ -196,17 +196,15 @@ function ResultContent() {
                                 className="first-color"> {stats.typeCount}명 ({stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%)
                             </span>
                             <br/>
-                            {type !== 'HUMAN' && (
-                                <>
-                                    🔍 당신은 <b>{type}</b> 타입 <span className="first-color">{stats.typeCount}명</span> 중
-                                    <span
-                                        className="second-color"> {stats.levelCount}명</span>인 <b>⭐{characterProfile?.name}⭐</b>
-                                    <span
-                                        className="second-color"> ({stats.typeCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)
+                            <>
+                                🔍 당신은 <b>{type}</b> 타입 <span className="first-color">{stats.typeCount}명</span> 중
+                                <span
+                                    className="second-color"> {stats.levelCount}명</span>인 <b>⭐{characterProfile?.name}⭐</b>
+                                <span
+                                    className="second-color"> ({stats.typeCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)
                                     </span>
-                                    <br/>
-                                </>
-                            )}
+                                <br/>
+                            </>
                         </p>
                     )}
                 </div>
