@@ -1,25 +1,28 @@
-# COPY . .으로 포함될 파일을 줄여서 Docker 빌드와 GHCR push 속도 감소를 위한 파일
-
-# node_modules는 다시 설치되므로 제외
+# node_modules는 다시 설치되니 제거
 node_modules
 
-# 로그/환경파일 등 민감 또는 불필요한 항목
+# 환경 변수 및 로그
 *.log
 .env
 *.env.*
+.eslintcache
 
 # Git 관련
 .git
 .gitignore
 
-# 테스트/문서
+# 테스트 / 문서
 coverage
 __tests__/
 *.test.*
 *.spec.*
 *.md
 
-# 기타 임시파일
+# 빌드 산출물
+.next
+out
+
+# 에디터/OS 임시파일
 .DS_Store
 .vscode
 .idea

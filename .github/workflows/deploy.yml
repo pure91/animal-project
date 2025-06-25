@@ -75,8 +75,8 @@ jobs:
               -e NEXT_PUBLIC_KAKAO_SHARE=${{ secrets.NEXT_PUBLIC_KAKAO_SHARE }} \
               -p 3000:3000 --restart=always $IMAGE
 
-            # dangling 이미지들만 정리(오래된 빌드 캐시 등)
-            docker image prune -f
+            # 태그 관계없이 24시간 된 사용하지 않는 이미지 삭제
+            docker image prune -a -f --filter "until=24h"
 
             # 점검 모드 OFF
             rm /var/www/maintenance/on
