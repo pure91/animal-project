@@ -4,11 +4,12 @@ import type {Metadata} from "next";
 import {getCharacterProfile} from "@/utils/animalUtils";
 import {parseShareSlug} from "@/utils/shareUtils";
 import {getAnimalImageUrl} from "@/utils/getAnimalImageUrl";
+import {redirect} from "next/navigation";
 
 /** 동적 메타데이터 공유용 서버 사이드 페이지 */
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
 
-// 하나 이상의 메타데이터 필드를 포함하는 Metadata 객체를 반환(동적 페이지 메타데이터 생성 방법 -> use client 쓰면 안됨)
+// slug 파싱 + getCharacterProfile() + imageUrl + OG 메타태그 생성
 export async function generateMetadata({params}: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const {slug} = await params; // 15.1버전 이후부터 params를 Promise로 받아야하고 그 실제값도 꺼내줘야함
 
@@ -53,6 +54,7 @@ export async function generateMetadata({params}: { params: Promise<{ slug: strin
     };
 }
 
+// 페이지 리디렉션
 export default async function Page({params}: { params: Promise<{ slug: string }> }) {
     const {slug} = await params;
     const parsed = parseShareSlug(slug);
@@ -74,15 +76,7 @@ export default async function Page({params}: { params: Promise<{ slug: string }>
         level: parsed.level,
     });
 
-    // 메타태그는 layout에있는 정적 og를 가져가면 안되고 generateMetadata에서 정적으로 메타데이터 og를 추가한걸로 던져줘야됨!
-    // html 먼저 주고 나중에 스크립트를 보내서 동적인 metadata 읽게 해야함
-    return (
-        <div>
-            <script
-                dangerouslySetInnerHTML={{
-                    __html: `window.location.href = "/result?${searchParams.toString()}"`,
-                }}
-            />
-        </div>
-    );
+    redirect(`/result?${searchParams.toString()}`);
+
+    return null; // redirect 후 렌더링을 멈추기위해.. 화면이 필요 없으니 null 반환
 }
