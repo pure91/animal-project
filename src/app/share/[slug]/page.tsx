@@ -4,12 +4,11 @@ import type {Metadata} from "next";
 import {getCharacterProfile} from "@/utils/animalUtils";
 import {parseShareSlug} from "@/utils/shareUtils";
 import {getAnimalImageUrl} from "@/utils/getAnimalImageUrl";
-import {redirect} from "next/navigation";
 
 /** 동적 메타데이터 공유용 서버 사이드 페이지 */
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
 
-// slug 파싱 + getCharacterProfile() + imageUrl + OG 메타태그 생성
+// 사용자 공유 요청 시 url의 slug 파싱하여 동적 메타태그 생성, 서버가 렌더링하는 HTML문서의 head에 삽입(sns 크롤러가 미리보기 읽을 수 있게)
 export async function generateMetadata({params}: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const {slug} = await params; // 15.1버전 이후부터 params를 Promise로 받아야하고 그 실제값도 꺼내줘야함
 
@@ -54,8 +53,8 @@ export async function generateMetadata({params}: { params: Promise<{ slug: strin
     };
 }
 
-// 페이지 리디렉션
-export default async function Page({params}: { params: Promise<{ slug: string }> }) {
+// 서버 렌더링 시, 클라이언트가 자동으로 /result 페이지로 이동하도록 페이지 HTML에 스크립트를 포함해서 응답
+export default async function SharePage({params}: { params: Promise<{ slug: string }> }) {
     const {slug} = await params;
     const parsed = parseShareSlug(slug);
 
@@ -76,7 +75,15 @@ export default async function Page({params}: { params: Promise<{ slug: string }>
         level: parsed.level,
     });
 
-    redirect(`/result?${searchParams.toString()}`);
-
-    return null; // redirect 후 렌더링을 멈추기위해.. 화면이 필요 없으니 null 반환
+    // 바로 서버에서 redirect 사용 시 sns 크롤러가 이 페이지의 동적 metadata를 읽지 못하고 기본 layout에 설정된 og만 인식함
+    // 즉, 클라이언트에서 스크립트를 사용해 리다이렉트 처리하고 서버는 동적 메타데이터를 먼저 보내서 사용자에게 이동하기 위함
+    return (
+        <div>
+            <script
+                dangerouslySetInnerHTML={{
+                    __html: `window.location.href = "/result?${searchParams.toString()}"`,
+                }}
+            />
+        </div>
+    );
 }
