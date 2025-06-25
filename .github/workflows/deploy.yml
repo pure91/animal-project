@@ -58,46 +58,22 @@ jobs:
             # 최신 이미지 Pull
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull $IMAGE
-          
-            # 새 컨테이너를 임시로 실행 (포트 충돌 방지를 위해 다른 포트 사용)
-            docker run -d --name animal-temp --network animal-net \
-              -e DB_HOST=${{ secrets.DB_HOST }} \
-              -e DB_USER=${{ secrets.DB_USER }} \
-              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-              -e DB_NAME=${{ secrets.DB_NAME }} \
-              -e NEXT_PUBLIC_KAKAO_SHARE=${{ secrets.NEXT_PUBLIC_KAKAO_SHARE }} \
-              -p 3027:3000 $IMAGE
-          
-            # 새 컨테이너 헬스체크 (10초 동안 정상 200응답을 기다림)
-            for i in $(seq 1 10); do
-              sleep 1
-              if curl -sf http://localhost:3027/api/health; then
-                echo "헬스체크 성공"
-                break
-              fi
-              if [ "$i" -eq 10 ]; then
-                echo "헬스체크 실패"
-                docker rm -f animal-temp
-                rm /var/www/maintenance/on
-                exit 1
-              fi
-            done
-          
+
             # 기존 컨테이너 중지 및 삭제
             docker stop animal || true
             docker rm animal || true
 
-            # 새 컨테이너를 정식 포트로 다시 실행
+            # 새 컨테이너 실행
             docker run -d --name animal --network animal-net \
+              --log-driver json-file \
+              --log-opt max-size=10m \
+              --log-opt max-file=3 \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_USER=${{ secrets.DB_USER }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e DB_NAME=${{ secrets.DB_NAME }} \
               -e NEXT_PUBLIC_KAKAO_SHARE=${{ secrets.NEXT_PUBLIC_KAKAO_SHARE }} \
               -p 3000:3000 --restart=always $IMAGE
-            
-            # 임시 컨테이너 삭제 (혹시 남았을 경우)
-            docker rm -f animal-temp || true
 
             # dangling 이미지들만 정리(오래된 빌드 캐시 등)
             docker image prune -f
