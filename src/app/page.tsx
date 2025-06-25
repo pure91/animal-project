@@ -126,7 +126,7 @@ export default function Home() {
                     newScores[key as keyof typeof newScores] += selectedScore[key];
                 }
             }
-            console.log("newScores:", newScores);
+            // console.log("newScores:", newScores);
             return newScores;
         });
 
@@ -282,7 +282,7 @@ export default function Home() {
             finalParameter.append("type", type);
             finalParameter.append("level", level);
 
-            await new Promise((resolve) => setTimeout(resolve, 1500));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
 
             router.push(`/result?${finalParameter.toString()}`);
         } catch (err) {
