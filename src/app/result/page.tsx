@@ -12,7 +12,7 @@ import {createShareSlug} from "@/utils/shareUtils";
 import InstagramShareModal from "@/app/components/InstagramShareModal";
 import toast, {Toaster} from "react-hot-toast";
 import {IoIosLink} from "react-icons/io";
-import {FaFacebookF, FaTwitter, FaInstagram} from "react-icons/fa";
+import {FaFacebookF, FaInstagram, FaTwitter} from "react-icons/fa";
 import {SiKakaotalk} from "react-icons/si";
 import {getAnimalImageAbsoluteUrl, getAnimalImageUrl} from "@/utils/getAnimalImageUrl";
 
@@ -159,6 +159,16 @@ function ResultContent() {
             (navigator.userAgent.includes("Macintosh") && 'ontouchend' in document);
     }
 
+    // 궁합 타입
+    const goodCode = characterProfile?.match?.good ?? "";
+    const badCode = characterProfile?.match?.bad ?? "";
+
+    const goodProfile = goodCode ? animalTypes[goodCode]?.types[level as LevelKeys]?.[0] : null;
+    const badProfile = badCode ? animalTypes[badCode]?.types[level as LevelKeys]?.[0] : null;
+
+    const goodName = goodProfile?.name ?? "정보 없음";
+    const badName = badProfile?.name ?? "정보 없음";
+
     return (
         <div className="character-card-parent">
             <Toaster position="top-center"/>
@@ -209,7 +219,7 @@ function ResultContent() {
                     )}
                 </div>
 
-                <h3>{characterProfile?.description || "설명 없음"}의 특징</h3>
+                <h3>✏️ {characterProfile?.description || "설명 없음"}의 특징</h3>
                 <ul>
                     {characterProfile?.characteristics?.length ? (
                         characterProfile.characteristics.map((char, idx) => (
@@ -219,6 +229,49 @@ function ResultContent() {
                         <li>특성 정보가 없습니다.</li>
                     )}
                 </ul>
+
+                <div className="match-section">
+                    <div className="match-card good">
+                        {goodProfile ? (
+                            <div className="match-card">
+                                <h4>우린 최고야!</h4>
+                                <span className="match-text">
+                                    <span className="match-code">{goodCode}</span>
+                                    <span className="match-name"> 타입 ⭐{goodName}⭐</span>
+                                </span>
+                                <Image
+                                    src={getAnimalImageUrl(goodCode, level as LevelKeys)}
+                                    alt={`${goodCode} 이미지`}
+                                    width={100}
+                                    height={180}
+                                />
+                            </div>
+                        ) : (
+                            <p>정보 없음</p>
+                        )}
+                    </div>
+
+                    <div className="match-card bad">
+                        {badProfile ? (
+                            <div className="match-card">
+                                <h4>어렵다 너..</h4>
+                                <span className="match-text">
+                                    <span className="match-code">{badCode}</span>
+                                    <span className="match-name"> 타입 ⭐{badName}⭐</span>
+                                </span>
+                                <Image
+                                    src={getAnimalImageUrl(badCode, level as LevelKeys)}
+                                    alt={`${badCode} 이미지`}
+                                    width={100}
+                                    height={180}
+                                />
+                            </div>
+                        ) : (
+                            <p>정보 없음</p>
+                        )}
+                    </div>
+                </div>
+
                 <div className="button-group">
                     <button onClick={handleCopyLink} className="share-btn link-copy" aria-label="링크 복사">
                         <IoIosLink size={20}/>
