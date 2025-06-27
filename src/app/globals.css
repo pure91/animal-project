@@ -403,13 +403,13 @@ a:hover {
 /* 흔들리는 애니메이션 */
 @keyframes paw-wobble {
     0%, 100% { transform: rotate(0deg); }
-    50%      { transform: rotate(15deg); }
+    50%      { transform: rotate(18deg); }
 }
 
 /* GOOD 카드 스타일 */
 .match-card.good {
     background: #f0f8ff;
-    border: 2px dashed #5993ff;
+    border: 2px outset #5993ff;
 }
 .match-card.good::before {
     content: "❤️️";
@@ -426,7 +426,7 @@ a:hover {
 /* BAD 카드 스타일 */
 .match-card.bad {
     background: #fff5f8;
-    border: 2px dashed #ff77a9;
+    border: 2px outset #ff77a9;
 }
 .match-card.bad::before {
     content: "‍💔";
@@ -446,13 +446,12 @@ a:hover {
 
 /* 타입 코드 배너 */
 .match-text .match-code {
-    padding: 2px 5px 2px 5px;
+    padding: 2px 6px 2px 6px;
     background-color: #5993ff;   /* GOOD 카드일 때 */
     color: #fff;
     border-radius: 20px;
     font-family: 'Rubik', sans-serif;
     font-size: 13px;
-    border: 2px dashed #5993ff;
 }
 
 /* BAD 카드에선 override */
@@ -839,7 +838,7 @@ span .tooltip-text {
     /* 매치 카드 타이틀 기본 스타일 */
     .match-section h4 {
         font-size: 11px;
-        margin : -8px 0 5px 0;
+        margin : -5px 0 5px 0;
     }
 
     /* GOOD 카드 스타일 */
@@ -849,8 +848,12 @@ span .tooltip-text {
     .match-card.good::before {
         font-size: 20px;
     }
-    .match-card.good span {
+    .match-card.good .match-code {
+        padding: 2px 4px 2px 4px;
         font-size: 8px;
+    }
+    .match-card.good .match-name {
+        font-size: 9px;
     }
 
     /* BAD 카드 스타일 */
@@ -860,8 +863,16 @@ span .tooltip-text {
     .match-card.bad::before {
         font-size: 20px;
     }
-    .match-card.bad span {
+    .match-card.bad .match-code {
+        padding: 2px 4px 2px 4px;
         font-size: 8px;
+    }
+    .match-card.bad .match-name {
+        font-size: 9px;
+    }
+
+    .match-card img {
+        margin-top: 5px;
     }
 
     .button-group {

@@ -242,7 +242,10 @@ export default function Home() {
 
         // 동점 발생 시 추가 질문을 위한 결과 보류
         if (type === "TIE") {
-            toast("🔥동점 발생! 추가 질문이 주어집니다!🔥");
+            toast("🔥동점 발생! 추가 질문이 주어집니다!🔥", {
+                duration: 2000,
+                position: "top-center"
+            });
 
             // 동점인 항목만 필터
             const tieQuestions = getFilteredTieQuestions(ties);
