@@ -9,10 +9,9 @@ import rawAnimalTypes from '@/app/data/animalTypes.json';
 import type {AnimalData, LevelKeys, TraitKeys} from '@/types/animalTypes';
 import {getCharacterProfile} from '@/utils/animalUtils';
 import {createShareSlug} from "@/utils/shareUtils";
-import InstagramShareModal from "@/app/components/InstagramShareModal";
 import toast, {Toaster} from "react-hot-toast";
 import {IoIosLink} from "react-icons/io";
-import {FaFacebookF, FaInstagram, FaTwitter} from "react-icons/fa";
+import {FaFacebookF, FaTwitter} from "react-icons/fa";
 import {SiKakaotalk} from "react-icons/si";
 import {getAnimalImageAbsoluteUrl, getAnimalImageUrl} from "@/utils/getAnimalImageUrl";
 
@@ -62,9 +61,6 @@ function ResultContent() {
 
     // 캐릭터 결정
     const characterProfile = animalData ? getCharacterProfile(resultTraits, animalData.types) : null;
-
-    // 인스타그램 모달 상태
-    const [showInstagramModal, setShowInstagramModal] = useState(false);
 
     // 링크 복사 핸들러
     const handleCopyLink = () => {
@@ -119,26 +115,6 @@ function ResultContent() {
         window.open(shareUrl, "_blank");
     }
 
-    // 인스타그램 공유 핸들러
-    const handleInstagramShare = () => {
-        const slug = createShareSlug(resultTraits, type, level as LevelKeys);
-        const shareUrl = `https://zootypes.com/share/${slug}`;
-
-        // 공유 설명 + 링크 텍스트 구성
-        const shareText =
-            `나의 유형은 ${type} 타입의 ⭐${characterProfile?.name}⭐\n` +
-            `\n🐾 ${characterProfile?.description}\n` +
-            `\n👇 링크를 복사해서 상세정보를 확인해보세요! 👇\n${shareUrl}`;
-
-        navigator.clipboard.writeText(shareText)
-            .then(() => {
-                toast.success("링크 공유용 텍스트 복사 완료");
-                setShowInstagramModal(true);
-            }).catch(() => {
-            toast.error("링크 복사 실패 😢")
-        })
-    };
-
     // 트위터 공유 핸들러
     const handleTwitterShare = () => {
         const text = `나의 유형은 ${type} 타입의 ⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}`;
@@ -152,12 +128,6 @@ function ResultContent() {
     // 이미지 URL
     const animalImageUrl = getAnimalImageUrl(type, level as LevelKeys); // 내부 이미지 (상대 경로)
     const animalImageUrlAbsolutePath = typeof window !== "undefined" ? getAnimalImageAbsoluteUrl(type, level as LevelKeys) : ""; // 카카오 공유용 (절대 경로)
-
-    // ios 감지
-    const isIOS = () => {
-        return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-            (navigator.userAgent.includes("Macintosh") && 'ontouchend' in document);
-    }
 
     // 궁합 타입
     const goodCode = characterProfile?.match?.good ?? "";
@@ -282,9 +252,6 @@ function ResultContent() {
                     <button onClick={handleFaceBookShare} className="share-btn facebook" aria-label="페이스북 공유">
                         <FaFacebookF size={20}/>
                     </button>
-                    <button onClick={handleInstagramShare} className="share-btn instagram" aria-label="인스타그램 공유">
-                        <FaInstagram size={20}/>
-                    </button>
                     <button onClick={handleTwitterShare} className="share-btn twitter" aria-label="트위터 공유">
                         <FaTwitter size={20}/>
                     </button>
@@ -293,27 +260,6 @@ function ResultContent() {
                     </Link>
                 </div>
             </div>
-            {showInstagramModal && (
-                <InstagramShareModal
-                    onClose={() => setShowInstagramModal(false)}
-                    onConfirm={() => {
-                        if (!isIOS()) {
-                            // 아이폰이 아닌경우 자동 다운로드
-                            const link = document.createElement("a");
-                            link.href = animalImageUrlAbsolutePath;
-                            link.download = `${type}_${characterProfile?.name}.png`;
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                        }
-
-                        window.open("https://www.instagram.com", "_blank");
-                        setShowInstagramModal(false);
-                    }}
-                    isIOS={isIOS}
-                    imageUrl={animalImageUrlAbsolutePath}
-                />
-            )}
         </div>
     )
 }

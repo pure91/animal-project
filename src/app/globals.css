@@ -379,7 +379,7 @@ a:hover {
 /* 매치 카드 타이틀 기본 스타일 */
 .match-section h4 {
     font-size: 15px;
-    margin: -10px 0 12px 0;
+    margin: -8px 0 8px 0;
 }
 
 /* 개별 match 카드 공통*/
@@ -403,7 +403,7 @@ a:hover {
 /* 흔들리는 애니메이션 */
 @keyframes paw-wobble {
     0%, 100% { transform: rotate(0deg); }
-    50%      { transform: rotate(18deg); }
+    50%      { transform: rotate(22deg); }
 }
 
 /* GOOD 카드 스타일 */
@@ -480,7 +480,7 @@ a:hover {
 
 .button-group {
     display: flex;
-    gap: 20px;
+    gap: 23px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -521,14 +521,6 @@ a:hover {
 
 .share-btn.facebook:hover {
     background-color: #0f6bd6;
-}
-
-.share-btn.instagram {
-    background-color: #ec4899;
-}
-
-.share-btn.instagram:hover {
-    background-color: #ed3789;
 }
 
 .share-btn.twitter {
@@ -838,7 +830,7 @@ span .tooltip-text {
     /* 매치 카드 타이틀 기본 스타일 */
     .match-section h4 {
         font-size: 11px;
-        margin : -5px 0 5px 0;
+        margin : -5px 0 3px 0;
     }
 
     /* GOOD 카드 스타일 */
@@ -871,10 +863,6 @@ span .tooltip-text {
         font-size: 9px;
     }
 
-    .match-card img {
-        margin-top: 5px;
-    }
-
     .button-group {
         gap: 10px;
         flex-wrap: wrap;
@@ -900,84 +888,3 @@ span .tooltip-text {
 }
 
 /********** 모바일 화면 처리 끝 **********/
-
-
-/********** 인스타그램 공유 모달 시작 **********/
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-box {
-    background-color: white;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    animation: fadeIn 0.2s ease-out;
-}
-
-.modal-title {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-top : 0.3rem;
-}
-
-.modal-text {
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-.modal-buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
-    gap: 0.75rem;
-}
-
-.modal-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-.modal-btn.cancel {
-    background-color: #acaaaa;
-}
-
-.modal-btn.cancel:hover {
-    background-color: #8e8d8d;
-}
-
-.modal-btn.confirm {
-    background-color: #ec4899;
-    color: white;
-}
-
-.modal-btn.confirm:hover {
-    background-color: #e6438d;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-        transform-origin: center;
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/********** 인스타그램 공유 모달 끝 **********/
