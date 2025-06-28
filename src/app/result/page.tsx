@@ -117,7 +117,7 @@ function ResultContent() {
 
     // 트위터 공유 핸들러
     const handleTwitterShare = () => {
-        const text = `나의 유형은 ${type} 타입의 ⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}`;
+        const text = `나의 유형은 ${type} 타입의⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}`;
         const slug = createShareSlug(resultTraits, type, level as LevelKeys);
         const url = encodeURIComponent(`https://zootypes.com/share/${slug}`);
         const tweetText = encodeURIComponent(text);
