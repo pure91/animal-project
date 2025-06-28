@@ -126,7 +126,7 @@ export default function Home() {
                     newScores[key as keyof typeof newScores] += selectedScore[key];
                 }
             }
-            // console.log("newScores:", newScores);
+            console.log("newScores:", newScores);
             return newScores;
         });
 

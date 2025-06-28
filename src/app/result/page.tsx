@@ -130,11 +130,11 @@ function ResultContent() {
     const animalImageUrlAbsolutePath = typeof window !== "undefined" ? getAnimalImageAbsoluteUrl(type, level as LevelKeys) : ""; // 카카오 공유용 (절대 경로)
 
     // 궁합 타입
-    const goodCode = characterProfile?.match?.good ?? "";
-    const badCode = characterProfile?.match?.bad ?? "";
+    const goodType = characterProfile?.match?.good ?? "";
+    const badType = characterProfile?.match?.bad ?? "";
 
-    const goodProfile = goodCode ? animalTypes[goodCode]?.types[level as LevelKeys]?.[0] : null;
-    const badProfile = badCode ? animalTypes[badCode]?.types[level as LevelKeys]?.[0] : null;
+    const goodProfile = goodType ? animalTypes[goodType]?.types[level as LevelKeys]?.[0] : null;
+    const badProfile = badType ? animalTypes[badType]?.types[level as LevelKeys]?.[0] : null;
 
     const goodName = goodProfile?.name ?? "정보 없음";
     const badName = badProfile?.name ?? "정보 없음";
@@ -143,8 +143,9 @@ function ResultContent() {
         <div className="character-card-parent">
             <Toaster position="top-center"/>
             <div className="character-card">
+            <span className="character-type">{type}</span>
                 {type !== "HUMAN" ? <h1>🎉변신 성공🎉</h1> : <h1>☠️ 변신 실패 ☠️</h1>}
-                <h2><span>{type}</span> 타입 ⭐{characterProfile?.name || "알 수 없음"}⭐</h2>
+                <h2>⭐{characterProfile?.name || "알 수 없음"}⭐</h2>
                 <div>
                     <Image
                         src={animalImageUrl}
@@ -204,34 +205,34 @@ function ResultContent() {
                     <div className="match-card good">
                         {goodProfile ? (
                             <div className="match-card">
-                                <h4>우린 최고야!</h4>
+                                <span className="match-type">{goodType}</span>
+                                {type === "HUMAN" ? <h4>모두 반가워!</h4> : <h4>우린 최고야!</h4>}
                                 <span className="match-text">
-                                    <span className="match-code">{goodCode}</span>
-                                    <span className="match-name"> 타입 ⭐{goodName}⭐</span>
+                                    <span className="match-name">⭐{goodName}⭐</span>
                                 </span>
                                 <Image
-                                    src={getAnimalImageUrl(goodCode, level as LevelKeys)}
-                                    alt={`${goodCode} 이미지`}
+                                    src={getAnimalImageUrl(goodType, level as LevelKeys)}
+                                    alt={`${goodType} 이미지`}
                                     width={100}
                                     height={180}
                                 />
                             </div>
                         ) : (
-                            <p>정보 없음</p>
+                           <p>정보 없음</p>
                         )}
                     </div>
 
                     <div className="match-card bad">
                         {badProfile ? (
                             <div className="match-card">
-                                <h4>어렵다 너..</h4>
+                                <span className="match-type">{badType}</span>
+                                {type === "HUMAN" ? <h4>사람 싫어!</h4> : <h4>어렵다 너..</h4>}
                                 <span className="match-text">
-                                    <span className="match-code">{badCode}</span>
-                                    <span className="match-name"> 타입 ⭐{badName}⭐</span>
+                                    <span className="match-name">⭐{badName}⭐</span>
                                 </span>
                                 <Image
-                                    src={getAnimalImageUrl(badCode, level as LevelKeys)}
-                                    alt={`${badCode} 이미지`}
+                                    src={getAnimalImageUrl(badType, level as LevelKeys)}
+                                    alt={`${badType} 이미지`}
                                     width={100}
                                     height={180}
                                 />
