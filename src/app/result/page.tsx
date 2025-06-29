@@ -111,8 +111,8 @@ function ResultContent() {
     // 페이스북 공유 핸들러
     const handleFaceBookShare = () => {
         const slug = createShareSlug(resultTraits, type, level as LevelKeys);
-        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://zootypes.com/share/${slug}`)}`;
-        window.open(shareUrl, "_blank");
+        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://zootypes.com/share/${slug}`)}&ref=share`;
+        window.location.href = shareUrl;
     }
 
     // 트위터 공유 핸들러
