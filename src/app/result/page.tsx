@@ -108,11 +108,26 @@ function ResultContent() {
         }
     };
 
+    // 네이버, 카카오톡, 페이스북 앱 내 웹뷰 감지
+    const isInAppWebView = () => {
+        const ua = navigator.userAgent.toLowerCase();
+        return ua.includes('kakaotalk') || ua.includes('naver') || ua.includes('fbav');
+    };
+
     // 페이스북 공유 핸들러
     const handleFaceBookShare = () => {
         const slug = createShareSlug(resultTraits, type, level as LevelKeys);
-        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://zootypes.com/share/${slug}`)}&ref=share`;
-        window.location.href = shareUrl;
+        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://zootypes.com/share/${slug}`)}`;
+
+        if (isInAppWebView()) {
+            toast("네이버앱 등 일부 앱에서는 공유 기능이 제대로 작동하지 않을 수 있어요😿\n기본 브라우저(Safari, Chrome 등)에서 열어 다시 시도해 주세요!", {
+                duration: 2000,
+                position: "top-center"
+            });
+            return;
+        }
+
+        window.open(shareUrl, '_blank', 'noopener,noreferrer');
     }
 
     // 트위터 공유 핸들러
