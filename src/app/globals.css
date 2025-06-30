@@ -582,6 +582,11 @@ a:hover {
     width: 50px;
 }
 
+.share-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .share-btn svg {
     margin-top: 3px;
     margin-left: -5px;

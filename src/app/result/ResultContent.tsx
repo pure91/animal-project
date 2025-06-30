@@ -2,7 +2,7 @@
 
 import {useSearchParams} from "next/navigation";
 import Link from "next/link";
-import {Suspense, useEffect, useState} from "react";
+import React, {Suspense, useEffect, useState} from "react";
 import Image from "next/image";
 import TraitBar from "@/app/components/TraitBar";
 import rawAnimalTypes from '@/app/data/animalTypes.json';
@@ -18,9 +18,22 @@ import {getAnimalImageAbsoluteUrl, getAnimalImageUrl} from "@/utils/getAnimalIma
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
 
+// 더블클릭 방지
+function preventDoubleClick(
+    isSharing: boolean,
+    setIsSharing: React.Dispatch<React.SetStateAction<boolean>>,
+    callback: () => void,
+    delay = 2000
+) {
+    if (isSharing) return;
+    setIsSharing(true);
+    callback();
+    setTimeout(() => setIsSharing(false), delay);
+}
+
+
 /** URL 쿼리 파라미터를 통해 결과 표시(통계, 공유) */
 function ResultContent() {
-
     const searchParams = useSearchParams();
     const type = searchParams.get("type") || "Unknown";
     const level = searchParams.get("level");
@@ -29,6 +42,9 @@ function ResultContent() {
     const [stats, setStats] = useState<{ totalCount: number; typeCount: number; levelCount: number } | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    // 더블를릭 방지
+    const [isSharing, setIsSharing] = useState(false);
 
     // 통계 조회
     useEffect(() => {
@@ -65,11 +81,13 @@ function ResultContent() {
 
     // 링크 복사 핸들러
     const handleCopyLink = () => {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-            toast.success("링크 복사 완료");
-        }).catch((err) => {
-            console.error("링크 복사 실패:", err);
-            toast.error("복사에 실패했습니다.");
+        preventDoubleClick(isSharing, setIsSharing, () => {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                toast.success("링크 복사 완료");
+            }).catch((err) => {
+                console.error("링크 복사 실패:", err);
+                toast.error("복사에 실패했습니다.");
+            });
         });
     };
 
@@ -91,50 +109,57 @@ function ResultContent() {
 
     // 카카오톡 공유 핸들러
     const handleKakaoShare = () => {
-        if (window.Kakao && window.Kakao.isInitialized()) {
-            window.Kakao.Link.sendDefault({
-                objectType: "feed",
-                content: {
-                    title: `나의 유형은 ${type}`,
-                    description: `⭐${characterProfile?.name}⭐`,
-                    imageUrl: animalImageUrlAbsolutePath,
-                    link: {
-                        mobileWebUrl: window.location.href,
-                        webUrl: window.location.href,
+        preventDoubleClick(isSharing, setIsSharing, () => {
+
+            if (window.Kakao && window.Kakao.isInitialized()) {
+                window.Kakao.Link.sendDefault({
+                    objectType: "feed",
+                    content: {
+                        title: `나의 유형은 ${type}`,
+                        description: `⭐${characterProfile?.name}⭐`,
+                        imageUrl: animalImageUrlAbsolutePath,
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href,
+                        },
                     },
-                },
-            });
-        } else {
-            toast.error("카카오톡 공유 기능을 사용할 수 없습니다.");
-        }
+                });
+            } else {
+                toast.error("카카오톡 공유 기능을 사용할 수 없습니다.");
+            }
+        });
     };
 
     // 페이스북 공유 핸들러
     const handleFaceBookShare = () => {
-        toast("공유가 완료되면 창이 닫힐 수도 있습니다.\n닫힌 경우 Facebook 웹/앱에서 확인해주세요.",
-            {
-                duration: 2500,
-                position: "top-center"
-            }
-        );
-        const slug = createShareSlug(resultTraits, type, level as LevelKeys);
-        const shareUrl = `https://zootypes.com/share/${slug}`;
-        const facebookShareUrl = `https://www.facebook.com/dialog/share?app_id=705418702255336&display=popup&href=${encodeURIComponent(shareUrl)}`;
+        preventDoubleClick(isSharing, setIsSharing, () => {
+            toast("공유가 완료되면 창이 닫힐 수도 있습니다.\n닫힌 경우 Facebook 웹/앱에서 확인해주세요.",
+                {
+                    duration: 2500,
+                    position: "top-center"
+                }
+            );
+            const slug = createShareSlug(resultTraits, type, level as LevelKeys);
+            const shareUrl = `https://zootypes.com/share/${slug}`;
+            const facebookShareUrl = `https://www.facebook.com/dialog/share?app_id=705418702255336&display=popup&href=${encodeURIComponent(shareUrl)}`;
 
-        // toast 보여주고 인지 시킨 뒤 공유 창 열기
-        setTimeout(() => {
-            window.location.href = facebookShareUrl;
-        }, 2500);
+            // toast 보여주고 인지 시킨 뒤 공유 창 열기
+            setTimeout(() => {
+                window.location.href = facebookShareUrl;
+            }, 2500);
+        });
     }
 
     // 트위터 공유 핸들러
     const handleTwitterShare = () => {
-        const text = `나의 유형은 ${type} 타입의⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}`;
-        const slug = createShareSlug(resultTraits, type, level as LevelKeys);
-        const url = encodeURIComponent(`https://zootypes.com/share/${slug}`);
-        const tweetText = encodeURIComponent(text);
-        const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`;
-        window.open(twitterUrl, "_blank");
+        preventDoubleClick(isSharing, setIsSharing, () => {
+            const text = `나의 유형은 ${type} 타입의⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}`;
+            const slug = createShareSlug(resultTraits, type, level as LevelKeys);
+            const url = encodeURIComponent(`https://zootypes.com/share/${slug}`);
+            const tweetText = encodeURIComponent(text);
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`;
+            window.open(twitterUrl, "_blank");
+        });
     };
 
     // 이미지 URL
@@ -197,7 +222,8 @@ function ResultContent() {
                             <p>
                                 이 <b>{type}</b> 타입 중에서도 <span
                                 className="second-color">{stats.levelCount}명({stats.typeCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)</span>인
-                                <b> Level{level as LevelKeys} ➡️</b><span className="bold-name">{characterProfile?.name}</span>
+                                <b> Level{level as LevelKeys} ➡️</b><span
+                                className="bold-name">{characterProfile?.name}</span>
                             </p>
                             <p className="sub-note">
                                 <i>😎 전체 참여자
@@ -262,16 +288,20 @@ function ResultContent() {
                 </div>
 
                 <div className="button-group">
-                    <button onClick={handleCopyLink} className="share-btn link-copy" aria-label="링크 복사">
+                    <button onClick={handleCopyLink} className="share-btn link-copy" aria-label="링크 복사"
+                            disabled={isSharing}>
                         <IoIosLink size={20}/>
                     </button>
-                    <button onClick={handleKakaoShare} className="share-btn kakao" aria-label="카카오톡 공유">
+                    <button onClick={handleKakaoShare} className="share-btn kakao" aria-label="카카오톡 공유"
+                            disabled={isSharing}>
                         <SiKakaotalk size={20}/>
                     </button>
-                    <button onClick={handleFaceBookShare} className="share-btn facebook" aria-label="페이스북 공유">
+                    <button onClick={handleFaceBookShare} className="share-btn facebook" aria-label="페이스북 공유"
+                            disabled={isSharing}>
                         <FaFacebookF size={20}/>
                     </button>
-                    <button onClick={handleTwitterShare} className="share-btn twitter" aria-label="트위터 공유">
+                    <button onClick={handleTwitterShare} className="share-btn twitter" aria-label="트위터 공유"
+                            disabled={isSharing}>
                         <FaTwitter size={20}/>
                     </button>
                     <Link href="/" className="home-link">
