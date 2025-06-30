@@ -111,19 +111,11 @@ function ResultContent() {
 
     // 페이스북 공유 핸들러
     const handleFaceBookShare = () => {
-        toast("공유가 완료되면 창이 닫힐 수도 있습니다.\n닫힌 경우 Facebook 웹/앱에서 확인해주세요.",
-            {
-                duration: 2500,
-                position: "top-center"
-            });
         const slug = createShareSlug(resultTraits, type, level as LevelKeys);
         const shareUrl = `https://zootypes.com/share/${slug}`;
-        const facebookShareUrl = `https://www.facebook.com/dialog/share?app_id=705418702255336&display=popup&href=${encodeURIComponent(shareUrl)}`;
+        const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
 
-        // toast 보여주고 인지 시킨 뒤 공유 창 열기
-        setTimeout(() => {
-            window.open(facebookShareUrl, '_blank');
-        }, 2500);
+        window.open(facebookShareUrl, '_blank');
     }
 
     // 트위터 공유 핸들러
