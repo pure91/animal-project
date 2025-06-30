@@ -97,7 +97,7 @@ function ResultContent() {
                 console.log("window.Kakao 객체:", window.Kakao);
                 if (!window.Kakao.isInitialized()) {
                     window.Kakao.init(kakaoAppKey);
-                    console.log("✅ Kakao SDK 초기화 완료");
+                    console.log("Kakao SDK 초기화 완료");
                 }
             } else {
                 console.log("window.Kakao 아직 없음")
@@ -110,7 +110,17 @@ function ResultContent() {
 
     // 카카오톡 공유 핸들러
     const handleKakaoShare = () => {
-        if (window.Kakao && window.Kakao.isInitialized()) {
+        if (typeof window.Kakao === "undefined") {
+            toast.error("Kakao SDK가 로드되지 않았습니다.");
+            return;
+        }
+
+        if (!window.Kakao.isInitialized()) {
+            toast.error("Kakao SDK 초기화가 되지 않았습니다.");
+            return;
+        }
+
+        try {
             window.Kakao.Link.sendDefault({
                 objectType: "feed",
                 content: {
@@ -123,8 +133,9 @@ function ResultContent() {
                     },
                 },
             });
-        } else {
-            toast.error("카카오톡 공유 기능을 사용할 수 없습니다.");
+        } catch (error) {
+            console.error("Kakao 공유 실패:", error);
+            toast.error("카카오톡 공유 중 문제가 발생했습니다.");
         }
     };
 
