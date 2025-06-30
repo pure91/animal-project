@@ -18,17 +18,17 @@ declare global {
 }
 
 export const metadata = {
-    title: '동물 성격 테스트',
-    description: '성격 테스트 결과에 따라 16가지 동물 캐릭터 중 하나로 변신! 각 동물은 level별 4단계로 나뉘어 총 64장의 이미지로 나만의 동물 아이덴티티를 완성하세요.',
-    applicationName: '동물 성격 테스트',
+    title: 'zootypes | 성격으로 알아보는 나의 동물',
+    description: '성격 유형 테스트를 통해 16가지 동물 중 나와 닮은 캐릭터를 확인해보세요. 레벨별 64가지 이미지로 나만의 동물 아이덴티티를 완성!',
+    applicationName: 'zootypes',
     appleWebApp: {
-        title: '동물 성격 테스트',
+        title: 'zootypes',
     },
     openGraph: {
-        title: '동물 성격 테스트',
-        description: '성격 테스트 결과에 따라 16가지 동물 캐릭터 중 하나로 변신! 각 동물은 level별 4단계로 나뉘어 총 64장의 이미지로 나만의 동물 아이덴티티를 완성하세요.',
+        title: 'zootypes - 성격으로 알아보는 나의 동물 유형',
+        description: '테스트 결과로 16가지 동물 캐릭터 중 하나를 만나보세요. 각 캐릭터는 레벨별 4단계 이미지로 구성되어 더욱 특별합니다.',
         url: 'https://zootypes.com',
-        siteName: '동물 성격 테스트',
+        siteName: 'zootypes',
         type: 'website',
         images: [
             {
