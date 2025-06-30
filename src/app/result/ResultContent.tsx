@@ -115,14 +115,15 @@ function ResultContent() {
             {
                 duration: 2500,
                 position: "top-center"
-            });
+            }
+        );
         const slug = createShareSlug(resultTraits, type, level as LevelKeys);
         const shareUrl = `https://zootypes.com/share/${slug}`;
         const facebookShareUrl = `https://www.facebook.com/dialog/share?app_id=705418702255336&display=popup&href=${encodeURIComponent(shareUrl)}`;
 
         // toast 보여주고 인지 시킨 뒤 공유 창 열기
         setTimeout(() => {
-            window.open(facebookShareUrl, '_blank');
+            window.location.href = facebookShareUrl;
         }, 2500);
     }
 
@@ -181,27 +182,33 @@ function ResultContent() {
                 <div className="stats-section">
                     {loading && <p>통계 불러오는 중...</p>}
                     {error && <p className="error">{error}</p>}
+                    <h3 className="stats-title">📊 통계</h3>
                     {stats && (
-                        <p>
-                            🔍 전체 <span className="first-color">{stats.totalCount}명</span> 중 <b>{type}</b> 타입은
-                            <span
-                                className="first-color"> {stats.typeCount}명 ({stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%)
-                            </span>
-                            <br/>
-                            <>
-                                🔍 당신은 <b>{type}</b> 타입 <span className="first-color">{stats.typeCount}명</span> 중
-                                <span
-                                    className="second-color"> {stats.levelCount}명</span>인 <b>⭐{characterProfile?.name}⭐</b>
-                                <span
-                                    className="second-color"> ({stats.typeCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)
-                                    </span>
-                                <br/>
-                            </>
-                        </p>
+                        <div className="stats-card">
+                            <p>
+                                지금까지 총 <span className="first-color">{stats.totalCount}명</span>이 테스트를 진행했어요
+                            </p>
+                            <p>
+                                <b>{type}</b> 타입은 총 <span className="first-color"> {stats.typeCount}명</span>으로
+                                전체의 약 <span className="first-color">
+                                {stats.totalCount > 0 ? ((stats.typeCount / stats.totalCount) * 100).toFixed(1) : 0}%</span>에
+                                해당해요
+                            </p>
+                            <p>
+                                이 <b>{type}</b> 타입 중에서도 <span
+                                className="second-color">{stats.levelCount}명({stats.typeCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)</span>인
+                                <b> Level{level as LevelKeys} ➡️</b><span className="bold-name">{characterProfile?.name}</span>
+                            </p>
+                            <p className="sub-note">
+                                <i>😎 전체 참여자
+                                    중 {(stats.totalCount > 0 ? ((stats.levelCount / stats.totalCount) * 100).toFixed(2) : 0)}%만
+                                    이 유형이에요</i>
+                            </p>
+                        </div>
                     )}
                 </div>
 
-                <h3>✏️ {characterProfile?.description || "설명 없음"}의 특징</h3>
+                <h3 className="stats-characteristics">✏️ {characterProfile?.description || "설명 없음"}의 특징</h3>
                 <ul>
                     {characterProfile?.characteristics?.length ? (
                         characterProfile.characteristics.map((char, idx) => (
