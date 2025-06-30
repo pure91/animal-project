@@ -673,7 +673,7 @@ a:hover {
 /* 버튼 컨테이너 */
 .button-row {
     display: flex;
-    justify-self: center;
+    justify-content: center;
     gap: 16px;
     width: 70%;
 }

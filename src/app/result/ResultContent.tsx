@@ -32,6 +32,41 @@ function ResultContent() {
     // 공유 상태
     const [isSharing, setIsSharing] = useState(false);      // 공용
     const [showFbModal, setShowFbModal] = useState(false);  // 페북
+    const [isMobile, setIsMobile] = useState(false);        // 모바일
+
+    // 모바일 감지
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const userAgent = navigator.userAgent;
+            const mobileRegex = /android|iphone|ipad|ipod/i;
+            setIsMobile(mobileRegex.test(userAgent));
+        }
+    }, []);
+
+    // fb=1 파라미터 확인, isMobile 결정된 이후
+    useEffect(() => {
+        if (!isMobile) return; // 모바일일 때만 실행
+        const fbFlag = searchParams.get("fb");
+        if (fbFlag === "1" && isMobile) {
+            setShowFbModal(true);
+        }
+    }, [searchParams, isMobile]);
+
+    // 카카오톡 init
+    useEffect(() => {
+        const kakaoAppKey = process.env.NEXT_PUBLIC_KAKAO_SHARE;
+        if (!kakaoAppKey) {
+            console.log("app key missing");
+            return;
+        }
+
+        if (typeof window !== "undefined" && window.Kakao) {
+            if (!window.Kakao.isInitialized()) {
+                window.Kakao.init(kakaoAppKey);
+                console.log("app key init complete");
+            }
+        }
+    }, []);
 
     // 통계 조회
     useEffect(() => {
@@ -50,17 +85,6 @@ function ResultContent() {
             .catch(() => setError("Failed to load stats"))
             .finally(() => setLoading(false));
     }, [type, level]);
-
-    // 페북 공유 완료 확인 모달
-    useEffect(() => {
-        if (typeof window === "undefined") return;
-        const pending = localStorage.getItem("fbSharePending");
-
-        if (pending === "true") {
-            localStorage.removeItem("fbSharePending");
-            setShowFbModal(true);
-        }
-    }, []);
 
     // 동물 데이터
     const animalData: AnimalData = animalTypes[type];
@@ -95,27 +119,8 @@ function ResultContent() {
             });
     };
 
-    // 로컬용 키 초기화
-    useEffect(() => {
-        const kakaoAppKey = process.env.NEXT_PUBLIC_KAKAO_SHARE;
-        if (!kakaoAppKey) {
-            console.log("app key missing");
-            return;
-        }
-
-        if (typeof window !== "undefined" && window.Kakao) {
-            if (!window.Kakao.isInitialized()) {
-                window.Kakao.init(kakaoAppKey);
-                console.log("app key init complete");
-            }
-        }
-    }, []);
-
     // 카카오톡 공유 핸들러
     const handleKakaoShare = () => {
-        if (isSharing) return;
-        setIsSharing(true);
-
         if (window.Kakao && window.Kakao.isInitialized()) {
             window.Kakao.Link.sendDefault({
                 objectType: "feed",
@@ -129,15 +134,10 @@ function ResultContent() {
                     },
                 },
             });
-            setTimeout(() => setIsSharing(false), 3000);
         } else {
             toast.error("카카오톡 공유 기능을 사용할 수 없습니다.");
-            setIsSharing(false)
         }
     };
-
-    // 모바일 감지
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     // 페이스북 공유 핸들러
     const handleFaceBookShare = () => {
@@ -145,17 +145,25 @@ function ResultContent() {
         setIsSharing(true);
 
         const slug = createShareSlug(resultTraits, type, level as LevelKeys);
-        const shareUrl = `https://zootypes.com/share/${slug}`;
+        const shareUrl = `https://zootypes.com/share/${slug}${isMobile ? '?fb=1' : ''}`;
         const facebookShareUrl = `https://www.facebook.com/dialog/share?app_id=705418702255336&display=popup&href=${encodeURIComponent(shareUrl)}`;
 
-        if (isMobile) {
-            localStorage.setItem("fbSharePending", "true");
-        }
-
         window.open(facebookShareUrl, "_blank")
-
         setTimeout(() => setIsSharing(false), 3000);
     }
+
+    const openFacebookApp = () => {
+        const now = Date.now();
+        window.location.href = "fb://";
+
+        // fallback: 앱 못 열었으면 웹으로 리디렉션
+        setTimeout(() => {
+            if (Date.now() - now < 2000) {
+                window.open("https://www.facebook.com", "_blank");
+            }
+            setShowFbModal(false);
+        }, 1500);
+    };
 
     // 트위터 공유 핸들러
     const handleTwitterShare = () => {
@@ -322,15 +330,8 @@ function ResultContent() {
                         <h3>☺️Facebook 공유 완료</h3>
                         <p>지금 Facebook 앱을 열어보시겠습니까?</p>
                         <div className="button-row">
-                            <button
-                                onClick={() => {
-                                    window.location.href = "fb://"; // 페이스북 앱 열기 시도
-                                    setShowFbModal(false);
-                                }}
-                            >
-                                열기
-                            </button>
-                            <button onClick={() => setShowFbModal(false)}>취소</button>
+                            <button onClick={openFacebookApp}>앱 열기</button>
+                            <button onClick={() => setShowFbModal(false)}>닫기</button>
                         </div>
                     </div>
                 </div>
