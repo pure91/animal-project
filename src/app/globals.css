@@ -639,6 +639,73 @@ a:hover {
     background-color: #665bfb;
 }
 
+/* 페북용 모달*/
+/* 배경 */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+/* 모달 박스 */
+.modal {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 25px;
+    width: 300px;
+    max-width: 90%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+/* 제목 */
+.modal h3 {
+    font-weight: 600;
+}
+/* 본문 텍스트 */
+.modal p {
+    font-size: 15px;
+    margin-bottom: 20px;
+    color: #606770;
+}
+/* 버튼 컨테이너 */
+.button-row {
+    display: flex;
+    justify-self: center;
+    gap: 16px;
+    width: 70%;
+}
+/* 버튼 공통 스타일 */
+.button-row button {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+    user-select: none;
+}
+/* 열기 버튼 - 페이스북 블루 */
+.button-row button:first-child {
+    background-color: #1877f2;
+    color: white;
+}
+.button-row button:first-child:hover {
+    background-color: #155db2;
+}
+/* 취소 버튼 - 연한 회색 */
+.button-row button:last-child {
+    background-color: #f0f2f5;
+    color: #1c1e21;
+}
+
+.button-row button:last-child:hover {
+    background-color: #d8dade;
+}
 /*********** 결과 후 링크 스타일 끝 ***********/
 
 /*********** 결과 지표 bar 스타일 시작 ***********/

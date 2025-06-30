@@ -18,20 +18,6 @@ import {getAnimalImageAbsoluteUrl, getAnimalImageUrl} from "@/utils/getAnimalIma
 // json 원시 데이터 할당
 const animalTypes = rawAnimalTypes as Record<string, AnimalData>;
 
-// 더블클릭 방지
-function preventDoubleClick(
-    isSharing: boolean,
-    setIsSharing: React.Dispatch<React.SetStateAction<boolean>>,
-    callback: () => void,
-    delay = 2000
-) {
-    if (isSharing) return;
-    setIsSharing(true);
-    callback();
-    setTimeout(() => setIsSharing(false), delay);
-}
-
-
 /** URL 쿼리 파라미터를 통해 결과 표시(통계, 공유) */
 function ResultContent() {
     const searchParams = useSearchParams();
@@ -43,8 +29,9 @@ function ResultContent() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // 더블를릭 방지
-    const [isSharing, setIsSharing] = useState(false);
+    // 공유 상태
+    const [isSharing, setIsSharing] = useState(false);      // 공용
+    const [showFbModal, setShowFbModal] = useState(false);  // 페북
 
     // 통계 조회
     useEffect(() => {
@@ -64,6 +51,17 @@ function ResultContent() {
             .finally(() => setLoading(false));
     }, [type, level]);
 
+    // 페북 공유 완료 확인 모달
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const pending = localStorage.getItem("fbSharePending");
+
+        if (pending === "true") {
+            localStorage.removeItem("fbSharePending");
+            setShowFbModal(true);
+        }
+    }, []);
+
     // 동물 데이터
     const animalData: AnimalData = animalTypes[type];
 
@@ -81,14 +79,20 @@ function ResultContent() {
 
     // 링크 복사 핸들러
     const handleCopyLink = () => {
-        preventDoubleClick(isSharing, setIsSharing, () => {
-            navigator.clipboard.writeText(window.location.href).then(() => {
+        if (isSharing) return;
+        setIsSharing(true);
+
+        navigator.clipboard.writeText(window.location.href)
+            .then(() => {
                 toast.success("링크 복사 완료");
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 console.error("링크 복사 실패:", err);
                 toast.error("복사에 실패했습니다.");
+            })
+            .finally(() => {
+                setTimeout(() => setIsSharing(false), 1000);
             });
-        });
     };
 
     // 로컬용 키 초기화
@@ -109,57 +113,63 @@ function ResultContent() {
 
     // 카카오톡 공유 핸들러
     const handleKakaoShare = () => {
-        preventDoubleClick(isSharing, setIsSharing, () => {
+        if (isSharing) return;
+        setIsSharing(true);
 
-            if (window.Kakao && window.Kakao.isInitialized()) {
-                window.Kakao.Link.sendDefault({
-                    objectType: "feed",
-                    content: {
-                        title: `나의 유형은 ${type}`,
-                        description: `⭐${characterProfile?.name}⭐`,
-                        imageUrl: animalImageUrlAbsolutePath,
-                        link: {
-                            mobileWebUrl: window.location.href,
-                            webUrl: window.location.href,
-                        },
+        if (window.Kakao && window.Kakao.isInitialized()) {
+            window.Kakao.Link.sendDefault({
+                objectType: "feed",
+                content: {
+                    title: `나의 유형은 ${type}`,
+                    description: `⭐${characterProfile?.name}⭐`,
+                    imageUrl: animalImageUrlAbsolutePath,
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href,
                     },
-                });
-            } else {
-                toast.error("카카오톡 공유 기능을 사용할 수 없습니다.");
-            }
-        });
+                },
+            });
+            setTimeout(() => setIsSharing(false), 3000);
+        } else {
+            toast.error("카카오톡 공유 기능을 사용할 수 없습니다.");
+            setIsSharing(false)
+        }
     };
+
+    // 모바일 감지
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     // 페이스북 공유 핸들러
     const handleFaceBookShare = () => {
-        preventDoubleClick(isSharing, setIsSharing, () => {
-            toast("공유가 완료되면 창이 닫힐 수도 있습니다.\n닫힌 경우 Facebook 웹/앱에서 확인해주세요.",
-                {
-                    duration: 2500,
-                    position: "top-center"
-                }
-            );
-            const slug = createShareSlug(resultTraits, type, level as LevelKeys);
-            const shareUrl = `https://zootypes.com/share/${slug}`;
-            const facebookShareUrl = `https://www.facebook.com/dialog/share?app_id=705418702255336&display=popup&href=${encodeURIComponent(shareUrl)}`;
+        if (isSharing) return;
+        setIsSharing(true);
 
-            // toast 보여주고 인지 시킨 뒤 공유 창 열기
-            setTimeout(() => {
-                window.location.href = facebookShareUrl;
-            }, 2500);
-        });
+        const slug = createShareSlug(resultTraits, type, level as LevelKeys);
+        const shareUrl = `https://zootypes.com/share/${slug}`;
+        const facebookShareUrl = `https://www.facebook.com/dialog/share?app_id=705418702255336&display=popup&href=${encodeURIComponent(shareUrl)}`;
+
+        if (isMobile) {
+            localStorage.setItem("fbSharePending", "true");
+        }
+
+        window.open(facebookShareUrl, "_blank")
+
+        setTimeout(() => setIsSharing(false), 3000);
     }
 
     // 트위터 공유 핸들러
     const handleTwitterShare = () => {
-        preventDoubleClick(isSharing, setIsSharing, () => {
-            const text = `나의 유형은 ${type} 타입의⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}`;
-            const slug = createShareSlug(resultTraits, type, level as LevelKeys);
-            const url = encodeURIComponent(`https://zootypes.com/share/${slug}`);
-            const tweetText = encodeURIComponent(text);
-            const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`;
-            window.open(twitterUrl, "_blank");
-        });
+        if (isSharing) return;
+        setIsSharing(true);
+
+        const text = `나의 유형은 ${type} 타입의⭐${characterProfile?.name}⭐\n🐾${characterProfile?.description}`;
+        const slug = createShareSlug(resultTraits, type, level as LevelKeys);
+        const url = encodeURIComponent(`https://zootypes.com/share/${slug}`);
+        const tweetText = encodeURIComponent(text);
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`;
+        window.open(twitterUrl, "_blank");
+
+        setTimeout(() => setIsSharing(false), 3000);
     };
 
     // 이미지 URL
@@ -169,10 +179,8 @@ function ResultContent() {
     // 궁합 타입
     const goodType = characterProfile?.match?.good ?? "";
     const badType = characterProfile?.match?.bad ?? "";
-
     const goodProfile = goodType ? animalTypes[goodType]?.types[level as LevelKeys]?.[0] : null;
     const badProfile = badType ? animalTypes[badType]?.types[level as LevelKeys]?.[0] : null;
-
     const goodName = goodProfile?.name ?? "정보 없음";
     const badName = badProfile?.name ?? "정보 없음";
 
@@ -222,8 +230,7 @@ function ResultContent() {
                             <p>
                                 이 <b>{type}</b> 타입 중에서도 <span
                                 className="second-color">{stats.levelCount}명({stats.typeCount > 0 ? ((stats.levelCount / stats.typeCount) * 100).toFixed(1) : 0}%)</span>인
-                                <b> Level{level as LevelKeys} ➡️</b><span
-                                className="bold-name">{characterProfile?.name}</span>
+                                <span className="bold-name">⭐{characterProfile?.name}⭐</span>
                             </p>
                             <p className="sub-note">
                                 <i>😎 전체 참여자
@@ -309,6 +316,25 @@ function ResultContent() {
                     </Link>
                 </div>
             </div>
+            {showFbModal && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h3>☺️Facebook 공유 완료</h3>
+                        <p>지금 Facebook 앱을 열어보시겠습니까?</p>
+                        <div className="button-row">
+                            <button
+                                onClick={() => {
+                                    window.location.href = "fb://"; // 페이스북 앱 열기 시도
+                                    setShowFbModal(false);
+                                }}
+                            >
+                                열기
+                            </button>
+                            <button onClick={() => setShowFbModal(false)}>취소</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
