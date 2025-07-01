@@ -248,41 +248,78 @@ function ResultContent() {
                 </ul>
 
                 <div className="match-section">
-                    <div className="match-card good">
+                    <div className="match-card good" onClick={e => e.currentTarget.classList.toggle("flipped")}>
                         {goodProfile ? (
-                            <div className="match-card">
+                            <>
+                                {/* 뱃지 */}
                                 <span className="match-type">{goodType}</span>
-                                {type === "HUMAN" ? <h4>모두 반가워!</h4> : <h4>우린 최고야!</h4>}
-                                <span className="match-text">
-                                    <span className="match-name">⭐{goodName}⭐</span>
-                                </span>
+                                {/* 헤더 */}
+                                <div className="match-header">
+                                    {type === "HUMAN" ? <h4>모두 반가워!</h4> : <h4>우린 최고야!</h4>}
+                                    <div className="match-name-wrapper">
+                                    <span className="match-text">
+                                      <span className="match-name">⭐{goodName}⭐</span>
+                                    </span>
+                                    </div>
+                                </div>
+                                {/* 토글용 설명 */}
+                                <div className="match-back">
+                                    {goodProfile?.characteristics?.length ? (
+                                        <ul className="characteristics-list">
+                                            {goodProfile.characteristics.map((char, idx) => (
+                                                <li key={idx}>{char}</li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p>특성 정보가 없습니다.</p>
+                                    )}
+                                </div>
+
                                 <Image
                                     src={getAnimalImageUrl(goodType, level as LevelKeys)}
                                     alt={`${goodType} 이미지`}
                                     width={100}
                                     height={180}
                                 />
-                            </div>
+                            </>
                         ) : (
                             <p>정보 없음</p>
                         )}
                     </div>
 
-                    <div className="match-card bad">
+                    <div className="match-card bad" onClick={(e) => e.currentTarget.classList.toggle("flipped")}>
                         {badProfile ? (
-                            <div className="match-card">
+                            <>
+                                {/* 뱃지 */}
                                 <span className="match-type">{badType}</span>
-                                {type === "HUMAN" ? <h4>사람 싫어!</h4> : <h4>어렵다 너..</h4>}
-                                <span className="match-text">
-                                    <span className="match-name">⭐{badName}⭐</span>
-                                </span>
+                                {/* 헤더 */}
+                                <div className="match-header">
+                                    {type === "HUMAN" ? <h4>사람 싫어!</h4> : <h4>어렵다 너..</h4>}
+                                    <div className="match-name-wrapper">
+                                    <span className="match-text">
+                                        <span className="match-name">⭐{badName}⭐</span>
+                                    </span>
+                                    </div>
+                                </div>
+                                {/* 토글용 설명 */}
+                                <div className="match-back">
+                                    {badProfile?.characteristics?.length ? (
+                                        <ul className="characteristics-list">
+                                            {badProfile.characteristics.map((char, idx) => (
+                                                <li key={idx}>{char}</li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p>특성 정보가 없습니다.</p>
+                                    )}
+                                </div>
                                 <Image
                                     src={getAnimalImageUrl(badType, level as LevelKeys)}
                                     alt={`${badType} 이미지`}
                                     width={100}
                                     height={180}
                                 />
-                            </div>
+                            </>
                         ) : (
                             <p>정보 없음</p>
                         )}

@@ -359,7 +359,7 @@ a:hover {
     text-align: left;
 }
 .stats-title {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: bold;
     margin : 10px 0 10px 0;
     color: #444;
@@ -389,8 +389,8 @@ a:hover {
 }
 
 /* 특성 리스트 */
-
 .stats-characteristics {
+    font-size: 19px;
     margin : 15px 0 -5px 0;
 }
 
@@ -425,7 +425,7 @@ a:hover {
 /* 매치 카드 타이틀 기본 스타일 */
 .match-section h4 {
     font-size: 20px;
-    margin: -5px 0 10px 0;
+    margin: 5px 0 10px 0;
 }
 
 /* GOOD & BAD 카드 타이틀 색상 분리 */
@@ -436,7 +436,7 @@ a:hover {
     color: #ff77a9;
 }
 
-/* 궁합 match 카드 */
+/* 궁합 match 카드 전체 스타일 */
 .match-card {
     flex: 1 1 0;             /* 줄어들고 늘어나기 */
     min-width: 0;            /* 내용물이 커도 줄어들기 */
@@ -446,7 +446,7 @@ a:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     text-align: center;
     position: relative;
-    transition: transform 0.2s ease;
+    cursor: pointer;
 }
 
 /* 흔들리는 애니메이션 */
@@ -457,8 +457,8 @@ a:hover {
 
 .match-type {
     position: absolute;
-    top: -2px;
-    left: 3px;
+    top: 6px;
+    left: 5px;
     padding: 5px 10px 5px 10px ;
     border-radius: 20px;
     font-family: 'Rubik', sans-serif;
@@ -550,20 +550,76 @@ a:hover {
     font-weight: bold;
     display: inline-block;
     margin-top: 5px;
-    line-height: 1.5;
-    min-height: 2.77em; /* 두 줄 기준 높이 고정 */
 }
 
 /* 내부 이미지 */
 .match-card img {
     width: 100%;
-    max-width: 240px;
+    max-width: 220px;
     height: auto;
     border-radius: 12px;
     object-fit: cover;
     margin-top: 13px;
     margin-bottom: 0;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+/******** match 토글 시작 ********/
+.match-card .match-text {
+    display: inline-block;
+}
+.match-card .match-back {
+    display: none;
+}
+.match-card.flipped .match-text {
+    display: none;
+}
+.match-card.flipped .match-back {
+    display: inline-block;
+}
+.match-back {
+    width: 220px;
+    margin: 0 0 -15px 0;
+}
+.match-back p {
+    font-size: 14px;
+    font-weight: bold;
+    margin : 6px 0 0 0;
+}
+
+.match-header h4 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+/*토글시 이미지만 숨기기*/
+.characteristics-list {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 16px;
+    list-style-type: none;
+    border: 2px dashed #cfd3d6;
+    max-width: 220px;         /* 이미지와 맞춤 */
+    width: 100%;
+    margin: 13px auto 0 auto;
+    text-align: left;
+    box-sizing: border-box;  /* padding 포함 */
+}
+.characteristics-list li::before {
+    content: "🎈";
+    margin-right: 6px;
+}
+.characteristics-list li {
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+.match-card.flipped img {
+    display: none;
+}
+.match-card.flipped .match-header {
+    display: block;
+}
+.match-card.flipped .match-text {
+    display: inline-block;
 }
 
 .button-group {
@@ -920,11 +976,9 @@ span .tooltip-text {
     .character-card h3 {
         font-size: 14px;
     }
-
     .character-card ul {
         padding: 10px;
     }
-
     .character-card li {
         font-size: 11px;
     }
@@ -936,13 +990,12 @@ span .tooltip-text {
     /* 매치 카드 타이틀 기본 스타일 */
     .match-section h4 {
         font-size: 13px;
-        margin-top: 5px;
+        margin-top: 8px;
         margin-bottom: 2px;
     }
-
     .match-type {
-        top: -2px;
-        left: -1px;
+        top: 5px;
+        left: 5px;
     }
 
     /* GOOD 카드 스타일 */
@@ -951,8 +1004,8 @@ span .tooltip-text {
     }
     .match-card.good::before {
         font-size: 18px;
-        margin-top: 5px;
-        right: 3px;
+        margin-top: 1px;
+        right: 2px;
     }
     .match-card.good .match-type {
         padding: 2px 6px 2px 6px;
@@ -961,9 +1014,9 @@ span .tooltip-text {
     .match-card.good .match-name {
         font-size: 10px;
     }
-
     .match-card img {
-        margin-top: 7px;
+        height: fit-content;
+        margin-top: 8px;
     }
 
     /* BAD 카드 스타일 */
@@ -972,15 +1025,36 @@ span .tooltip-text {
     }
     .match-card.bad::before {
         font-size: 18px;
-        margin-top: 6px;
-        right: 3px;
+        margin-top: 1px;
+        right: 2px;
     }
     .match-card.bad .match-type {
         padding: 2px 6px 2px 6px;
-        font-size: 8px;
+        font-size: 9px;
     }
     .match-card.bad .match-name {
         font-size: 10px;
+    }
+
+    /* 카드 반전 특징 리스트 */
+    .match-back {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: -18px;
+    }
+    .match-back p {
+        font-size: 8px;
+    }
+    ul.characteristics-list {
+        border: 1px dashed #cfd3d6;
+    }
+    .characteristics-list li::before {
+        content: "🎈";
+        margin-right: 4px;
+    }
+    .characteristics-list li {
+        margin-bottom: 5px;
+        font-size: 8px;
     }
 
     .button-group {
@@ -1003,7 +1077,7 @@ span .tooltip-text {
 
     .home-link {
         font-size: 12px;
-        padding: 8px 10px 8px 10px;
+        padding: 8px 10px 7px 10px;
     }
 }
 
