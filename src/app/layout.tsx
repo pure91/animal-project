@@ -62,11 +62,11 @@ export default function RootLayout({children}: { children: ReactNode }) {
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="beforeInteractive"/>
         <Header/>
         <main>
-            <GoogleAd />
             {/*<KaKaoAdMobileTop/>*/}
             {/*<KakaoAdPCLeft/>*/}
             {/*<KakaoAdPCRight/>*/}
             {children}
+            <GoogleAd />
         </main>
         {/*<KakaoAdPCBottom/>*/}
         {/*<KakaoAdMobileBottom/>*/}
