@@ -555,7 +555,7 @@ a:hover {
 /* 내부 이미지 */
 .match-card img {
     width: 100%;
-    max-width: 220px;
+    max-width: 270px;
     height: auto;
     border-radius: 12px;
     object-fit: cover;
@@ -577,7 +577,7 @@ a:hover {
     display: inline-block;
 }
 .match-back {
-    width: 220px;
+    width: 270px;
     margin: 0 0 -15px 0;
 }
 .match-back p {
