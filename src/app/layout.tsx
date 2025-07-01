@@ -8,6 +8,7 @@ import KakaoAdPCBottom from "@/app/components/advertise/KaKao/KakaoAdPCBottom";
 import KakaoAdPCLeft from "@/app/components/advertise/KaKao/KakaoAdPCLeft";
 import KakaoAdPCRight from "@/app/components/advertise/KaKao/KakaoAdPCRight";
 import KaKaoAdMobileTop from "@/app/components/advertise/KaKao/KaKaoAdMobileTop";
+import GoogleAd from "@/app/components/advertise/Google/GoogleAd";
 
 // 카카오 공유 window 객체 타입 선언
 declare global {
@@ -54,19 +55,26 @@ export default function RootLayout({children}: { children: ReactNode }) {
         <head>
             {/*Google Adsense*/}
             <meta name="google-adsense-account" content="ca-pub-3666035347659822"/>
+            <Script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3666035347659822"
+                crossOrigin="anonymous"
+                strategy="afterInteractive"
+            />
         </head>
         <body>
         {/* Kakao Share */}
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="beforeInteractive"/>
         <Header/>
         <main>
-            <KaKaoAdMobileTop/>
-            <KakaoAdPCLeft/>
-            <KakaoAdPCRight/>
+            <GoogleAd />
+            {/*<KaKaoAdMobileTop/>*/}
+            {/*<KakaoAdPCLeft/>*/}
+            {/*<KakaoAdPCRight/>*/}
             {children}
         </main>
-        <KakaoAdPCBottom/>
-        <KakaoAdMobileBottom/>
+        {/*<KakaoAdPCBottom/>*/}
+        {/*<KakaoAdMobileBottom/>*/}
         <Footer/>
         </body>
         </html>
