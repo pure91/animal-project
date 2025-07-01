@@ -42,11 +42,11 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
 
           # ----- 정적 점검 페이지 동기화 -----
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa -p 22 -o StrictHostKeyChecking=no" \
+          rsync -avz -e "ssh -i ~/.ssh/id_rsa -p 2727 -o StrictHostKeyChecking=no" \
             public/maintenance/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/maintenance/
 
           # ----- 서버 접속 및 배포 실행 -----
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22 \
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 2727 \
               ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
 
             set -e  # 에러 발생 시 즉시 종료
