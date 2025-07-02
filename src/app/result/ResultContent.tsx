@@ -11,8 +11,8 @@ import {getCharacterProfile} from '@/utils/animalUtils';
 import {createShareSlug} from "@/utils/shareUtils";
 import toast, {Toaster} from "react-hot-toast";
 import {IoIosLink} from "react-icons/io";
-import {FaFacebookF, FaTwitter} from "react-icons/fa";
-import {SiKakaotalk} from "react-icons/si";
+import {FaFacebookF} from "react-icons/fa";
+import {SiKakaotalk, SiX} from "react-icons/si";
 import {getAnimalImageAbsoluteUrl, getAnimalImageUrl} from "@/utils/getAnimalImageUrl";
 
 // json 원시 데이터 할당
@@ -341,7 +341,7 @@ function ResultContent() {
                     </button>
                     <button onClick={handleTwitterShare} className="share-btn twitter" aria-label="트위터 공유"
                             disabled={isSharing}>
-                        <FaTwitter size={20}/>
+                        <SiX size={20} />
                     </button>
                     <Link href="/" className="home-link">
                         Home
