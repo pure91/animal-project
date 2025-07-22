@@ -10,6 +10,7 @@ module.exports = {
             {
                 userAgent: '*',
                 allow: '/',
+                disallow: '/api', // api 이하만 차단, 나머지 전체 허용(이유는 백엔드 엔드포인트용이라 사람이나 검색엔진에게 보여줄 콘텐츠가 아님)
             },
         ],
     },

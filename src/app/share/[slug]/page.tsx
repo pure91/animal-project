@@ -75,15 +75,23 @@ export default async function SharePage({params}: { params: Promise<{ slug: stri
         level: parsed.level,
     });
 
-    // 바로 서버에서 redirect 사용 시 sns 크롤러가 이 페이지의 동적 metadata를 읽지 못하고 기본 layout에 설정된 og만 인식함
-    // 즉, 클라이언트에서 스크립트를 사용해 리다이렉트 처리하고 서버는 동적 메타데이터를 먼저 보내서 사용자에게 이동하기 위함
+    // canonical 태그 헤드에 삽입
     return (
-        <div>
-            <script
-                dangerouslySetInnerHTML={{
-                    __html: `window.location.href = "/result?${searchParams.toString()}"`,
-                }}
-            />
-        </div>
+        <>
+            <head>
+                <title>나의 유형은 {parsed?.type ?? "알 수 없음"}</title>
+                {/* 해당페이지는 공유용이지 실제 대표 컨텐츠는 result 파일이라는것을 알리기 위함*/}
+                <link rel="canonical" href={`https://zootypes.com/result?${searchParams.toString()}`} />
+                {/*  robots noindex 추가, 해당 페이지는 검색 결과에 색인(검색 노출)하지 말것(공유 페이지는 노출말고 실제 콘텐츠는 result만 인도하기 위함) */}
+                <meta name="robots" content="noindex, follow" />
+            </head>
+            <div>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `window.location.href = "/result?${searchParams.toString()}"`,
+                    }}
+                />
+            </div>
+        </>
     );
 }
