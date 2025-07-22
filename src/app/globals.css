@@ -61,6 +61,8 @@ a:hover {
 }
 
 .entry-image-style {
+    width: 100%;
+    max-width: 300px;
     cursor: pointer;
     margin: 15px 0 10px 0;
     border-radius: 15px;
@@ -77,8 +79,151 @@ a:hover {
     font-weight: 600;
     color: seagreen;
 }
-
+/* 설명 아코디언 */
+.accordion-container {
+    max-width: 550px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 25px 0 10px 0;
+    justify-self: center;
+}
+.accordion-item {
+    border-bottom: 1px solid #eee;
+}
+.accordion-item:last-child {
+    border-bottom: none;
+}
+.accordion-title {
+    background-color: #f1f1f1;
+    color: #333;
+    cursor: pointer;
+    padding: 15px 20px;
+    width: 100%;
+    text-align: left;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.accordion-title:hover {
+    background-color: #ddd;
+}
+.accordion-title.open {
+    background-color: #e9e9e9;
+}
+.accordion-title span {
+    font-size: 20px;
+    margin-right: 35px;
+}
+.accordion-content {
+    background-color: white;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+    padding: 0 20px;
+}
+.accordion-content.open {
+    max-height: 500px;
+    padding: 15px 20px;
+    transition: max-height 0.3s ease-in;
+}
+.accordion-content p {
+    font-size: 16px;
+    text-align: left;
+    line-height: 1.5;
+    color: #555;
+}
+.accordion-content b {
+    font-weight: 700;
+    color: #61a0ff;
+}
+.em-green {
+    font-weight: 500;
+    color: #3ac240 !important;
+}
+.accordion-content .em-red {
+    color: #ff5252;
+}
+.main-description-list {
+    list-style: none;
+    text-align: left;
+    line-height: 1.3;
+    margin: 0;
+    padding: 0;
+}
+.main-description-list li {
+    position: relative;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+.main-description-list li::before {
+    content: "🔸";
+    position: absolute;
+    left: -25px;
+    top: 0;
+    color: #007bff;
+}
 /*********** 입장하기 화면 끝 ***********/
+
+/*********** 정책 시작 ***********/
+/* 이용약관 (Terms.tsx) */
+.terms-section {
+    padding: 20px;
+    text-align: left;
+}
+.terms-section h1 {
+    font-size: 2em;
+    margin-bottom: 26px;
+    color: #333;
+    text-align: center;
+}
+.terms-section li {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #555;
+    line-height: 1.5;
+}
+.terms-section p {
+    margin: 30px 0 0 23px;
+    line-height: 1.5;
+    font-size: 1.05em;
+    font-weight: bold;
+}
+.terms-section a {
+    color: mediumslateblue;
+}
+
+/* 개인정보처리방침 (Privacy.tsx) */
+.privacy-section {
+    padding: 20px;
+    text-align: left;
+}
+.privacy-section h1 {
+    font-size: 2em;
+    margin-bottom: 26px;
+    color: #333;
+    text-align: center;
+}
+.privacy-section li {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #555;
+    line-height: 1.5;
+}
+.privacy-section p {
+    margin: 30px 0 0 23px;
+    line-height: 1.5;
+    font-size: 1em;
+    font-weight: bold;
+    font-style: italic;
+    color:dimgray;
+}
+.privacy-section a {
+    color: mediumslateblue;
+}
+/*********** 정책 끝 ***********/
 
 /*********** question-card 스타일 시작 ***********/
 .question-card {
@@ -898,6 +1043,59 @@ span .tooltip-text {
 
     .entry-image-style {
         margin: 25px 0 10px 0;
+    }
+    /* 설명 아코디언 */
+    .accordion-container {
+        max-width: 300px;
+    }
+    .accordion-title {
+        font-size: 14px;
+    }
+    .accordion-content {
+        font-size: 13px;
+    }
+
+    /* 이용약관 (term.tsx) */
+    .terms-section {
+        padding: 10px;
+    }
+    .terms-section h1 {
+        font-size: 20px;
+        margin : 10px 0 10px 0;
+    }
+    .terms-section ol {
+        padding: 10px;
+    }
+    .terms-section li {
+        font-size: 13px;
+    }
+    .terms-section p {
+        margin: -15px 0 0 0;
+        font-size: 13px;
+    }
+
+    /* 개인정보처리방침 (Privacy.tsx) */
+    .privacy-section {
+        padding: 10px;
+    }
+    .privacy-section h1 {
+        font-size: 20px;
+        margin : 10px 0 10px 0;
+    }
+    .privacy-section ol {
+        padding: 10px;
+    }
+    .privacy-section li {
+        margin-bottom: 10px;
+        font-size: 13px;
+    }
+    .privacy-section p {
+        margin: -15px 0 0 0;
+        font-size: 12px;
+    }
+    .footer-menu {
+        padding: 0;
+        font-size: 12px;
     }
 
     .question-card {
