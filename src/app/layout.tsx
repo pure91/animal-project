@@ -3,11 +3,6 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import {ReactNode} from "react";
 import Script from "next/script";
-import KaKaoAdMobileTop from "@/app/components/advertise/KaKao/KaKaoAdMobileTop";
-import KakaoAdPCLeft from "@/app/components/advertise/KaKao/KakaoAdPCLeft";
-import KakaoAdPCRight from "@/app/components/advertise/KaKao/KakaoAdPCRight";
-import KakaoAdPCBottom from "@/app/components/advertise/KaKao/KakaoAdPCBottom";
-import KakaoAdMobileBottom from "@/app/components/advertise/KaKao/KakaoAdMobileBottom";
 
 // 카카오 공유 window 객체 타입 선언
 declare global {
@@ -66,14 +61,14 @@ export default function RootLayout({children}: { children: ReactNode }) {
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="beforeInteractive"/>
         <Header/>
         <main>
-            <KaKaoAdMobileTop/>
-            <KakaoAdPCLeft/>
-            <KakaoAdPCRight/>
+            {/*<KaKaoAdMobileTop/>*/}
+            {/*<KakaoAdPCLeft/>*/}
+            {/*<KakaoAdPCRight/>*/}
             {children}
             {/*<GoogleAd />*/}
         </main>
-        <KakaoAdPCBottom/>
-        <KakaoAdMobileBottom/>
+        {/*<KakaoAdPCBottom/>*/}
+        {/*<KakaoAdMobileBottom/>*/}
         <Footer/>
         </body>
         </html>
