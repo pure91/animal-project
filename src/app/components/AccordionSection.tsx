@@ -27,10 +27,10 @@ export default function AccordionSection() {
                                 <b>R</b> (현실형/Realistic) / <b className="em-red">D</b> (추상형/Divergent)
                             </li>
                             <li>
-                                <b>E</b> (감정형/Empathy) / <b className="em-red">C</b> (이성형/Critical)
+                                <b>E</b> (감성형/Empathy) / <b className="em-red">C</b> (이성형/Critical)
                             </li>
                             <li>
-                                <b>S</b> (계획형/Structure) / <b className="em-red">A</b> (자유형/Adaptive)
+                                <b>S</b> (계획형/Structure) / <b className="em-red">A</b> (적응형/Adaptive)
                             </li>
                         </ul>
                     </>

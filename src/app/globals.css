@@ -85,8 +85,8 @@ a:hover {
     border: 1px solid #ccc;
     border-radius: 20px;
     overflow: hidden;
-    margin: 25px 0 10px 0;
-    justify-self: center;
+    margin: 25px auto 10px auto;
+    justify-content: center;
 }
 .accordion-item {
     border-bottom: 1px solid #eee;
@@ -170,12 +170,12 @@ a:hover {
 /*********** 정책 시작 ***********/
 /* 이용약관 (Terms.tsx) */
 .terms-section {
-    padding: 20px;
+    padding: 10px;
     text-align: left;
 }
 .terms-section h1 {
     font-size: 2em;
-    margin-bottom: 26px;
+    margin-bottom: 35px;
     color: #333;
     text-align: center;
 }
@@ -197,12 +197,12 @@ a:hover {
 
 /* 개인정보처리방침 (Privacy.tsx) */
 .privacy-section {
-    padding: 20px;
+    padding: 10px;
     text-align: left;
 }
 .privacy-section h1 {
     font-size: 2em;
-    margin-bottom: 26px;
+    margin-bottom: 40px;
     color: #333;
     text-align: center;
 }
@@ -1056,12 +1056,9 @@ span .tooltip-text {
     }
 
     /* 이용약관 (term.tsx) */
-    .terms-section {
-        padding: 10px;
-    }
     .terms-section h1 {
         font-size: 20px;
-        margin : 10px 0 10px 0;
+        margin: 10px 0 15px 0;
     }
     .terms-section ol {
         padding: 10px;
@@ -1075,12 +1072,9 @@ span .tooltip-text {
     }
 
     /* 개인정보처리방침 (Privacy.tsx) */
-    .privacy-section {
-        padding: 10px;
-    }
     .privacy-section h1 {
-        font-size: 20px;
-        margin : 10px 0 10px 0;
+        font-size: 18px;
+        margin: 10px 0 20px 0;
     }
     .privacy-section ol {
         padding: 10px;
