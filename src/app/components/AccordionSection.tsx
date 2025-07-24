@@ -41,21 +41,21 @@ export default function AccordionSection() {
                 content: (
                     <>
                         <p>
-                            고슴도치, 거북이, 고양이, 펭귄, 토끼, 오소리, 여우, 족제비, 강아지, 늑대, 사자, 코끼리, 돌고래, 상어, 다람쥐, 문어 등 16가지 동물 유형이 있고 <b className="em-green">각 동물별로 4단계의 레벨</b>이 있어 <b className="em-red">총 64가지 유형</b>을 만나실 수 있습니다.
+                            고슴도치, 거북이, 고양이, 펭귄, 토끼, 오소리, 여우, 족제비, 강아지, 늑대, 사자, 코끼리, 돌고래, 상어, 다람쥐, 문어 등 16가지 동물 유형이 있으며
+                            각 동물별 4단계의 레벨이 있어 <b className="em-red">총 64가지 유형</b>을 만나실 수 있습니다.
                         </p>
                         <ul className="main-description-list">
                             <li>
-                                만약 너무 중립적인 답변을 반복 선택했다면, 예외적으로 <b className="em-red">HUMAN</b>이라는 특별한 캐릭터도 등장할 수 있습니다.
+                                만약 너무 중립적인 답변을 반복하면, 예외적으로 <b>특별 캐릭터(HUMAN)</b>가 등장할 수도 있어요!
                             </li>
                             <li>
-                                나의 동물이 전체에서 어느 정도의 비율을 차지하는지 <b>통계</b>도 확인할 수 있으며
-                                타입, 특징, 설명, <b className="em-red">잘 맞는 타입❤️</b>과 <b className="em-red">안 맞는 타입💔</b>까지 함께 제공하여 관계 이해에 도움을 드립니다.
+                                테스트 결과를 통해 나의 동물이 전체에서 <b className="em-green">어느 정도 비율인지 통계</b>도 확인할 수 있으며 캐릭터, 특징, 설명, 어울리는 타입까지 함께 제공되어 관계 이해에 도움을 드립니다.
                             </li>
                             <li>
-                                테스트 결과는 <b>링크, 카카오톡, 메타, X</b>를 통해 친구, 가족, 연인과 손쉽게 공유하여 유쾌하게 웃을 수 있는 대화 소재가 되어줍니다.
+                                테스트 결과는 <b>링크, 카카오톡, Facebook, Twitter</b>로 손쉽게 공유할 수 있어 친구, 가족, 연인과 함께 즐거운 대화 소재가 되어줍니다.
                             </li>
                             <li>
-                                자 그럼, 각 유형별로 제공되는 설명과 동물 그리고 실생활에 적용할 수 있는 팁까지 통해 <b>나만의 동물 아이덴티티를 완성해 보세요</b>🐯
+                                자, 그럼 각 유형별로 제공되는 동물의 특징과 설명을 통해 나만의 <b className="em-red">동물 아이덴티티</b>를 확인해 보세요!
                             </li>
                         </ul>
                     </>
@@ -78,7 +78,9 @@ export default function AccordionSection() {
                         </span>
                     </div>
                     <div className={`accordion-content ${openIndex === index ? 'open' : ''}`}>
-                        {item.content}
+                        <div className="accordion-inner">
+                            {item.content}
+                        </div>
                     </div>
                 </div>
             ))}

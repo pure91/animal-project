@@ -122,11 +122,12 @@ a:hover {
     overflow: hidden;
     max-height: 0;
     transition: max-height 0.3s ease-out;
-    padding: 0 20px;
+}
+.accordion-inner {
+    padding: 5px 20px;
 }
 .accordion-content.open {
     max-height: 500px;
-    padding: 15px 20px;
     transition: max-height 0.3s ease-in;
 }
 .accordion-content p {
@@ -141,10 +142,10 @@ a:hover {
 }
 .em-green {
     font-weight: 500;
-    color: #3ac240 !important;
+    color: #2ea821 !important;
 }
 .accordion-content .em-red {
-    color: #ff5252;
+    color: #ff4f4f;
 }
 .main-description-list {
     list-style: none;
