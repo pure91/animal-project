@@ -1,6 +1,6 @@
 "use client";
 
-import {useSearchParams} from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import React, {Suspense, useEffect, useState} from "react";
 import Image from "next/image";
@@ -31,6 +31,11 @@ function ResultContent() {
 
     // 공유 상태
     const [isSharing, setIsSharing] = useState(false);      // 공용
+
+    // result에 붙는 필수 쿼리 없으면 404 페이지
+    if (!type || !level) {
+        notFound();
+    }
 
     // 통계 조회
     useEffect(() => {
@@ -341,7 +346,7 @@ function ResultContent() {
                     </button>
                     <button onClick={handleTwitterShare} className="share-btn twitter" aria-label="트위터 공유"
                             disabled={isSharing}>
-                        <SiX size={20} />
+                        <SiX size={20}/>
                     </button>
                     <Link href="/" className="home-link">
                         Home
